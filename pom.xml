@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.dvsmedeiros</groupId>
+	<artifactId>ecommerce-ws-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>Ecommerce WS Parent</name>
+	<version>1.0.0-SNAPSHOT</version>
+	<url>http://dvsmedeiros.com.br</url>
+
+	<properties>
+		<project.version>1.0.0-SNAPSHOT</project.version>
+		<spring.version>4.3.6.RELEASE</spring.version>
+		<hibernate.version>5.2.6.Final</hibernate.version>
+		<persistence.version>1.0.0.Final</persistence.version>
+		<servlet.version>3.1.0</servlet.version>
+		<junit.version>4.8.2</junit.version>
+		<oracle.version>11.2.0.3</oracle.version>
+		<java.version>1.7</java.version>
+		<jackson.version>2.8.6</jackson.version>
+		<jaxws.version>2.0</jaxws.version>
+	</properties>
+	
+	<modules>
+		<module>commons</module>
+		<module>product</module>
+		<module>ecommerce</module>		
+	</modules>
+	
+	<build>
+		<finalName>ecommerce-ws</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>

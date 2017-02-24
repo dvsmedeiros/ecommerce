@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shop Homepage - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/shop-homepage.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Book Store</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                	<li>
+                        <a href="#">
+                        	<span style="font-size:1.8em;" class="glyphicon glyphicon-shopping-cart" aria- hidden="true"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">Minha Conta</a>
+                    </li>
+                    <li>
+                        <a href="#">Meus Pedidos</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+            	<br />
+				<h3>FINALIZAR COMPRA</h3>
+				<hr />
+				<div class="row">
+					<div class="col-md-4">
+						<div class="panel panel-default">
+							<div class="panel-heading">ENDEREÇOS</div>
+							<div class="panel-body">
+								<h4>Endereço Principal</h4>
+								<hr />
+								<strong>Davisson Medeiros</strong>
+								<p>
+									 Avenida Presbítero Eliezer Martins Costa, 179
+									 Jardim Varan
+									 08696-100 | Suzano - SP
+								</p>
+								<p>(11) 4749-7851</p>
+								<hr />
+								<h4>Endereço Entrega</h4>
+								<div class="checkbox">
+									<label><input type="checkbox" value="">Endereço de Entrega igual ao Principal</label>
+								</div>
+								<hr />
+								<a class="btn btn-default btn-block" >INSERIR NOVO ENDEREÇO</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="panel panel-default">
+							<div class="panel-heading">FORMA DE PAGAMENTO</div>
+							<div class="panel-body">
+								<div class="radio">
+									<label><input type="radio" name="optradio">Boleto Bancário</label>
+								</div>
+								<hr />
+								<div class="radio">
+									<label><input type="radio" name="optradio">Cartão de Crédito</label>
+								</div>
+								<br />
+								<form class="form-horizontal">
+									<div class="form-group">
+										<label class="control-label col-sm-3" for="email">Cartão:</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-3" for="email">Parcelas:</label>
+										<div class="col-sm-9">
+											<select class="form-control">
+									        	<option>1 x Parcela</option>
+									        </select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-3" for="email">Nome:</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="email">Vencimento:</label>
+										<div class="col-sm-4">
+											<select class="form-control">
+									        	<option>Mês</option>
+									        </select>
+										</div>
+										<div class="col-sm-4">
+											<select class="form-control">
+									        	<option>Ano</option>
+									        </select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-5" for="email">Cód. Segurança:</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="panel panel-default">
+						<div class="panel-heading">REVISÃO DO PEDIDO</div>
+							<div class="panel-body">
+								<p>Produto 1</p>
+								<p>Qtde: 1</p>
+								<p>Preço: $ 48.99</p>
+								<hr />
+								<p>Produto 2</p>
+								<p>Qtde: 3</p>
+								<p>Preço: $ 48.99</p>
+								
+								<table class="table">
+							  			<tr>
+							  				<td><h5>Subtotal</h5></td>
+							  				<td><h5 class="text-right">$ 49.98</h5></td>
+							  			</tr>
+							  			<tr>
+							  				<td><h5>Frete</h5></td>
+							  				<td><h5 class="text-right">$ 49.98</h5></td>
+							  			</tr>
+							  			<tr>
+							  				<td><h4>Total</h4></td>
+							  				<td><h4 class="text-right">$ 49.98</h4></td>
+							  			</tr>
+							  		</table>
+								<a class="btn btn-success btn-block" href="/ecommercews/public/home.html">FINALIZAR COMPRA</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="text-center">Copyright &copy; Davisson Medeiros 2017</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    <script src="js/shop-homepage.js"></script>
+
+</body>
+
+</html>

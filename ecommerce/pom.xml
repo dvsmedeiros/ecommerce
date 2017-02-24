@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>ecommercews</artifactId>
+	<packaging>war</packaging>
+	<name>Ecommerce WS</name>
+	<url>http://dvsmedeiros.com.br</url>
+	
+	<parent>
+		<groupId>com.dvsmedeiros</groupId>
+		<artifactId>ecommerce-ws-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<properties>
+		<jackson.version>2.8.6</jackson.version>
+		<jaxws.version>2.0</jaxws.version>
+		<project.version>1.0.0-SNAPSHOT</project.version>
+		<failOnMissingWebXml>false</failOnMissingWebXml>		
+	</properties>
+	
+	<dependencies>
+		
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>commons-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>product-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>${jackson.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>javax.ws.rs</groupId>
+		    <artifactId>javax.ws.rs-api</artifactId>
+		    <version>${jaxws.version}</version>
+		</dependency>
+												
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		
+	</dependencies>
+	
+	<build>
+		<finalName>ecommercews</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
