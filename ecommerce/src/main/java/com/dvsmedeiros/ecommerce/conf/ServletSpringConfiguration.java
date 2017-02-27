@@ -1,8 +1,11 @@
 package com.dvsmedeiros.ecommerce.conf;
 
+import javax.servlet.Filter;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.dvsmedeiros.commons.conf.JPAConfiguration;
+import com.dvsmedeiros.ecommerce.filter.CORSFilter;
 
 public class ServletSpringConfiguration extends AbstractAnnotationConfigDispatcherServletInitializer{
 
@@ -20,5 +23,10 @@ public class ServletSpringConfiguration extends AbstractAnnotationConfigDispatch
     protected String[] getServletMappings() {
         return new String[] { "/" };
     }
-
+    
+    @Override
+    protected Filter[] getServletFilters() {
+        Filter [] singleton = { new CORSFilter() };
+        return singleton;
+    }
 }
