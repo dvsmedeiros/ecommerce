@@ -63,8 +63,8 @@ public class ApplicationFacade<T extends DomainEntity> implements IFacade<T>, IS
 	public Result<T> findAll(Class<? extends DomainEntity> clazz, INavigationCase<T> aCase) {
 
 		if(aCase.getName().equals(BusinessCase.DEFAULT_CONTEXT_NAME)){
-			IDAO dao = factoryDAO.create(clazz.getName());
-			aCase.getResult().setEntityList(dao.findAll(clazz.getClass()));
+			IDAO dao = factoryDAO.create(clazz.getClass().getName());
+			aCase.getResult().setEntityList(dao.findAll(clazz));
 		}
 		return aCase.getResult();
 	}
@@ -73,8 +73,8 @@ public class ApplicationFacade<T extends DomainEntity> implements IFacade<T>, IS
 	public Result<T> find(Long id, Class<? extends DomainEntity> clazz, INavigationCase<T> aCase) {
 		
 		if(aCase.getName().equals(BusinessCase.DEFAULT_CONTEXT_NAME)){
-			IDAO dao = factoryDAO.create(clazz.getName());
-			T aEntity = (T) dao.find(id, clazz.getClass());
+			IDAO dao = factoryDAO.create(clazz.getClass().getName());
+			T aEntity = (T) dao.find(id, clazz);
 			aCase.getResult().setEntity(aEntity);
 		}
 		return aCase.getResult();
