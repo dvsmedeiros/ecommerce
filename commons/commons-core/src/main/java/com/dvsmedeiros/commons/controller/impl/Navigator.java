@@ -41,7 +41,7 @@ public class Navigator<E extends DomainEntity> implements INavigator {
 					strategy.process(aEntity, aCase);
 				}
 
-			} else {
+			} else if (!aCase.getName().equals(BusinessCase.DEFAULT_CONTEXT_NAME)) {
 
 				aCase.suspendExecution();
 				aCase.getResult().setMessage(aCase.getName() + " - Não foi encontrada!");
