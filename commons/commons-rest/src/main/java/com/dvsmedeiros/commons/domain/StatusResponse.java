@@ -1,15 +1,15 @@
 package com.dvsmedeiros.commons.domain;
 
-public class StatusResponse extends DomainEntity {
+public class StatusResponse {
 
-	private String code;
+	private Status code;
 	private String message;
 
-	public String getCode() {
+	public Status getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public void setCode(Status code) {
 		this.code = code;
 	}
 
