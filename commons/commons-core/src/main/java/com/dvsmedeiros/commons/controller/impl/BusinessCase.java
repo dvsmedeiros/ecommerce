@@ -1,20 +1,22 @@
 package com.dvsmedeiros.commons.controller.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.commons.controller.INavigationCase;
 import com.dvsmedeiros.commons.domain.DomainEntity;
 import com.dvsmedeiros.commons.domain.Result;
 
-@Component
 public class BusinessCase<E extends DomainEntity> implements INavigationCase<E> {
 
-	@Autowired
 	private Result<E> result;
 	private String name;
 	private Boolean suspend = false;
-
+	private E entity;
+	
+	public BusinessCase() {
+		this.result = new Result<>();
+	}
+	
 	@Override
 	public String getName() {
 		return this.name;
@@ -43,4 +45,12 @@ public class BusinessCase<E extends DomainEntity> implements INavigationCase<E> 
 		this.name = name;
 	}
 
+	public E getEntity() {
+		return entity;
+	}
+
+	public void setEntity(E entity) {
+		this.entity = entity;
+	}
+	
 }
