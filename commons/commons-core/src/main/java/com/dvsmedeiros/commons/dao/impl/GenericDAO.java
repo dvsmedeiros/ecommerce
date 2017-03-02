@@ -21,7 +21,7 @@ public class GenericDAO<T extends DomainEntity> implements IDAO<T> {
 	
 	@Override
 	public void save(T aEntity) {
-		em.persist(aEntity);
+		em.merge(aEntity);
 	}
 
 	@Override
