@@ -81,22 +81,22 @@ public class ApplicationFacade<T extends DomainEntity> implements IFacade<T>, IS
 	}
 
 	@Override
-	public Result<T> find(String code, Class<? extends T> clazz) {
-		return null;
-	}
-
-	@Override
-	public Result<T> delete(String code, Class<? extends T> clazz) {
-		return null;
-	}
-
-	@Override
-	public Result<T> findAll(boolean active, Class<? extends T> clazz) {
-		return null;
-	}
-
-	@Override
 	public Result<T> find(Filter<T> aFilter, INavigationCase<T> aCase) {
+		return null;
+	}
+
+	@Override
+	public Result<T> find(String code, Class<? extends T> clazz, INavigationCase<T> aCase) {
+		return null;
+	}
+
+	@Override
+	public Result<T> delete(String code, Class<? extends T> clazz, INavigationCase<T> aCase) {
+		return null;
+	}
+
+	@Override
+	public Result<T> findAll(boolean active, Class<? extends T> clazz, INavigationCase<T> aCase) {
 		return null;
 	}
 
