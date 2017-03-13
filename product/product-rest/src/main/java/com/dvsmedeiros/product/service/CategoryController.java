@@ -124,7 +124,7 @@ public class CategoryController {
 
 		try {
 
-			Category category = appFacade.find(categoryId, Category.class, new BusinessCaseBuilder().build()).getEntity();
+			Category category = appFacade.find(categoryId, Category.class, new BusinessCaseBuilder<Category>().build()).getEntity();
 			appFacade.delete(category, new BusinessCaseBuilder().build());
 
 			response.setCode(Status.OK);
@@ -146,7 +146,7 @@ public class CategoryController {
 
 		try {
 			
-			Category category = appFacade.find(categoryId, Category.class, new BusinessCaseBuilder().build()).getEntity();
+			Category category = appFacade.find(categoryId, Category.class, new BusinessCaseBuilder<Category>().build()).getEntity();
 			appFacade.delete(category.getCode(), Category.class, new BusinessCaseBuilder().build());
 			
 

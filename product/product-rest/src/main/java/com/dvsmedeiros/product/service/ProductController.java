@@ -90,7 +90,7 @@ public class ProductController {
 
 		try {
 
-			result = appFacade.find(productId, Product.class, new BusinessCaseBuilder().build());
+			result = appFacade.find(productId, Product.class, new BusinessCaseBuilder<Product>().build());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -106,7 +106,7 @@ public class ProductController {
 
 		try {
 
-			Product product = appFacade.find(productId, Product.class, new BusinessCaseBuilder().build()).getEntity();
+			Product product = appFacade.find(productId, Product.class, new BusinessCaseBuilder<Product>().build()).getEntity();
 			appFacade.delete(product, new BusinessCaseBuilder().build());
 
 			response.setCode(Status.OK);
@@ -127,8 +127,8 @@ public class ProductController {
 		StatusResponse response = new StatusResponse();
 
 		try {
-			Product product = appFacade.find(productId, Product.class, new BusinessCaseBuilder().build()).getEntity();
-			appFacade.delete(product.getCode(), Product.class, new BusinessCaseBuilder().build());
+			Product product = appFacade.find(productId, Product.class, new BusinessCaseBuilder<Product>().build()).getEntity();
+			appFacade.delete(product.getCode(), Product.class, new BusinessCaseBuilder<Product>().build());
 
 			response.setCode(Status.OK);
 			response.setMessage("Produto removido com sucesso.");
