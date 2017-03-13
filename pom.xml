@@ -25,6 +25,8 @@
 	<modules>
 		<module>commons</module>
 		<module>product</module>
+		<module>freight</module>
+		<module>shopcart</module>
 		<module>ecommerce</module>		
 	</modules>
 	

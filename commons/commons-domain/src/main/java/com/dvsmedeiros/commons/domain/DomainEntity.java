@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 
 @MappedSuperclass
 public class DomainEntity extends AbstractDomainEntity {
@@ -38,6 +39,11 @@ public class DomainEntity extends AbstractDomainEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	@PrePersist
+	public void prePersist(){
+		this.insertionDate = Calendar.getInstance();
 	}
 
 }

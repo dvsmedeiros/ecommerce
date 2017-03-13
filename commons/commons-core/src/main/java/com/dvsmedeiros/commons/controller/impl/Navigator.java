@@ -18,7 +18,7 @@ import com.dvsmedeiros.commons.domain.DomainEntity;
 public class Navigator<E extends DomainEntity> implements INavigator {
 
 	@Autowired
-	private Map<String, EntityRuleDefinition> listNavigations = new HashMap<String, EntityRuleDefinition>();
+	private Map<String, EntityRuleDefinition<E>> listNavigations = new HashMap<String, EntityRuleDefinition<E>>();
 
 	@Override
 	public void run(DomainEntity aEntity, INavigationCase aCase) {
@@ -32,13 +32,14 @@ public class Navigator<E extends DomainEntity> implements INavigator {
 
 			EntityRuleDefinition<E> entityRuleDefinition = listNavigations.get(aCase.getName());
 
-			if (entityRuleDefinition != null && aCase.isSuspendExecution()) {
+			if (entityRuleDefinition != null && !aCase.isSuspendExecution()) {
 
-				List<IStrategy<E>> activities = entityRuleDefinition.getActivities();
+				List<IStrategy<? super E>> activities = entityRuleDefinition.getActivities();
 
 				for (IStrategy strategy : activities) {
 
 					strategy.process(aEntity, aCase);
+					if(aCase.isSuspendExecution()) break;
 				}
 
 			} else if (!aCase.getName().equals(BusinessCase.DEFAULT_CONTEXT_NAME)) {

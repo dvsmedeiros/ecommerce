@@ -1,7 +1,5 @@
 package com.dvsmedeiros.commons.controller.impl;
 
-import org.springframework.stereotype.Component;
-
 import com.dvsmedeiros.commons.controller.INavigationCase;
 import com.dvsmedeiros.commons.domain.DomainEntity;
 import com.dvsmedeiros.commons.domain.Result;
