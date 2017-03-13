@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+ 
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.dvsmedeiros</groupId>
+	<artifactId>shopcart</artifactId>
+	<packaging>pom</packaging>
+	<name>shopcart-codebase</name>
+	<version>1.0.0-SNAPSHOT</version>
+	<url>http://dvsmedeiros.com.br</url>
+	
+	<properties>
+		<project.version>1.0.0-SNAPSHOT</project.version>
+		<spring.version>4.3.6.RELEASE</spring.version>
+		<hibernate.version>5.2.6.Final</hibernate.version>
+		<persistence.version>1.0.0.Final</persistence.version>
+		<servlet.version>3.1.0</servlet.version>
+		<junit.version>4.8.2</junit.version>
+		<oracle.version>11.2.0.3</oracle.version>
+		<java.version>1.7</java.version>
+		<jackson.version>2.8.6</jackson.version>
+		<jaxws.version>2.0</jaxws.version>
+	</properties>
+	
+	<modules>
+		<module>shopcart-domain</module>
+		<module>shopcart-core</module>
+		<module>shopcart-rest</module>
+	</modules>
+	
+	<dependencies>
+	
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>commons-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+	</dependencies>
+</project>
