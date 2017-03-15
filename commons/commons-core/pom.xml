@@ -54,7 +54,7 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-		<!-- mvn install:install-file -Dfile=C:\temp\ojdbc6.jar -->
+		<!-- mvn install:install-file -Dfile={PATH}/ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dpackaging=jar -Dversion=11.2.0.3 -->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
