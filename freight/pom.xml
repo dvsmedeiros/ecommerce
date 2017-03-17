@@ -11,6 +11,7 @@
 	<url>http://dvsmedeiros.com.br</url>
 	
 	<properties>
+	    <correiows>0.0.1-SNAPSHOT</correiows>
 		<project.version>1.0.0-SNAPSHOT</project.version>
 		<spring.version>4.3.6.RELEASE</spring.version>
 		<hibernate.version>5.2.6.Final</hibernate.version>

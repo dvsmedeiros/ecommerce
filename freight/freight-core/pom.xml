@@ -28,6 +28,12 @@
 			<version>${project.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>correiows</artifactId>
+			<version>${correiows}</version>
+		</dependency>
+		
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
