@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Configuration;
 
 import com.dvsmedeiros.commons.controller.impl.EntityRuleDefinition;
 import com.dvsmedeiros.shopcart.controller.business.impl.AddItemToCart;
-import com.dvsmedeiros.shopcart.controller.business.impl.FindAndRemoveProductOfCart;
+import com.dvsmedeiros.shopcart.controller.business.impl.FindProductInCart;
+import com.dvsmedeiros.shopcart.controller.business.impl.RemoveAllItemOfCart;
+import com.dvsmedeiros.shopcart.controller.business.impl.RemoveItemOfCart;
 import com.dvsmedeiros.shopcart.controller.business.impl.ShopCartFindProductByIdActivity;
 import com.dvsmedeiros.shopcart.domain.CartItem;
 
@@ -18,13 +20,18 @@ public class ShopCartNavigation {
 	@Autowired
 	private AddItemToCart addItemToCart;
 	@Autowired
-	private FindAndRemoveProductOfCart findAndRemoveProductOfCart;
+	private FindProductInCart findProductInCart;
+	@Autowired
+	private RemoveItemOfCart removeItemOfCart;
+	@Autowired
+	private RemoveAllItemOfCart removeAllItemOfCart;
 	
 	@Bean(name="ADD_ITEM_TO_CART")
 	public EntityRuleDefinition<CartItem> addProductToCartNavigation(){
 		
 		EntityRuleDefinition<CartItem> activities = new EntityRuleDefinition<>();
-		
+
+		activities.addActivity(findProductInCart);
 		activities.addActivity(findProductByIdActivity);
 		activities.addActivity(addItemToCart);
 		
@@ -37,7 +44,20 @@ public class ShopCartNavigation {
 		
 		EntityRuleDefinition<CartItem> activities = new EntityRuleDefinition<>();
 		
-		activities.addActivity(findAndRemoveProductOfCart);
+		activities.addActivity(findProductInCart);
+		activities.addActivity(removeItemOfCart);
+		
+		return activities;
+		
+	}
+	
+	@Bean(name="REMOVE_ALL_ITEM_TO_CART")
+	public EntityRuleDefinition<CartItem> removeAllProductToCartNavigation(){
+		
+		EntityRuleDefinition<CartItem> activities = new EntityRuleDefinition<>();
+		
+		activities.addActivity(findProductInCart);
+		activities.addActivity(removeAllItemOfCart);
 		
 		return activities;
 		

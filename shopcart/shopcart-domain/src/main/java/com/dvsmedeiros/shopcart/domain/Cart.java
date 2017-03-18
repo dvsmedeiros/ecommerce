@@ -25,12 +25,34 @@ public class Cart extends DomainEntity {
 
 	public void addItem(CartItem item) {
 		this.cartItems.add(item);
-		this.subTotal += item.getProduct().getPrice().getValue() * item.getQuantity();
+		calculateSubTotal();
+	}
+	
+	public void removeAllItem(CartItem item) {
+		this.cartItems.remove(item);
+		calculateSubTotal();
 	}
 	
 	public void removeItem(CartItem item) {
+		
+		if(item.getQuantity() > 1){
+			item.lessOneProduct();
+			calculateSubTotal();
+			return;
+		}
 		this.cartItems.remove(item);
-		this.subTotal -= item.getProduct().getPrice().getValue() * item.getQuantity();
+		calculateSubTotal();
+	}
+	
+	public void moreOneProduct(CartItem item){
+		item.moreOneProduct();
+		calculateSubTotal();
+	}
+	public void calculateSubTotal(){
+		this.subTotal = 0;
+		for(CartItem item : cartItems){
+			this.subTotal += item.getProduct().getPrice().getValue() * item.getQuantity();
+		}
 	}
 	
 	public List<CartItem> getCartItems() {

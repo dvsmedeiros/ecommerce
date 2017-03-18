@@ -76,4 +76,15 @@ public class ShopCartController {
 		
 		return cart;	
 	}
+	
+	@RequestMapping(value = "cart/product/{productId}", method = RequestMethod.DELETE)
+	public @ResponseBody Cart removeALLCartItem(@PathVariable Long productId){
+		
+		CartItem item = new CartItem();
+		item.getProduct().setId(productId);
+		
+		navigator.run(item, new BusinessCaseBuilder<CartItem>().withName("REMOVE_ALL_ITEM_TO_CART").build() );
+		
+		return cart;	
+	}
 }

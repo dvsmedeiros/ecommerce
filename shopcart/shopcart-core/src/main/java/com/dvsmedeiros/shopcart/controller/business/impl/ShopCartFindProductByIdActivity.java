@@ -23,17 +23,21 @@ public class ShopCartFindProductByIdActivity implements IStrategy<CartItem>{
 	
 	@Override
 	public void process(CartItem aEntity, INavigationCase<CartItem> aCase) {
+			
+			if(aCase.getResult().getEntity() != null){
+				return;
+			}
 		
-		BusinessCase<Product> bCase = new BusinessCaseBuilder<Product>().withName("FIND_PRODUCT_BY_ID").build();
-		navigator.run(aEntity.getProduct(), bCase);
-		
-		if(bCase.isSuspendExecution() || bCase.getResult().getEntity() == null){
-			aCase.suspendExecution();
-			aCase.getResult().setMessage("Produto ID: " + aEntity.getProduct().getId() + " não existe!");
-			return;
-		}
-		
-		aEntity.setProduct(bCase.getResult().getEntity());
+			BusinessCase<Product> bCase = new BusinessCaseBuilder<Product>().withName("FIND_PRODUCT_BY_ID").build();
+			navigator.run(aEntity.getProduct(), bCase);
+			
+			if(bCase.isSuspendExecution() || bCase.getResult().getEntity() == null){
+				aCase.suspendExecution();
+				aCase.getResult().setMessage(bCase.getResult().getMessage());
+				return;
+			}
+			
+			aEntity.setProduct(bCase.getResult().getEntity());
 	}
 
 }
