@@ -45,7 +45,7 @@ public class Navigator<E extends DomainEntity> implements INavigator {
 			} else if (!aCase.getName().equals(BusinessCase.DEFAULT_CONTEXT_NAME)) {
 
 				aCase.suspendExecution();
-				aCase.getResult().setMessage(aCase.getName() + " - Não foi encontrada!");
+				aCase.getResult().setMessage(aCase.getName() + " - NÃ£o foi encontrada!");
 			}
 		}
 	}

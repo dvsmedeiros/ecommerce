@@ -23,7 +23,7 @@ public class FindProductByIdActivity implements IStrategy<Product> {
 
 		if (product == null) {
 			aCase.suspendExecution();
-			aCase.getResult().setMessage("Produto ID: " + aEntity.getId() + " n„o existe!");
+			aCase.getResult().setMessage("Produto ID: " + aEntity.getId() + " n√£o existe!");
 			return;
 		}
 
