@@ -1,5 +1,6 @@
 package com.dvsmedeiros.shopcart.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +16,8 @@ import com.dvsmedeiros.freight.domain.Freight;
 public class Cart extends DomainEntity {
 
 	private List<CartItem> cartItems;
-	private double subTotal;
-	private double total;
+	private BigDecimal subTotal = BigDecimal.ZERO;
+	private BigDecimal total = BigDecimal.ZERO;
 	private Freight freight;
 
 	public Cart() {
@@ -49,22 +50,30 @@ public class Cart extends DomainEntity {
 		calculateSubTotal();
 	}
 	public void calculateSubTotal(){
-		this.subTotal = 0;
-		for(CartItem item : cartItems){
-			this.subTotal += item.getProduct().getPrice().getValue() * item.getQuantity();
+		this.subTotal = BigDecimal.ZERO;
+		for(CartItem item : cartItems){			
+			subTotal.add(item.getProduct().getPrice().getValue().multiply( BigDecimal.valueOf(item.getQuantity())));
 		}
 	}
 	
 	public List<CartItem> getCartItems() {
 		return cartItems;
 	}
-
-	public double getSubTotal() {
+	
+	public BigDecimal getSubTotal() {
 		return subTotal;
 	}
 
-	public double getTotal() {
-		return subTotal /*+ freight.value*/;
+	public void setSubTotal(BigDecimal subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 
 	public Freight getFreight() {

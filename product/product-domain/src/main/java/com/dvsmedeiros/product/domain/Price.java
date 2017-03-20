@@ -1,5 +1,7 @@
 package com.dvsmedeiros.product.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Embeddable;
 
 import org.springframework.stereotype.Component;
@@ -8,13 +10,13 @@ import org.springframework.stereotype.Component;
 @Embeddable
 public class Price {
 
-	private Double value;
+	private BigDecimal value;
 
-	public Double getValue() {
+	public BigDecimal getValue() {
 		return value;
 	}
 
-	public void setValue(Double value) {
+	public void setValue(BigDecimal value) {
 		this.value = value;
 	}
 

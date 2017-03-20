@@ -1,5 +1,7 @@
 package com.dvsmedeiros.product.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Embeddable;
 
 import org.springframework.stereotype.Component;
@@ -9,10 +11,11 @@ import org.springframework.stereotype.Component;
 public class Packing {
 
 	private PackingType type;
-	private Double weight;
-	private Double height;
-	private Double width;
-	private Double length;
+	private BigDecimal weight = BigDecimal.ZERO;
+	private BigDecimal height = BigDecimal.ZERO;
+	private BigDecimal width = BigDecimal.ZERO;
+	private BigDecimal length = BigDecimal.ZERO;
+	private BigDecimal diameter = BigDecimal.ZERO;
 
 	public PackingType getType() {
 		return type;
@@ -22,36 +25,44 @@ public class Packing {
 		this.type = type;
 	}
 
-	public Double getWeight() {
+	public BigDecimal getWeight() {
 		return weight;
 	}
 
-	public void setWeight(Double weight) {
+	public void setWeight(BigDecimal weight) {
 		this.weight = weight;
 	}
 
-	public Double getHeight() {
+	public BigDecimal getHeight() {
 		return height;
 	}
 
-	public void setHeight(Double height) {
+	public void setHeight(BigDecimal height) {
 		this.height = height;
 	}
 
-	public Double getWidth() {
+	public BigDecimal getWidth() {
 		return width;
 	}
 
-	public void setWidth(Double width) {
+	public void setWidth(BigDecimal width) {
 		this.width = width;
 	}
 
-	public Double getLength() {
+	public BigDecimal getLength() {
 		return length;
 	}
 
-	public void setLength(Double length) {
+	public void setLength(BigDecimal length) {
 		this.length = length;
+	}
+
+	public BigDecimal getDiameter() {
+		return diameter;
+	}
+
+	public void setDiameter(BigDecimal diameter) {
+		this.diameter = diameter;
 	}
 
 }
