@@ -1,22 +1,25 @@
 package com.dvsmedeiros.product.service;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dvsmedeiros.commons.controller.IFacade;
+import com.dvsmedeiros.commons.controller.INavigator;
+import com.dvsmedeiros.commons.controller.impl.BusinessCase;
+import com.dvsmedeiros.commons.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.freight.domain.Freight;
-import com.dvsmedeiros.freight.domain.FreightResponse;
+import com.dvsmedeiros.freight.domain.FreightService;
+import com.dvsmedeiros.product.domain.Product;
+import com.dvsmedeiros.shopcart.domain.Cart;
 
 @Controller
 public class FreightController {
@@ -24,9 +27,38 @@ public class FreightController {
 	@Autowired
 	@Qualifier("applicationFacade")
 	IFacade<Freight> appFacade;
+	
+	@Autowired
+	@Qualifier("navigator")
+	private INavigator navigator;
 
-	@RequestMapping(value = "freight", method = RequestMethod.GET)
-	public @ResponseBody List<FreightResponse> calculteFreightAndDeadLine() {
-		return null;
+	@RequestMapping(value = "freight/cart", method = RequestMethod.GET)
+	public @ResponseBody List<FreightService> calculteFreightAndDeadLine(@RequestBody Cart cart) {
+		
+		BusinessCase<Cart> aCase = new BusinessCaseBuilder<Cart>().withName("CALCULATE_FREIGHT_FOR_CART").build();
+		navigator.run(cart, aCase);
+		
+		if( aCase.isSuspendExecution() ){
+			
+			return new ArrayList<>();
+		}
+		
+		return aCase.getResult().getEntity().getFreight().getResponse().getServices();
+		
+	}
+	
+	@RequestMapping(value = "freight/product", method = RequestMethod.GET)
+	public @ResponseBody List<FreightService> calculteFreightAndDeadLine(@RequestBody Freight freight) {
+		
+		BusinessCase<Freight> aCase = new BusinessCaseBuilder<Freight>().withName("CALCULATE_FREIGHT_FOR_PRODUCT").build();
+		navigator.run(freight, aCase);
+		
+		if( aCase.isSuspendExecution() ){
+			
+			return new ArrayList<>();
+		}
+		
+		return aCase.getResult().getEntity().getResponse().getServices();
+		
 	}
 }
