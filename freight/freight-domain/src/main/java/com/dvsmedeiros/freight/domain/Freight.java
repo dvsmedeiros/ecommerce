@@ -4,32 +4,28 @@ import com.dvsmedeiros.commons.domain.DomainSpecificEntity;
 
 public class Freight extends DomainSpecificEntity {
 
-	private String serviceName;
-	private Double value;
-	private String deadline;
-
-	public String getServiceName() {
-		return serviceName;
+	private FreightRequest request;
+	private FreightResponse response;
+	
+	public Freight() {
+		this.request = new FreightRequest();
+		this.response = new FreightResponse();
+	}
+	
+	public FreightRequest getRequest() {
+		return request;
 	}
 
-	public void setServiceName(String serviceName) {
-		this.serviceName = serviceName;
+	public void setRequest(FreightRequest request) {
+		this.request = request;
 	}
 
-	public Double getValue() {
-		return value;
+	public FreightResponse getResponse() {
+		return response;
 	}
 
-	public void setValue(Double value) {
-		this.value = value;
-	}
-
-	public String getDeadline() {
-		return deadline;
-	}
-
-	public void setDeadline(String deadline) {
-		this.deadline = deadline;
+	public void setResponse(FreightResponse response) {
+		this.response = response;
 	}
 
 }
