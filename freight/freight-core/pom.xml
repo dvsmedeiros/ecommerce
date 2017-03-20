@@ -30,6 +30,18 @@
 		
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>shopcart-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>product-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
 			<artifactId>correiows</artifactId>
 			<version>${correiows}</version>
 		</dependency>
