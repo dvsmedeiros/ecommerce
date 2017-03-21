@@ -10,6 +10,7 @@ import com.dvsmedeiros.commons.controller.business.IStrategy;
 import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.product.domain.Packing;
 import com.dvsmedeiros.product.domain.PackingType;
+import com.dvsmedeiros.product.domain.Price;
 import com.dvsmedeiros.product.domain.Product;
 import com.dvsmedeiros.shopcart.domain.Cart;
 import com.dvsmedeiros.shopcart.domain.CartItem;
@@ -44,12 +45,15 @@ public class SummarizeShopCart implements IStrategy<Cart> {
 		packing.setDiameter(diameter);
 		packing.setType(PackingType.BOX);
 		
+		Price price = new Price();
+		price.setValue(declaredValue);
+
 		Product product = new Product();
+		product.setPrice(price);
 		product.setPacking(packing);
 		
 		Freight freight = new Freight();
 		freight.getRequest().setProduct(product);
-		freight.getRequest().setDeclaredValue(declaredValue);
 		
 		aEntity.setFreight(freight);
 	}
