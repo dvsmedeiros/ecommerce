@@ -52,7 +52,7 @@ public class Cart extends DomainEntity {
 	public void calculateSubTotal(){
 		this.subTotal = BigDecimal.ZERO;
 		for(CartItem item : cartItems){			
-			subTotal.add(item.getProduct().getPrice().getValue().multiply( BigDecimal.valueOf(item.getQuantity())));
+			this.subTotal = subTotal.add(item.getProduct().getPrice().getValue().multiply( BigDecimal.valueOf(item.getQuantity())));
 		}
 	}
 	
