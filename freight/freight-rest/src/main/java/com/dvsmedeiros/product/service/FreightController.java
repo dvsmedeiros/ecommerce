@@ -31,9 +31,12 @@ public class FreightController {
 	@Autowired
 	@Qualifier("navigator")
 	private INavigator navigator;
+	
+	@Autowired
+	private Cart cart;
 
-	@RequestMapping(value = "freight/cart", method = RequestMethod.GET)
-	public @ResponseBody List<FreightService> calculteFreightAndDeadLine(@RequestBody Cart cart) {
+	@RequestMapping(value = "freight", method = RequestMethod.GET)
+	public @ResponseBody List<FreightService> calculteFreightAndDeadLine() {
 		
 		BusinessCase<Cart> aCase = new BusinessCaseBuilder<Cart>().withName("CALCULATE_FREIGHT_FOR_CART").build();
 		navigator.run(cart, aCase);
@@ -47,8 +50,13 @@ public class FreightController {
 		
 	}
 	
-	@RequestMapping(value = "freight/product", method = RequestMethod.GET)
-	public @ResponseBody List<FreightService> calculteFreightAndDeadLine(@RequestBody Freight freight) {
+	@RequestMapping(value = "freight/{productId}", method = RequestMethod.GET)
+	public @ResponseBody List<FreightService> calculteFreightAndDeadLine(@PathVariable Long productId) {
+		
+		Freight freight = new Freight();
+		Product product = new Product();
+		product.setId(productId);
+		freight.getRequest().setProduct(product);
 		
 		BusinessCase<Freight> aCase = new BusinessCaseBuilder<Freight>().withName("CALCULATE_FREIGHT_FOR_PRODUCT").build();
 		navigator.run(freight, aCase);
