@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.commons.controller.INavigationCase;
 import com.dvsmedeiros.commons.controller.business.IStrategy;
-import com.dvsmedeiros.correiows.domain.Frete;
 import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.product.domain.Packing;
+import com.dvsmedeiros.product.domain.PackingType;
+import com.dvsmedeiros.product.domain.Product;
 import com.dvsmedeiros.shopcart.domain.Cart;
 import com.dvsmedeiros.shopcart.domain.CartItem;
 
@@ -29,10 +30,10 @@ public class SummarizeShopCart implements IStrategy<Cart> {
 		
 		for (CartItem cartItem : cartItems) {
 			
-			length.add(cartItem.getProduct().getPacking().getLength());
-			height.add(cartItem.getProduct().getPacking().getHeight());
-			width.add(cartItem.getProduct().getPacking().getWidth());
-			declaredValue.add(cartItem.getProduct().getPrice().getValue());
+			length = length.add(cartItem.getProduct().getPacking().getLength());
+			height = height.add(cartItem.getProduct().getPacking().getHeight());
+			width = width.add(cartItem.getProduct().getPacking().getWidth());
+			declaredValue = declaredValue.add(cartItem.getProduct().getPrice().getValue());
 			
 		}				
 		
@@ -41,9 +42,13 @@ public class SummarizeShopCart implements IStrategy<Cart> {
 		packing.setLength(length);
 		packing.setWidth(width);
 		packing.setDiameter(diameter);
-				
+		packing.setType(PackingType.BOX);
+		
+		Product product = new Product();
+		product.setPacking(packing);
+		
 		Freight freight = new Freight();
-		freight.getRequest().getProduct().setPacking(packing);
+		freight.getRequest().setProduct(product);
 		freight.getRequest().setDeclaredValue(declaredValue);
 		
 		aEntity.setFreight(freight);
