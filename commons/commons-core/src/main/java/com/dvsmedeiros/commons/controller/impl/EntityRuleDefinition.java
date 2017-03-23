@@ -6,8 +6,9 @@ import java.util.List;
 import com.dvsmedeiros.commons.controller.business.IStrategy;
 import com.dvsmedeiros.commons.domain.ApplicationEntity;
 import com.dvsmedeiros.commons.domain.DomainEntity;
+import com.dvsmedeiros.commons.domain.IEntity;
 
-public class EntityRuleDefinition<E extends DomainEntity> extends ApplicationEntity {
+public class EntityRuleDefinition<E extends IEntity> extends ApplicationEntity {
 	
 	private List<IStrategy<? super E>> activities;
 	

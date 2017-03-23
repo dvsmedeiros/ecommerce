@@ -1,11 +1,10 @@
 package com.dvsmedeiros.commons.controller.impl;
 
-import org.springframework.stereotype.Component;
-
 import com.dvsmedeiros.commons.domain.DomainEntity;
+import com.dvsmedeiros.commons.domain.IEntity;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class BusinessCaseBuilder<E extends DomainEntity> {
+public class BusinessCaseBuilder<E extends IEntity> {
 
 	protected BusinessCase aCase;
 	

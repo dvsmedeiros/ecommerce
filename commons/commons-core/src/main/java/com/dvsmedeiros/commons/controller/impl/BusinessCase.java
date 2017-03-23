@@ -2,9 +2,10 @@ package com.dvsmedeiros.commons.controller.impl;
 
 import com.dvsmedeiros.commons.controller.INavigationCase;
 import com.dvsmedeiros.commons.domain.DomainEntity;
+import com.dvsmedeiros.commons.domain.IEntity;
 import com.dvsmedeiros.commons.domain.Result;
 
-public class BusinessCase<E extends DomainEntity> implements INavigationCase<E> {
+public class BusinessCase<E extends IEntity> implements INavigationCase<E> {
 
 	private Result<E> result;
 	private String name;

@@ -12,21 +12,22 @@ import com.dvsmedeiros.commons.controller.INavigationCase;
 import com.dvsmedeiros.commons.controller.INavigator;
 import com.dvsmedeiros.commons.controller.business.IStrategy;
 import com.dvsmedeiros.commons.domain.DomainEntity;
+import com.dvsmedeiros.commons.domain.IEntity;
 
 @Component
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class Navigator<E extends DomainEntity> implements INavigator {
+public class Navigator<E extends IEntity> implements INavigator {
 
 	@Autowired
 	private Map<String, EntityRuleDefinition<E>> listNavigations = new HashMap<String, EntityRuleDefinition<E>>();
 
 	@Override
-	public void run(DomainEntity aEntity, INavigationCase aCase) {
+	public void run(IEntity aEntity, INavigationCase aCase) {
 
 		navigate(aEntity, aCase);
 	}
 
-	private void navigate(DomainEntity aEntity, INavigationCase aCase) {
+	private void navigate(IEntity aEntity, INavigationCase aCase) {
 
 		if (aEntity != null) {
 

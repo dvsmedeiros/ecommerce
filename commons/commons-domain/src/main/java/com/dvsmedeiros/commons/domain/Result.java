@@ -3,7 +3,7 @@ package com.dvsmedeiros.commons.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Result<T extends DomainEntity> extends ApplicationEntity {
+public class Result<T extends IEntity> extends ApplicationEntity {
 	
 	private List<T> entityList;
 	private T entity;

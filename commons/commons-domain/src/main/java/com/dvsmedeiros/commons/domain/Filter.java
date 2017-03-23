@@ -13,7 +13,7 @@ public class Filter<T extends DomainEntity> extends ApplicationEntity {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public T getEntity() {
 		return entity;
 	}
