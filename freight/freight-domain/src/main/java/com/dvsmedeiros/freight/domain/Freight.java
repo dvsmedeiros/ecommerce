@@ -1,31 +1,36 @@
 package com.dvsmedeiros.freight.domain;
 
 import com.dvsmedeiros.commons.domain.DomainSpecificEntity;
+import com.dvsmedeiros.product.domain.Product;
 
 public class Freight extends DomainSpecificEntity {
 
-	private FreightRequest request;
-	private FreightResponse response;
-	
-	public Freight() {
-		this.request = new FreightRequest();
-		this.response = new FreightResponse();
-	}
-	
-	public FreightRequest getRequest() {
-		return request;
+	private Product product;
+	private String postalCodeDestine;
+	private FreightService service;
+
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setRequest(FreightRequest request) {
-		this.request = request;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
-	public FreightResponse getResponse() {
-		return response;
+	public String getPostalCodeDestine() {
+		return postalCodeDestine;
 	}
 
-	public void setResponse(FreightResponse response) {
-		this.response = response;
+	public void setPostalCodeDestine(String postalCodeDestine) {
+		this.postalCodeDestine = postalCodeDestine;
+	}
+
+	public FreightService getService() {
+		return service;
+	}
+
+	public void setService(FreightService service) {
+		this.service = service;
 	}
 
 }

@@ -18,7 +18,7 @@
 	
 		<dependency>
 		    <groupId>com.dvsmedeiros</groupId>
-		    <artifactId>product-domain</artifactId>
+		    <artifactId>shopcart-domain</artifactId>
 		    <version>${project.version}</version>
 		</dependency>
 	

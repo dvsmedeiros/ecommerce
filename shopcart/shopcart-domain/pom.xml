@@ -23,12 +23,6 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>com.dvsmedeiros</groupId>
-		    <artifactId>freight-domain</artifactId>
-		    <version>${project.version}</version>
-		</dependency>
-		
-		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context</artifactId>
 		    <version>${spring.version}</version>

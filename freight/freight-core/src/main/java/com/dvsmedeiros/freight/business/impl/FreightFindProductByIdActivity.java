@@ -9,32 +9,34 @@ import com.dvsmedeiros.commons.controller.INavigator;
 import com.dvsmedeiros.commons.controller.business.IStrategy;
 import com.dvsmedeiros.commons.controller.impl.BusinessCase;
 import com.dvsmedeiros.commons.controller.impl.BusinessCaseBuilder;
-import com.dvsmedeiros.commons.dao.IDAO;
 import com.dvsmedeiros.freight.domain.Freight;
+import com.dvsmedeiros.freight.domain.FreightFilter;
 import com.dvsmedeiros.product.domain.Product;
-import com.dvsmedeiros.shopcart.domain.CartItem;
 
 @Component
-public class FreightFindProductByIdActivity implements IStrategy<Freight>{
-	
-	
+public class FreightFindProductByIdActivity implements IStrategy<FreightFilter> {
+
 	@Autowired
 	@Qualifier("navigator")
 	INavigator navigator;
-	
+
 	@Override
-	public void process(Freight aEntity, INavigationCase<Freight> aCase) {
-			
+	public void process(FreightFilter aEntity, INavigationCase<FreightFilter> aCase) {
+
+		if (aEntity.getEntity().getProduct() != null) {
+
 			BusinessCase<Product> bCase = new BusinessCaseBuilder<Product>().withName("FIND_PRODUCT_BY_ID").build();
-			navigator.run(aEntity.getRequest().getProduct(), bCase);
-			
-			if(bCase.isSuspendExecution() || bCase.getResult().getEntity() == null){
+			navigator.run(aEntity.getEntity().getProduct(), bCase);
+
+			if (bCase.isSuspendExecution() || bCase.getResult().getEntity() == null) {
 				aCase.suspendExecution();
 				aCase.getResult().setMessage(bCase.getResult().getMessage());
 				return;
 			}
-			
-			aEntity.getRequest().setProduct(bCase.getResult().getEntity());
+
+			aEntity.getEntity().setProduct(bCase.getResult().getEntity());
+
+		}
 	}
 
 }

@@ -4,20 +4,18 @@ import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.commons.controller.IAdapter;
 import com.dvsmedeiros.correiows.domain.Frete;
+import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.freight.domain.FreightRequest;
 
 @Component
-public class FreightRequestToFreteAdapter implements IAdapter<FreightRequest, Frete>{
-	
-	private static final String POSTAL_CODE_ORIGIN = "60743410";
+public class FreightToFreteAdapter implements IAdapter<Freight, Frete>{
 	
 	@Override
-	public Frete adapt(FreightRequest source) {
+	public Frete adapt(Freight source) {
 		
 		Frete frete = new Frete();
 		
 		frete.setAltura(source.getProduct().getPacking().getHeight());
-		frete.setCepOrigem(POSTAL_CODE_ORIGIN);
 		frete.setCepDestino(source.getPostalCodeDestine());
 		frete.setComprimento(source.getProduct().getPacking().getLength());
 		frete.setDiametro(source.getProduct().getPacking().getDiameter());
