@@ -55,10 +55,8 @@ public class SummarizeShopCart implements IStrategy<FreightFilter> {
 			product.setPrice(price);
 			product.setPacking(packing);
 			
-			Freight freight = new Freight();
-			freight.setProduct(product);
 			
-			aEntity.setEntity(freight);
+			aEntity.getEntity().setProduct(product);
 			
 		}
 	}
