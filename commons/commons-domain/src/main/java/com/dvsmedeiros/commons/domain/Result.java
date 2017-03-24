@@ -3,10 +3,12 @@ package com.dvsmedeiros.commons.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class Result<T extends IEntity> extends ApplicationEntity {
 	
 	private List<T> entityList;
 	private T entity;
+	private Object uncheckedEntity;
 	private String message;
 	private boolean error;
 	
@@ -49,4 +51,11 @@ public class Result<T extends IEntity> extends ApplicationEntity {
 		this.entity = aEntity;
 	}
 	
+	public void setUncheckedEntity(Object uncheckedEntity) {
+		this.uncheckedEntity = uncheckedEntity;
+	}
+	
+	public <R> R getUncheckedEntity() {
+		return (R) uncheckedEntity;
+	}
 }
