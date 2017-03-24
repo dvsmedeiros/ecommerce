@@ -9,7 +9,6 @@ import com.dvsmedeiros.commons.controller.INavigator;
 import com.dvsmedeiros.commons.controller.business.IStrategy;
 import com.dvsmedeiros.commons.controller.impl.BusinessCase;
 import com.dvsmedeiros.commons.controller.impl.BusinessCaseBuilder;
-import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.freight.domain.FreightFilter;
 import com.dvsmedeiros.product.domain.Product;
 
