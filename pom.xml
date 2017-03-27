@@ -27,7 +27,10 @@
 		<module>product</module>
 		<module>freight</module>
 		<module>shopcart</module>
-		<module>ecommerce</module>		
+		<module>ecommerce</module>
+		<module>stock</module>
+		<module>payment</module>
+		<module>checkout</module>		
 	</modules>
 	
 	<build>
