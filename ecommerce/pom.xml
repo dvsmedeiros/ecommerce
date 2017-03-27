@@ -48,6 +48,24 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>stock-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>payment-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>checkout-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
