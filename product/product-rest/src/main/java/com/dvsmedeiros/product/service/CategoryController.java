@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dvsmedeiros.commons.controller.IFacade;
-import com.dvsmedeiros.commons.controller.impl.BusinessCaseBuilder;
-import com.dvsmedeiros.commons.controller.impl.EntityRuleDefinition;
-import com.dvsmedeiros.commons.domain.Result;
-import com.dvsmedeiros.commons.domain.Status;
-import com.dvsmedeiros.commons.domain.StatusResponse;
+import com.dvsmedeiros.bce.controller.IFacade;
+import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.bce.controller.impl.EntityRuleDefinition;
+import com.dvsmedeiros.bce.domain.Result;
+import com.dvsmedeiros.bce.domain.Status;
+import com.dvsmedeiros.bce.domain.StatusResponse;
 import com.dvsmedeiros.product.domain.Category;
 import com.dvsmedeiros.product.domain.Product;
 

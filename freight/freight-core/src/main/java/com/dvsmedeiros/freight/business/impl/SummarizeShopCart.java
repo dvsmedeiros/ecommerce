@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.commons.controller.INavigationCase;
-import com.dvsmedeiros.commons.controller.business.IStrategy;
+import com.dvsmedeiros.bce.controller.INavigationCase;
+import com.dvsmedeiros.bce.controller.business.IStrategy;
 import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.freight.domain.FreightFilter;
 import com.dvsmedeiros.product.domain.Packing;

@@ -24,7 +24,7 @@
 		
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
-			<artifactId>commons-rest</artifactId>
+			<artifactId>bce-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		

@@ -2,7 +2,7 @@ package com.dvsmedeiros.product.domain;
 
 import javax.persistence.OneToOne;
 
-import com.dvsmedeiros.commons.domain.DomainEntity;
+import com.dvsmedeiros.bce.domain.DomainEntity;
 
 public class Stock extends DomainEntity {
 	

@@ -8,7 +8,7 @@ import javax.enterprise.context.SessionScoped;
 
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.commons.domain.DomainEntity;
+import com.dvsmedeiros.bce.domain.DomainEntity;
 
 @Component
 @SessionScoped

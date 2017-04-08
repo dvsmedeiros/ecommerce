@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
-import com.dvsmedeiros.commons.controller.IFacade;
-import com.dvsmedeiros.commons.controller.INavigator;
+import com.dvsmedeiros.bce.controller.IFacade;
+import com.dvsmedeiros.bce.controller.INavigator;
 import com.dvsmedeiros.payment.domain.Payment;
 
 @Controller

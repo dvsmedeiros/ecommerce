@@ -1,7 +1,9 @@
 package com.dvsmedeiros.shopcart.domain;
 
-import com.dvsmedeiros.commons.domain.DomainEntity;
+import com.dvsmedeiros.bce.domain.DomainEntity;
 
-public class Stock extends DomainEntity{
+public class Stock extends DomainEntity {
+	
+	
 
 }

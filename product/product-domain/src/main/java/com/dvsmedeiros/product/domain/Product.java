@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.commons.domain.DomainSpecificEntity;
+import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 
 @Component
 @Entity

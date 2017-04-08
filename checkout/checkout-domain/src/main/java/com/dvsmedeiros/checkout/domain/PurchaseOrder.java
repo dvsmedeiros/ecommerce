@@ -1,6 +1,6 @@
 package com.dvsmedeiros.checkout.domain;
 
-import com.dvsmedeiros.commons.domain.DomainEntity;
+import com.dvsmedeiros.bce.domain.DomainEntity;
 import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.shopcart.domain.Cart;
 

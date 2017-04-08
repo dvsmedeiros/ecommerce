@@ -2,7 +2,7 @@ package com.dvsmedeiros.product.domain;
 
 import java.util.List;
 
-import com.dvsmedeiros.commons.domain.StatusResponse;
+import com.dvsmedeiros.bce.domain.StatusResponse;
 
 public class CategoryResponse extends StatusResponse {
 

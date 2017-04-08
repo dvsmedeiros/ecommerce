@@ -3,8 +3,8 @@ package com.dvsmedeiros.product.controller.business.impl;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.dvsmedeiros.commons.controller.INavigationCase;
-import com.dvsmedeiros.commons.controller.business.IStrategy;
+import com.dvsmedeiros.bce.controller.INavigationCase;
+import com.dvsmedeiros.bce.controller.business.IStrategy;
 import com.dvsmedeiros.product.domain.Product;
 
 @Component
@@ -18,7 +18,7 @@ public class ShortDescriptionValidator implements IStrategy<Product> {
 		}
 		
 		aCase.suspendExecution();
-		aCase.getResult().setMessage("Descrição resumida inexistente ou inválida!");
+		aCase.getResult().setMessage("Descriï¿½ï¿½o resumida inexistente ou invï¿½lida!");
 		
 	}
 

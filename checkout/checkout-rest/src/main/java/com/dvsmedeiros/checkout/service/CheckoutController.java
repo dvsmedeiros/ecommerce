@@ -6,10 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dvsmedeiros.bce.controller.IFacade;
+import com.dvsmedeiros.bce.controller.INavigator;
 import com.dvsmedeiros.checkout.domain.Checkout;
 import com.dvsmedeiros.checkout.domain.PurchaseOrder;
-import com.dvsmedeiros.commons.controller.IFacade;
-import com.dvsmedeiros.commons.controller.INavigator;
 import com.dvsmedeiros.shopcart.domain.Cart;
 
 @Controller

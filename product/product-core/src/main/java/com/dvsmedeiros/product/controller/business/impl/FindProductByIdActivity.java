@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.commons.controller.INavigationCase;
-import com.dvsmedeiros.commons.controller.business.IStrategy;
-import com.dvsmedeiros.commons.dao.IDAO;
+import com.dvsmedeiros.bce.controller.INavigationCase;
+import com.dvsmedeiros.bce.controller.business.IStrategy;
+import com.dvsmedeiros.bce.dao.IDAO;
 import com.dvsmedeiros.product.domain.Product;
 
 @Component

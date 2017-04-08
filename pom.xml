@@ -23,14 +23,16 @@
 	</properties>
 	
 	<modules>
-		<module>commons</module>
+		<module>bce</module>
 		<module>product</module>
 		<module>freight</module>
 		<module>shopcart</module>
 		<module>ecommerce</module>
 		<module>stock</module>
 		<module>payment</module>
-		<module>checkout</module>		
+		<module>checkout</module>
+		<module>supplier</module>
+		<module>address</module>		
 	</modules>
 	
 	<build>

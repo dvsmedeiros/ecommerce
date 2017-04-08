@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dvsmedeiros.commons.controller.IFacade;
-import com.dvsmedeiros.commons.controller.INavigator;
-import com.dvsmedeiros.commons.controller.impl.BusinessCase;
-import com.dvsmedeiros.commons.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.bce.controller.IFacade;
+import com.dvsmedeiros.bce.controller.INavigator;
+import com.dvsmedeiros.bce.controller.impl.BusinessCase;
+import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.freight.domain.FreightFilter;
 import com.dvsmedeiros.product.domain.Product;

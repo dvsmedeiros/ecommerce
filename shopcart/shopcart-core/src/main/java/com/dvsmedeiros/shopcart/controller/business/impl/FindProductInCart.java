@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.commons.controller.INavigationCase;
-import com.dvsmedeiros.commons.controller.business.IStrategy;
-import com.dvsmedeiros.commons.controller.impl.Navigator;
+import com.dvsmedeiros.bce.controller.INavigationCase;
+import com.dvsmedeiros.bce.controller.business.IStrategy;
+import com.dvsmedeiros.bce.controller.impl.Navigator;
 import com.dvsmedeiros.product.domain.Product;
 import com.dvsmedeiros.shopcart.domain.Cart;
 import com.dvsmedeiros.shopcart.domain.CartItem;

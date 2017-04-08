@@ -1,6 +1,6 @@
 package com.dvsmedeiros.product.domain;
 
-import com.dvsmedeiros.commons.domain.StatusResponse;
+import com.dvsmedeiros.bce.domain.StatusResponse;
 
 public class ProductResponse extends StatusResponse {
 	

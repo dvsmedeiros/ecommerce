@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.dvsmedeiros.commons.controller.impl.EntityRuleDefinition;
+import com.dvsmedeiros.bce.controller.impl.EntityRuleDefinition;
 import com.dvsmedeiros.shopcart.controller.business.impl.AddItemToCart;
 import com.dvsmedeiros.shopcart.controller.business.impl.FindProductInCart;
 import com.dvsmedeiros.shopcart.controller.business.impl.RemoveAllItemOfCart;

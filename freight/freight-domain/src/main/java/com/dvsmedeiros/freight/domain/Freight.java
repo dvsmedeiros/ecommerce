@@ -1,6 +1,6 @@
 package com.dvsmedeiros.freight.domain;
 
-import com.dvsmedeiros.commons.domain.DomainSpecificEntity;
+import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 import com.dvsmedeiros.product.domain.Product;
 
 public class Freight extends DomainSpecificEntity {

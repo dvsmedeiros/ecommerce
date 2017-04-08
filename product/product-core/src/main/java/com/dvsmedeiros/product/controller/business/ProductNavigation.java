@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.dvsmedeiros.commons.controller.business.impl.ActiveValidator;
-import com.dvsmedeiros.commons.controller.business.impl.CodeValidator;
-import com.dvsmedeiros.commons.controller.business.impl.DescriptionValidator;
-import com.dvsmedeiros.commons.controller.business.impl.IdValidator;
-import com.dvsmedeiros.commons.controller.impl.EntityRuleDefinition;
+import com.dvsmedeiros.bce.controller.business.impl.ActiveValidator;
+import com.dvsmedeiros.bce.controller.business.impl.CodeValidator;
+import com.dvsmedeiros.bce.controller.business.impl.DescriptionValidator;
+import com.dvsmedeiros.bce.controller.business.impl.IdValidator;
+import com.dvsmedeiros.bce.controller.impl.EntityRuleDefinition;
 import com.dvsmedeiros.product.controller.business.impl.FindProductByIdActivity;
 import com.dvsmedeiros.product.controller.business.impl.ShortDescriptionValidator;
 import com.dvsmedeiros.product.controller.dao.impl.ProductDAO;

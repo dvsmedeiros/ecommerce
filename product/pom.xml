@@ -33,7 +33,7 @@
 	
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
-			<artifactId>commons-core</artifactId>
+			<artifactId>bce-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		

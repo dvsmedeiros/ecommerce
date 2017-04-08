@@ -2,7 +2,7 @@ package com.dvsmedeiros.freight.adapter;
 
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.commons.controller.IAdapter;
+import com.dvsmedeiros.bce.controller.IAdapter;
 import com.dvsmedeiros.correiows.domain.Frete;
 import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.freight.domain.FreightRequest;

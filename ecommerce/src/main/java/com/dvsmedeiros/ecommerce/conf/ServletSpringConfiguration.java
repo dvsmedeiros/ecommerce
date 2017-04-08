@@ -4,7 +4,7 @@ import javax.servlet.Filter;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import com.dvsmedeiros.commons.conf.JPAConfiguration;
+import com.dvsmedeiros.bce.conf.JPAConfiguration;
 import com.dvsmedeiros.ecommerce.filter.CORSFilter;
 
 public class ServletSpringConfiguration extends AbstractAnnotationConfigDispatcherServletInitializer{

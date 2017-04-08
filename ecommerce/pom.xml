@@ -25,7 +25,7 @@
 		
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
-			<artifactId>commons-rest</artifactId>
+			<artifactId>bce-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		
@@ -62,6 +62,18 @@
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
 			<artifactId>checkout-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>supplier-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>		
+
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>address-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

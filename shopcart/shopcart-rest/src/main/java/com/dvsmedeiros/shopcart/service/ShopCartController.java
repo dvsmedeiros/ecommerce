@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dvsmedeiros.commons.controller.IFacade;
-import com.dvsmedeiros.commons.controller.INavigator;
-import com.dvsmedeiros.commons.controller.impl.BusinessCase;
-import com.dvsmedeiros.commons.controller.impl.BusinessCaseBuilder;
-import com.dvsmedeiros.commons.domain.Status;
-import com.dvsmedeiros.commons.domain.StatusResponse;
+import com.dvsmedeiros.bce.controller.IFacade;
+import com.dvsmedeiros.bce.controller.INavigator;
+import com.dvsmedeiros.bce.controller.impl.BusinessCase;
+import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.bce.domain.Status;
+import com.dvsmedeiros.bce.domain.StatusResponse;
 import com.dvsmedeiros.shopcart.domain.Cart;
 import com.dvsmedeiros.shopcart.domain.CartItem;
 

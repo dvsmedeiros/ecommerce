@@ -7,8 +7,8 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.dvsmedeiros.commons.dao.impl.GenericSpecificDAO;
-import com.dvsmedeiros.commons.domain.Filter;
+import com.dvsmedeiros.bce.dao.impl.GenericSpecificDAO;
+import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.product.controller.dao.IProductDAO;
 import com.dvsmedeiros.product.domain.Product;
 
