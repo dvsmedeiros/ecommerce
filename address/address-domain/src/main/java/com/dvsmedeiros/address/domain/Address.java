@@ -1,5 +1,6 @@
-package com.dvsmedeiros.product.domain;
+package com.dvsmedeiros.address.domain;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 import org.springframework.stereotype.Component;
@@ -7,28 +8,30 @@ import org.springframework.stereotype.Component;
 import com.dvsmedeiros.bce.domain.DomainEntity;
 
 @Component
+@Entity
 public class Address extends DomainEntity {
 
-	private String complemnt;
-	private String number;
+	@Embedded
+	private Neighborhood neighborhood;
+	private String complement;
+	private String aNumber;
 	private String zipCode;
 	private String street;
-	private Neighborhood neighborhood;
-
-	public String getComplemnt() {
-		return complemnt;
+	
+	public String getComplement() {
+		return complement;
 	}
 
-	public void setComplemnt(String complemnt) {
-		this.complemnt = complemnt;
+	public void setComplement(String complement) {
+		this.complement = complement;
 	}
 
-	public String getNumber() {
-		return number;
+	public String getaNumber() {
+		return aNumber;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setaNumber(String aNumber) {
+		this.aNumber = aNumber;
 	}
 
 	public String getZipCode() {
