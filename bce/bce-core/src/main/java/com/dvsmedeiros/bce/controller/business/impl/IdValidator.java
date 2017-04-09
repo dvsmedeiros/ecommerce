@@ -17,7 +17,7 @@ public class IdValidator implements IStrategy<DomainEntity>{
 		}
 		
 		aCase.suspendExecution();
-		aCase.getResult().setMessage("ID: " + aEntity.getId() + " inexistente ou inv�lido");
+		aCase.getResult().setMessage("ID: " + aEntity.getId() + " inexistente ou inválido");
 	}
 	
 }
