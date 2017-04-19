@@ -1,4 +1,4 @@
-package com.dvsmedeiros.bce.business.domain;
+package com.dvsmedeiros.commons.domain;
 
 import com.dvsmedeiros.bce.domain.DomainEntity;
 
