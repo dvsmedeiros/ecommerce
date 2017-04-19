@@ -15,7 +15,13 @@
 	</parent>
 	
 	<dependencies>
-	
+		
+		<dependency>
+		    <groupId>com.dvsmedeiros</groupId>
+		    <artifactId>bce-domain</artifactId>
+		    <version>${project.version}</version>
+		</dependency>
+
 		<dependency>
 		    <groupId>com.dvsmedeiros</groupId>
 		    <artifactId>shopcart-domain</artifactId>

@@ -18,15 +18,15 @@
 
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
-			<artifactId>checkout-core</artifactId>
+			<artifactId>commons-rest</artifactId>
 			<version>${project.version}</version>
-		</dependency>		
+		</dependency>
 		
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
-			<artifactId>bce-rest</artifactId>
+			<artifactId>checkout-core</artifactId>
 			<version>${project.version}</version>
-		</dependency>
+		</dependency>		
 		
 		<!-- Spring -->
 		<dependency>

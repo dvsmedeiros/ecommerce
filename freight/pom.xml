@@ -30,13 +30,4 @@
 		<module>freight-rest</module>
 	</modules>
 	
-	<dependencies>
-	
-		<dependency>
-			<groupId>com.dvsmedeiros</groupId>
-			<artifactId>bce-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		
-	</dependencies>
 </project>

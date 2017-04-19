@@ -22,7 +22,6 @@ public class AddressController {
 	@Autowired
 	@Qualifier("applicationFacade")
 	IFacade<Address> appFacade;
-
 	
 	@RequestMapping(value = "address", method = RequestMethod.POST)
 	public @ResponseBody StatusResponse saveProduct(@RequestBody Address address) {

@@ -17,6 +17,12 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>bce-domain</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context</artifactId>
 		    <version>${spring.version}</version>

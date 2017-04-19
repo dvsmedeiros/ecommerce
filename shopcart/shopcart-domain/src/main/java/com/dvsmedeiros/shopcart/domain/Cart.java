@@ -4,14 +4,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
-
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import com.dvsmedeiros.bce.domain.DomainEntity;
 
 @Component
-@SessionScoped
+@SessionScope
 public class Cart extends DomainEntity {
 
 	private List<CartItem> cartItems;
