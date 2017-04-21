@@ -1,11 +1,18 @@
 package com.dvsmedeiros.commons.domain;
 
+import javax.persistence.Embedded;
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public class LegalEntity extends People {
 
 	private String companyName;
 	private String tradingName;
+	@Embedded
 	private CNPJ cnpj;
+	@Embedded
 	private StateRegistration stateRegistration;
+	@Embedded
 	private MunicipalRegistration municipalRegistration;
 
 	public String getCompanyName() {

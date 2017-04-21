@@ -1,10 +1,13 @@
 package com.dvsmedeiros.commons.domain;
 
-import com.dvsmedeiros.bce.domain.DomainEntity;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
-public abstract class Document extends DomainEntity {
-
+@MappedSuperclass
+public abstract class Document {
+	
 	protected String number;
+	@Transient
 	protected String mask;
 
 	public String getNumber() {
