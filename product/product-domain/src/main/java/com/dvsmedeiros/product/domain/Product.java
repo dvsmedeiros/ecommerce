@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
+import com.dvsmedeiros.supplier.domain.Supplier;
 
 @Component
 @Entity
@@ -21,9 +22,13 @@ public class Product extends DomainSpecificEntity {
 	private Price price;
 	@ManyToOne
 	private Category category;
-	
-	public Product() {}
-	
+	@ManyToOne
+	private Supplier supplier;
+	private UnitType unitType;
+
+	public Product() {
+	}
+
 	@Autowired
 	public Product(Packing packing, Price price, Category category) {
 		this.packing = packing;
@@ -71,4 +76,20 @@ public class Product extends DomainSpecificEntity {
 		this.category = category;
 	}
 
+	public UnitType getUnitType() {
+		return unitType;
+	}
+
+	public void setUnitType(UnitType unitType) {
+		this.unitType = unitType;
+	}
+
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+	
 }
