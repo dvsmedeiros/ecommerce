@@ -4,13 +4,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.SessionScoped;
+
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
 
 import com.dvsmedeiros.bce.domain.DomainEntity;
 
 @Component
-@SessionScope
+@SessionScoped
 public class Cart extends DomainEntity {
 
 	private List<CartItem> cartItems;
@@ -25,15 +26,15 @@ public class Cart extends DomainEntity {
 		this.cartItems.add(item);
 		calculateSubTotal();
 	}
-	
+
 	public void removeAllItem(CartItem item) {
 		this.cartItems.remove(item);
 		calculateSubTotal();
 	}
-	
+
 	public void removeItem(CartItem item) {
-		
-		if(item.getQuantity() > 1){
+
+		if (item.getQuantity() > 1) {
 			item.lessOneProduct();
 			calculateSubTotal();
 			return;
@@ -41,22 +42,24 @@ public class Cart extends DomainEntity {
 		this.cartItems.remove(item);
 		calculateSubTotal();
 	}
-	
-	public void moreOneProduct(CartItem item){
+
+	public void moreOneProduct(CartItem item) {
 		item.moreOneProduct();
 		calculateSubTotal();
 	}
-	public void calculateSubTotal(){
+
+	public void calculateSubTotal() {
 		this.subTotal = BigDecimal.ZERO;
-		for(CartItem item : cartItems){			
-			this.subTotal = subTotal.add(item.getProduct().getPrice().getValue().multiply( BigDecimal.valueOf(item.getQuantity())));
+		for (CartItem item : cartItems) {
+			this.subTotal = subTotal
+					.add(item.getProduct().getPrice().getValue().multiply(BigDecimal.valueOf(item.getQuantity())));
 		}
 	}
-	
+
 	public List<CartItem> getCartItems() {
 		return cartItems;
 	}
-	
+
 	public BigDecimal getSubTotal() {
 		return subTotal;
 	}
@@ -73,5 +76,5 @@ public class Cart extends DomainEntity {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
-	
+
 }
