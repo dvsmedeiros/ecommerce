@@ -6,6 +6,7 @@ import javax.persistence.MappedSuperclass;
 public class DomainSpecificEntity extends DomainEntity {
 
 	private String code;
+	private String description;
 	private Boolean active;
 
 	public String getCode() {
@@ -23,5 +24,15 @@ public class DomainSpecificEntity extends DomainEntity {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 
 }
