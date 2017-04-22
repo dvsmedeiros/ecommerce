@@ -33,6 +33,14 @@ public class DomainSpecificEntity extends DomainEntity {
 		this.description = description;
 	}
 	
+	@Override
+	public void prePersist() {
+		super.prePersist();
+		
+		if(this.active == null){
+			active = Boolean.TRUE;
+		}
+	}
 	
 
 }
