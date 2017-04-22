@@ -19,12 +19,13 @@ public class Product extends DomainSpecificEntity {
 	@Embedded
 	private Packing packing;
 	@Embedded
+	private UnitType unitType;
+	@Embedded
 	private Price price;
 	@ManyToOne
 	private Category category;
 	@ManyToOne
 	private Supplier supplier;
-	private UnitType unitType;
 
 	public Product() {
 	}
