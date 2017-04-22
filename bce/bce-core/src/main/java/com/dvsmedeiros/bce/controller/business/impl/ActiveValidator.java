@@ -17,7 +17,7 @@ public class ActiveValidator implements IStrategy<DomainSpecificEntity>{
 		}
 		
 		aCase.suspendExecution();
-		aCase.getResult().setMessage("Status inexistente ou inv�lido!");
+		aCase.getResult().setMessage("Status inexistente ou inválido!");
 		
 	}
 
