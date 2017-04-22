@@ -3,11 +3,14 @@ package com.dvsmedeiros.commons.domain;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @MappedSuperclass
 public abstract class Document {
 	
 	protected String number;
-	@Transient
+	@JsonIgnore
+	@Transient 
 	protected String mask;
 
 	public String getNumber() {
