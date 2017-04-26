@@ -2,6 +2,8 @@ package com.dvsmedeiros.product.domain;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ public class Product extends DomainSpecificEntity {
 	private String shortDescription;
 	@Embedded
 	private Packing packing;
-	@Embedded
+	@Enumerated(EnumType.STRING)
 	private UnitType unitType;
 	@Embedded
 	private Price price;
