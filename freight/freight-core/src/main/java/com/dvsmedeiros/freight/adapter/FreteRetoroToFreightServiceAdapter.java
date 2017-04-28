@@ -23,7 +23,7 @@ public class FreteRetoroToFreightServiceAdapter implements IAdapter<List<FreteRe
 			Freight freight = new Freight();
 			FreightService service = new FreightService();
 
-			service.setValue(retorno.getValor());
+			service.setValue(Double.valueOf(retorno.getValor().replace(",", ".")));
 			service.setDeadline(retorno.getPrazo());
 			service.setServiceName(retorno.getTipoServico());
 

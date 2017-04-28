@@ -1,16 +1,16 @@
 package com.dvsmedeiros.freight.domain;
 
 public class FreightService {
-	
-	private String value;
+
+	private Double value;
 	private String deadline;
 	private String serviceName;
 
-	public String getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 
@@ -29,5 +29,5 @@ public class FreightService {
 	public void setServiceName(String serviceName) {
 		this.serviceName = serviceName;
 	}
-	
+
 }
