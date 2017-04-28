@@ -29,15 +29,18 @@ public class SummarizeShopCart implements IStrategy<FreightFilter> {
 			BigDecimal length = BigDecimal.ZERO;
 			BigDecimal height = BigDecimal.ZERO;
 			BigDecimal width = BigDecimal.ZERO;
+			BigDecimal weight = BigDecimal.ZERO;
 			BigDecimal diameter = BigDecimal.ZERO;
 			BigDecimal declaredValue = BigDecimal.ZERO;
 			
 			for (CartItem cartItem : cartItems) {
 				
-				length = length.add(cartItem.getProduct().getPacking().getLength());
-				height = height.add(cartItem.getProduct().getPacking().getHeight());
-				width = width.add(cartItem.getProduct().getPacking().getWidth());
-				declaredValue = declaredValue.add(cartItem.getProduct().getPrice().getValue());
+				BigDecimal quantity = new BigDecimal(cartItem.getQuantity());
+				length = length.add(cartItem.getProduct().getPacking().getLength()).multiply(quantity) ;
+				height = height.add(cartItem.getProduct().getPacking().getHeight()).multiply(quantity);
+				width = width.add(cartItem.getProduct().getPacking().getWidth()).multiply(quantity);
+				weight = weight.add(cartItem.getProduct().getPacking().getWeight()).multiply(quantity);
+				declaredValue = declaredValue.add(cartItem.getProduct().getPrice().getValue()).multiply(quantity);
 				
 			}
 			
@@ -45,6 +48,7 @@ public class SummarizeShopCart implements IStrategy<FreightFilter> {
 			packing.setHeight(height);
 			packing.setLength(length);
 			packing.setWidth(width);
+			packing.setWeight(weight);
 			packing.setDiameter(diameter);
 			packing.setType(PackingType.BOX);
 			
