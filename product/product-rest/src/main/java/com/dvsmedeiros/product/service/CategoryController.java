@@ -60,6 +60,7 @@ public class CategoryController {
 		return response;
 	}
 	
+	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "products/category", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse updateProductCategory(@RequestBody Category category) {
 
@@ -120,7 +121,8 @@ public class CategoryController {
 
 		return result.getEntity();
 	}
-
+	
+	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "products/category/{categoryId}", method = RequestMethod.DELETE)
 	public @ResponseBody StatusResponse deleteProductCategoryById(@PathVariable Long categoryId) {
 
@@ -142,7 +144,8 @@ public class CategoryController {
 
 		return response;
 	}
-
+	
+	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "products/category/{categoryId}", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse inactivateProductCategoryById(@PathVariable Long categoryId) {
 

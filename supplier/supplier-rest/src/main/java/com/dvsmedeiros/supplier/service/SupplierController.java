@@ -56,7 +56,8 @@ public class SupplierController {
 
 		return response;
 	}
-
+	
+	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse updateProductSupplier(@RequestBody Supplier supplier) {
 
@@ -117,7 +118,8 @@ public class SupplierController {
 
 		return result.getEntity();
 	}
-
+	
+	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier/{supplierId}", method = RequestMethod.DELETE)
 	public @ResponseBody StatusResponse deleteProductSupplierById(@PathVariable Long supplierId) {
 
@@ -139,7 +141,8 @@ public class SupplierController {
 
 		return response;
 	}
-
+	
+	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier/{supplierId}", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse inactivateProductSupplierById(@PathVariable Long supplierId) {
 

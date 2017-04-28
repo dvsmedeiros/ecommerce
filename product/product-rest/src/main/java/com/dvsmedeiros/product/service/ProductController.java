@@ -58,6 +58,7 @@ public class ProductController {
 
 	}
 	
+	@CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse updateProduct(@RequestBody Product product) {
 
@@ -100,7 +101,8 @@ public class ProductController {
 
 		return result.getEntity();
 	}
-
+	
+	@CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products/{productId}", method = RequestMethod.DELETE)
 	public @ResponseBody StatusResponse deleteProductById(@PathVariable Long productId) {
 
@@ -122,7 +124,8 @@ public class ProductController {
 
 		return response;
 	}
-
+	
+	@CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products/{productId}", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse deleteLogicalProductById(@PathVariable Long productId) {
 
