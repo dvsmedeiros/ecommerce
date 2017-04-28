@@ -13,6 +13,7 @@ public class PackingBoxLenghtValidator implements IStrategy<FreightFilter> {
 
 	private final static Long MIN_VALUE_LENGHT_BOX = 16L;
 	private final static Long MAX_VALUE_LENGHT_BOX = 105L;
+	
 	@Override
 	public void process(FreightFilter aEntity, INavigationCase<FreightFilter> aCase) {
 
@@ -24,8 +25,8 @@ public class PackingBoxLenghtValidator implements IStrategy<FreightFilter> {
 		
 		if (aEntity.getEntity().getProduct().getPacking().getLength() != null
 				&& aEntity.getEntity().getProduct().getPacking().getLength().longValueExact() > MAX_VALUE_LENGHT_BOX) {
-				aCase.suspendExecution();
-				aCase.getResult().setMessage("O comprimentonão pode ser maior que " + MAX_VALUE_LENGHT_BOX + " cm");
+			aCase.suspendExecution();
+			aCase.getResult().setMessage("O comprimentonão pode ser maior que " + MAX_VALUE_LENGHT_BOX + " cm");
 			return;
 		}
 	}
