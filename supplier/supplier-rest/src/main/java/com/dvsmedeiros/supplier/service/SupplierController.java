@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +28,8 @@ public class SupplierController {
 	@Autowired
 	@Qualifier("applicationFacade")
 	IFacade<Supplier> appFacade;
-
+	
+	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier", method = RequestMethod.POST)
 	public @ResponseBody StatusResponse saveSupplier(@RequestBody Supplier supplier) {
 		StatusResponse response = new StatusResponse();
@@ -80,7 +83,8 @@ public class SupplierController {
 
 		return response;
 	}
-
+	
+	@Cacheable(value = "cacheSuppliers")
 	@RequestMapping(value = "supplier", method = RequestMethod.GET)
 	public @ResponseBody List<Supplier> getProductCategories(
 			@RequestParam(value = "active", required = false) boolean active) {

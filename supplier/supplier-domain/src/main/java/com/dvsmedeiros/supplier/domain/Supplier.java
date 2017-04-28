@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 import com.dvsmedeiros.commons.domain.LegalEntity;
 
 @Component

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +32,7 @@ public class CategoryController {
 	@Qualifier("applicationFacade")
 	IFacade<Category> appFacade;
 
+	@CacheEvict(value = "cacheCategories", allEntries = true)
 	@RequestMapping(value = "products/category", method = RequestMethod.POST)
 	public @ResponseBody StatusResponse saveProductCategory(@RequestBody Category category) {
 
@@ -56,7 +59,7 @@ public class CategoryController {
 
 		return response;
 	}
-
+	
 	@RequestMapping(value = "products/category", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse updateProductCategory(@RequestBody Category category) {
 
@@ -84,7 +87,8 @@ public class CategoryController {
 
 		return response;
 	}
-
+	
+	@Cacheable(value = "cacheCategories")
 	@RequestMapping(value = "products/category", method = RequestMethod.GET)
 	public @ResponseBody List<Category> getProductCategories(@RequestParam(value = "active", required = false) boolean active) {
 
