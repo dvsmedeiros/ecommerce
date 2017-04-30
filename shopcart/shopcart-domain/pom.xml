@@ -18,9 +18,16 @@
 		
 		<dependency>
 		    <groupId>com.dvsmedeiros</groupId>
+		    <artifactId>commons-domain</artifactId>
+		    <version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.dvsmedeiros</groupId>
 		    <artifactId>product-domain</artifactId>
 		    <version>${project.version}</version>
 		</dependency>
+		
 		
 		<dependency>
 		    <groupId>javax.enterprise</groupId>
