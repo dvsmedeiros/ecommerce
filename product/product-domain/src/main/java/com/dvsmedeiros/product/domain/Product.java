@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import com.dvsmedeiros.supplier.domain.Supplier;
 
 @Component
 @Entity
+@Table(name = "PRODUCTS")
 public class Product extends DomainSpecificEntity {
 
 	private String name;

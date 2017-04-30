@@ -2,6 +2,7 @@ package com.dvsmedeiros.address.domain;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,7 @@ import com.dvsmedeiros.bce.domain.DomainEntity;
 
 @Component
 @Entity
+@Table(name = "ADRRESSES")
 public class Address extends DomainEntity {
 
 	@Embedded
