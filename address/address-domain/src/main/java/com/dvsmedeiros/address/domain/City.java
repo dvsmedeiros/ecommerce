@@ -14,7 +14,7 @@ import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 @Table(name = "CITIES")
 public class City extends DomainSpecificEntity {
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private State state;
 
 	public State getState() {

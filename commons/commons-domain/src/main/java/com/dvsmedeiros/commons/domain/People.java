@@ -14,9 +14,9 @@ import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 @MappedSuperclass
 public class People extends DomainSpecificEntity {
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Address address;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Phone> phones;
 	private String email;
 
