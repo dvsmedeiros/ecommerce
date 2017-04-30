@@ -1,26 +1,64 @@
 package com.dvsmedeiros.order.domain;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 import com.dvsmedeiros.commons.domain.User;
-import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.payment.domain.Payment;
 
+@Component
+@Entity
+@Table(name = "ORDERS")
 public class Order extends DomainSpecificEntity {
 
+	private BigDecimal freightValue;
+	private BigDecimal subTotal;
+	private BigDecimal total;
+	@ManyToOne
 	private Payment payment;
+	@OneToMany
+	@JoinColumn(name = "ORDER_ID")
+	private List<OrderItem> items = new ArrayList<>();
+	@Enumerated(EnumType.STRING)
 	private StatusOrder statusOrder;
-	private List<OrderItem> items;
-	private Freight freight;
+	@ManyToOne
 	private User user;
-	
-	public Freight getFreight() {
-		return freight;
+
+	public BigDecimal getFreightValue() {
+		return freightValue;
 	}
 
-	public void setFreight(Freight freight) {
-		this.freight = freight;
+	public void setFreightValue(BigDecimal freightValue) {
+		this.freightValue = freightValue;
+	}
+
+	public BigDecimal getSubTotal() {
+		return subTotal;
+	}
+
+	public void setSubTotal(BigDecimal subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 
 	public Payment getPayment() {
@@ -31,20 +69,20 @@ public class Order extends DomainSpecificEntity {
 		this.payment = payment;
 	}
 
-	public StatusOrder getStatusOrder() {
-		return statusOrder;
-	}
-
-	public void setStatusOrder(StatusOrder statusOrder) {
-		this.statusOrder = statusOrder;
-	}
-
 	public List<OrderItem> getItems() {
 		return items;
 	}
 
 	public void setItems(List<OrderItem> items) {
 		this.items = items;
+	}
+
+	public StatusOrder getStatusOrder() {
+		return statusOrder;
+	}
+
+	public void setStatusOrder(StatusOrder statusOrder) {
+		this.statusOrder = statusOrder;
 	}
 
 	public User getUser() {
