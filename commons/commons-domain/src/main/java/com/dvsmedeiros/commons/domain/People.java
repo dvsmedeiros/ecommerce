@@ -16,7 +16,7 @@ public class People extends DomainSpecificEntity {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Phone> phones;
 	private String email;
 
