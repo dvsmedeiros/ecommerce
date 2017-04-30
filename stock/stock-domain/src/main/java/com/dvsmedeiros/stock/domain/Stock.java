@@ -1,4 +1,4 @@
-package com.dvsmedeiros.shopcart.domain;
+package com.dvsmedeiros.stock.domain;
 
 import com.dvsmedeiros.bce.domain.DomainEntity;
 

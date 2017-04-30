@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import com.dvsmedeiros.bce.controller.IFacade;
 import com.dvsmedeiros.bce.controller.INavigator;
-import com.dvsmedeiros.shopcart.domain.Stock;
+import com.dvsmedeiros.stock.domain.Stock;
 
 @Controller
 public class StockController {
