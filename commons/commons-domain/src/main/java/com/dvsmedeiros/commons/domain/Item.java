@@ -1,7 +1,10 @@
 package com.dvsmedeiros.commons.domain;
 
+import javax.persistence.MappedSuperclass;
+
 import com.dvsmedeiros.bce.domain.DomainEntity;
 
+@MappedSuperclass
 public class Item extends DomainEntity {
 
 	private static final int MINIMAL_QUANTITY = 1;
@@ -19,7 +22,5 @@ public class Item extends DomainEntity {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
-	
 
 }
