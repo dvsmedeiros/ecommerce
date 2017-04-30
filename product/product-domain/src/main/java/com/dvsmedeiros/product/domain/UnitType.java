@@ -1,7 +1,5 @@
 package com.dvsmedeiros.product.domain;
 
-import javax.persistence.Column;
-
 public enum UnitType {
 
 	/**
