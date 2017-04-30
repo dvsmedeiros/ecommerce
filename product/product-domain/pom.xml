@@ -18,7 +18,7 @@
 
 		<dependency>
 		    <groupId>com.dvsmedeiros</groupId>
-		    <artifactId>commons-domain</artifactId>
+		    <artifactId>bce-domain</artifactId>
 		    <version>${project.version}</version>
 		</dependency>
 	

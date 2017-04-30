@@ -9,6 +9,8 @@ import com.dvsmedeiros.bce.controller.business.impl.CodeValidator;
 import com.dvsmedeiros.bce.controller.business.impl.DescriptionValidator;
 import com.dvsmedeiros.bce.controller.business.impl.IdValidator;
 import com.dvsmedeiros.bce.controller.impl.EntityRuleDefinition;
+import com.dvsmedeiros.bce.domain.Filter;
+import com.dvsmedeiros.product.controller.business.impl.FindFilterProduct;
 import com.dvsmedeiros.product.controller.business.impl.FindProductByIdActivity;
 import com.dvsmedeiros.product.controller.business.impl.ShortDescriptionValidator;
 import com.dvsmedeiros.product.controller.dao.impl.ProductDAO;
@@ -30,6 +32,8 @@ public class ProductNavigation {
 	private ShortDescriptionValidator shortDescriptionValidator;
 	@Autowired
 	private FindProductByIdActivity findProductByIdActivity;
+	@Autowired
+	private FindFilterProduct findFilterProduct;
 	
 	@Bean(name="com.dvsmedeiros.product.domain.Product")
 	public ProductDAO getProductDAO(){
@@ -57,6 +61,16 @@ public class ProductNavigation {
 		activities.addActivity(idValidator);
 		activities.addActivity(findProductByIdActivity);
 		
+		return activities;
+	}
+	
+	@Bean(name = "FIND_FILTER_PRODUCT")
+	public EntityRuleDefinition<Filter<Product>> findFilterProduct() {
+
+		EntityRuleDefinition<Filter<Product>> activities = new EntityRuleDefinition<>();
+
+		activities.addActivity(findFilterProduct);
+
 		return activities;
 	}
 	

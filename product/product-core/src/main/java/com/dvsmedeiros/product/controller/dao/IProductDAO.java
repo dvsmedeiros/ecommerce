@@ -8,5 +8,5 @@ import com.dvsmedeiros.product.domain.Product;
 
 public interface IProductDAO extends IDAO<Product> {
 	
-	public List<Product> find(Filter<Product> filter);
+	public List<Product> filter(Filter<Product> filter);
 }
