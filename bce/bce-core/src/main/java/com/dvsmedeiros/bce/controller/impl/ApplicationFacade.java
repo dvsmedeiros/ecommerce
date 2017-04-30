@@ -86,7 +86,10 @@ public class ApplicationFacade<T extends DomainEntity> implements IFacade<T> {
 
 	@Override
 	public Result<T> find(Filter<T> aFilter, INavigationCase<T> aCase) {
-		return null;
+		
+		navigator.run(aFilter, aCase);
+		return aCase.getResult();
+		
 	}
 
 	@Override
