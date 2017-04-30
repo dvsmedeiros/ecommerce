@@ -3,14 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>ecommercews</artifactId>
+	<artifactId>ecommerce-api</artifactId>
 	<packaging>war</packaging>
-	<name>Ecommerce WS</name>
+	<name>Ecommerce API</name>
 	<url>http://dvsmedeiros.com.br</url>
 
 	<parent>
 		<groupId>com.dvsmedeiros</groupId>
-		<artifactId>ecommerce-ws-parent</artifactId>
+		<artifactId>ecommerce-api-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
@@ -81,6 +81,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>order-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
@@ -108,7 +114,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>ecommercews</finalName>
+		<finalName>ecommerce-api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

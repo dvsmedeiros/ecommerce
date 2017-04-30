@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.dvsmedeiros</groupId>
-	<artifactId>ecommerce-ws-parent</artifactId>
+	<artifactId>ecommerce-api-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>Ecommerce WS Parent</name>
 	<version>1.0.0-SNAPSHOT</version>
@@ -32,11 +32,12 @@
 		<module>payment</module>
 		<module>checkout</module>
 		<module>supplier</module>
-		<module>address</module>		
+		<module>address</module>
+		<module>order</module>		
 	</modules>
 	
 	<build>
-		<finalName>ecommerce-ws</finalName>
+		<finalName>ecommerce-api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
