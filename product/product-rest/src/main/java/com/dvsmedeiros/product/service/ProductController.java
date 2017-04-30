@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dvsmedeiros.bce.controller.IFacade;
 import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
 import com.dvsmedeiros.bce.domain.Status;
 import com.dvsmedeiros.bce.domain.StatusResponse;
+import com.dvsmedeiros.product.domain.Category;
 import com.dvsmedeiros.product.domain.Product;
 
 @Controller
@@ -29,7 +31,7 @@ public class ProductController {
 	@Qualifier("applicationFacade")
 	IFacade<Product> appFacade;
 
-	@CacheEvict(value = "cacheProducts", allEntries = true)
+	//@CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products", method = RequestMethod.POST)
 	public @ResponseBody StatusResponse saveProduct(@RequestBody Product product) {
 
@@ -58,7 +60,7 @@ public class ProductController {
 
 	}
 	
-	@CacheEvict(value = "cacheProducts", allEntries = true)
+	//@CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse updateProduct(@RequestBody Product product) {
 
@@ -102,7 +104,7 @@ public class ProductController {
 		return result.getEntity();
 	}
 	
-	@CacheEvict(value = "cacheProducts", allEntries = true)
+	//@CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products/{productId}", method = RequestMethod.DELETE)
 	public @ResponseBody StatusResponse deleteProductById(@PathVariable Long productId) {
 
@@ -125,7 +127,7 @@ public class ProductController {
 		return response;
 	}
 	
-	@CacheEvict(value = "cacheProducts", allEntries = true)
+	//@CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products/{productId}", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse deleteLogicalProductById(@PathVariable Long productId) {
 
@@ -146,20 +148,30 @@ public class ProductController {
 		return response;
 	}
 	
-	@Cacheable(value = "cacheProducts")
+	//@Cacheable(value = "cacheProducts")
 	@RequestMapping(value = "products", method = RequestMethod.GET)
-	public @ResponseBody List<Product> getProducts(@RequestParam(value = "active", required = false) boolean active) {
+	public @ResponseBody List<Product> getProducts(@RequestParam(value = "active", required = false) boolean active, @RequestParam(value = "categoryId", required = false) Long categoryId) {
 
 		Result<Product> result = null;
 
 		try {
-
-			result = appFacade.findAll(active, Product.class, new BusinessCaseBuilder().build());
+			
+			Filter<Product> filter = new Filter<>(Product.class);
+			
+			Category category = new Category();
+			if(categoryId != null){
+				category.setId(categoryId);
+			}
+			
+			filter.getEntity().setActive(active);
+			filter.getEntity().setCategory(category);
+			
+			result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_PRODUCT").build());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return result.getEntityList();
+		return result.getUncheckedEntity();
 	}
 }
