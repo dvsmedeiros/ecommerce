@@ -150,7 +150,7 @@ public class ProductController {
 	
 	//@Cacheable(value = "cacheProducts")
 	@RequestMapping(value = "products", method = RequestMethod.GET)
-	public @ResponseBody List<Product> getProducts(@RequestParam(value = "active", required = false) boolean active, @RequestParam(value = "categoryId", required = false) Long categoryId) {
+	public @ResponseBody List<Product> getProducts(@RequestParam(value = "active", required = false) Boolean active, @RequestParam(value = "categoryId", required = false) Long categoryId) {
 
 		Result<Product> result = null;
 
@@ -163,7 +163,10 @@ public class ProductController {
 				category.setId(categoryId);
 			}
 			
-			filter.getEntity().setActive(active);
+			if(active != null){
+				filter.getEntity().setActive(active);
+			}
+			
 			filter.getEntity().setCategory(category);
 			
 			result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_PRODUCT").build());
