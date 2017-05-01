@@ -2,14 +2,17 @@ package com.dvsmedeiros.payment.domain;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.domain.DomainEntity;
+import com.dvsmedeiros.commons.domain.CreditCard;
 
 @Component
 @Entity
@@ -19,7 +22,10 @@ public class Payment extends DomainEntity {
 	private PaymentType paymentType;
 	private StatusPayment statusPayment;
 	private BigDecimal purchaseValue;
-	private BigDecimal quotaValue;
+	private Quota quota;
+	
+	@ManyToOne
+	private CreditCard card;
 
 	@Enumerated(EnumType.STRING)
 	public PaymentType getPaymentType() {
@@ -47,12 +53,21 @@ public class Payment extends DomainEntity {
 		this.purchaseValue = purchaseValue;
 	}
 
-	public BigDecimal getQuotaValue() {
-		return quotaValue;
+	@Embedded
+	public Quota getQuota() {
+		return quota;
 	}
 
-	public void setQuotaValue(BigDecimal quotaValue) {
-		this.quotaValue = quotaValue;
+	public void setQuota(Quota quota) {
+		this.quota = quota;
+	}
+
+	public CreditCard getCard() {
+		return card;
+	}
+
+	public void setCard(CreditCard card) {
+		this.card = card;
 	}
 
 }
