@@ -1,10 +1,19 @@
 package com.dvsmedeiros.freight.domain;
 
-public class FreightService {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.springframework.stereotype.Component;
+
+import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
+
+@Component
+@Entity
+@Table(name = "FREIGHT")
+public class FreightService extends DomainSpecificEntity {
 
 	private Double value;
 	private String deadline;
-	private String serviceName;
 
 	public Double getValue() {
 		return value;
@@ -20,14 +29,6 @@ public class FreightService {
 
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
-	}
-
-	public String getServiceName() {
-		return serviceName;
-	}
-
-	public void setServiceName(String serviceName) {
-		this.serviceName = serviceName;
 	}
 
 }
