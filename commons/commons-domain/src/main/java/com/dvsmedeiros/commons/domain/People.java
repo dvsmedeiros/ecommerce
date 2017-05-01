@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.dvsmedeiros.address.domain.Address;
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
@@ -14,10 +17,13 @@ import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 @MappedSuperclass
 public class People extends DomainSpecificEntity {
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Address address;
-	@OneToMany(cascade = CascadeType.PERSIST)
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Phone> phones;
+	
 	private String email;
 
 	public Address getAddress() {
@@ -35,7 +41,8 @@ public class People extends DomainSpecificEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
+	
 	public List<Phone> getPhones() {
 		return phones;
 	}
@@ -43,5 +50,5 @@ public class People extends DomainSpecificEntity {
 	public void setPhones(List<Phone> phones) {
 		this.phones = phones;
 	}
-
+	
 }
