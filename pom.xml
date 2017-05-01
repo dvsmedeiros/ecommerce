@@ -30,7 +30,6 @@
 		<module>ecommerce</module>
 		<module>stock</module>
 		<module>payment</module>
-		<module>checkout</module>
 		<module>supplier</module>
 		<module>address</module>
 		<module>order</module>		
