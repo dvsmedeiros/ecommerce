@@ -31,7 +31,12 @@ public class Cart extends DomainEntity {
 		this.cartItems.remove(item);
 		calculateSubTotal();
 	}
-
+	
+	public void removeAllItems() {
+		this.cartItems = new ArrayList<>();
+		calculateSubTotal();
+	}
+	
 	public void removeItem(CartItem item) {
 
 		if (item.getQuantity() > 1) {
