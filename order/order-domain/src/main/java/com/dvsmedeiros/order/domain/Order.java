@@ -1,9 +1,9 @@
 package com.dvsmedeiros.order.domain;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,35 +12,35 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
+import com.dvsmedeiros.bce.domain.DomainEntity;
 import com.dvsmedeiros.commons.domain.User;
-import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.freight.domain.FreightService;
 import com.dvsmedeiros.payment.domain.Payment;
 
 @Component
 @Entity
 @Table(name = "ORDERS")
-public class Order extends DomainSpecificEntity {
+public class Order extends DomainEntity {
 
 	private BigDecimal total;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private FreightService freight;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Payment payment;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ORDER_ID")
 	private List<OrderItem> items;
 	
 	@Enumerated(EnumType.STRING)
 	private StatusOrder statusOrder;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.DETACH)
 	private User user;
 
 	public BigDecimal getTotal() {

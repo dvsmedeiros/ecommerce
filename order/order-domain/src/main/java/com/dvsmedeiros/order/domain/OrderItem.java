@@ -2,6 +2,7 @@ package com.dvsmedeiros.order.domain;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,9 +17,9 @@ import com.dvsmedeiros.product.domain.Product;
 @Table(name = "ORDER_ITEMS")
 public class OrderItem extends Item {
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.DETACH)
 	private Product product;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Order order;
 	private BigDecimal salePrice;
 
