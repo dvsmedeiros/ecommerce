@@ -2,6 +2,7 @@ package com.dvsmedeiros.payment.domain;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import org.springframework.stereotype.Component;
@@ -10,15 +11,16 @@ import org.springframework.stereotype.Component;
 @Embeddable
 public class Quota {
 
-	private int number;
+	@Column(name = "QUOTAS")
+	private int aNumber;
 	private BigDecimal quotaValue;
 
-	public int getNumber() {
-		return number;
+	public int getaNumber() {
+		return aNumber;
 	}
 
-	public void setNumber(int number) {
-		this.number = number;
+	public void setaNumber(int aNumber) {
+		this.aNumber = aNumber;
 	}
 
 	public BigDecimal getQuotaValue() {

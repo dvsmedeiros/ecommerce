@@ -2,6 +2,7 @@ package com.dvsmedeiros.payment.domain;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -24,7 +25,7 @@ public class Payment extends DomainEntity {
 	private BigDecimal purchaseValue;
 	private Quota quota;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private CreditCard card;
 
 	@Enumerated(EnumType.STRING)
