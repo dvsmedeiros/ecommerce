@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.commons.domain.Item;
 import com.dvsmedeiros.product.domain.Product;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Component
 @Entity
@@ -20,6 +21,7 @@ public class OrderItem extends Item {
 	@ManyToOne(cascade = CascadeType.DETACH)
 	private Product product;
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonBackReference
 	private Order order;
 	private BigDecimal salePrice;
 
