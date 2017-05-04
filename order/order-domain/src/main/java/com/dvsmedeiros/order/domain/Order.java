@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,6 +20,7 @@ import com.dvsmedeiros.bce.domain.DomainEntity;
 import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.freight.domain.FreightService;
 import com.dvsmedeiros.payment.domain.Payment;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Component
 @Entity
@@ -26,20 +28,22 @@ import com.dvsmedeiros.payment.domain.Payment;
 public class Order extends DomainEntity {
 
 	private BigDecimal total;
-	
+	private BigDecimal subTotal;
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	private FreightService freight;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Payment payment;
-	
-	@OneToMany(cascade = CascadeType.ALL)
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ORDER_ID")
+	@JsonManagedReference
 	private List<OrderItem> items;
-	
+
 	@Enumerated(EnumType.STRING)
 	private StatusOrder statusOrder;
-	
+
 	@ManyToOne(cascade = CascadeType.DETACH)
 	private User user;
 
@@ -89,6 +93,14 @@ public class Order extends DomainEntity {
 
 	public void setFreight(FreightService freight) {
 		this.freight = freight;
+	}
+
+	public BigDecimal getSubTotal() {
+		return subTotal;
+	}
+
+	public void setSubTotal(BigDecimal subTotal) {
+		this.subTotal = subTotal;
 	}
 
 }
