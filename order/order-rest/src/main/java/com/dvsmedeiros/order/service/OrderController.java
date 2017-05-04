@@ -1,8 +1,11 @@
 package com.dvsmedeiros.order.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dvsmedeiros.bce.controller.IFacade;
 import com.dvsmedeiros.bce.controller.INavigator;
 import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
 import com.dvsmedeiros.bce.domain.Status;
 import com.dvsmedeiros.bce.domain.StatusResponse;
+import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.order.domain.Order;
 
 @Controller
@@ -27,6 +32,9 @@ public class OrderController {
 	@Autowired
 	@Qualifier("navigator")
 	private INavigator navigator;
+	
+	@Autowired
+	private User user;
 
 	@RequestMapping(value = "checkout", method = RequestMethod.POST)
 	public @ResponseBody StatusResponse checkout(@RequestBody Order order) {
@@ -54,4 +62,43 @@ public class OrderController {
 
 		return response;
 	}
+	
+	@RequestMapping(value = "orders", method = RequestMethod.GET)
+	public @ResponseBody List<Order> getOrders(){
+		
+		Result<Order> result = null;
+
+		try {
+			
+			Filter<Order> filter = new Filter<>(Order.class);
+			
+			if(user != null && user.getId() > 0){
+				filter.getEntity().setUser(user);
+			}
+			
+			result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_ORDER").build());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result.getUncheckedEntity();
+	}
+	
+	@RequestMapping(value = "orders/{orderId}", method = RequestMethod.GET)
+	public @ResponseBody Order getProductById(@PathVariable Long orderId) {
+
+		Result<Order> result = null;
+
+		try {
+
+			result = appFacade.find(orderId, Order.class, new BusinessCaseBuilder<Order>().build());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result.getEntity();
+	}
+	
 }
