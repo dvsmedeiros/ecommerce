@@ -29,7 +29,7 @@ public class OrderNavigation {
 		return new OrderDAO();
 	}
 	
-	@Bean(name="SAVE_ORDER")
+	@Bean(name="CHECKOUT")
 	public EntityRuleDefinition<Order> getSaveOrderNavigation(){
 		
 		EntityRuleDefinition<Order> activities = new EntityRuleDefinition<>();
