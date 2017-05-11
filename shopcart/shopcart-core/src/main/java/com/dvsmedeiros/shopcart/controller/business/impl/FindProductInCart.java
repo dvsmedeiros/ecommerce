@@ -29,7 +29,7 @@ public class FindProductInCart implements IStrategy<CartItem>{
 		for(CartItem item : cart.getCartItems()){
 			
 			if(item.getProduct().getId() == target.getId()){
-				aCase.getResult().setEntity(item);
+				aCase.getContext().setAttribute("item", item);
 				return;
 			}
 		}

@@ -2,8 +2,6 @@ package com.dvsmedeiros.product.controller.business.impl;
 
 import java.util.List;
 
-import javax.crypto.AEADBadTagException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -25,7 +23,7 @@ public class FindFilterProduct implements IStrategy<Filter<Product>> {
 	public void process(Filter<Product> aFilter, INavigationCase<Filter<Product>> aCase) {
 		
 		List<Product> products = dao.filter(aFilter);
-		aCase.getResult().setUncheckedEntity(products);
+		aCase.getResult().addEntity("products", products);
 		
 	}
 

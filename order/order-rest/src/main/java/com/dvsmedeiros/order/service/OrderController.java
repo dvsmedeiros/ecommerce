@@ -42,8 +42,10 @@ public class OrderController {
 		StatusResponse response = new StatusResponse();
 
 		try {
-
-			Result<Order> result = appFacade.save(order, new BusinessCaseBuilder().withName("SAVE_ORDER").build());
+			User user = new User();
+			user.setId(4L);
+			order.setUser(user);
+			Result result = appFacade.save(order, new BusinessCaseBuilder().withName("CHECKOUT").build());
 
 			if (result.hasError()) {
 				response.setCode(Status.ERROR);
@@ -66,7 +68,7 @@ public class OrderController {
 	@RequestMapping(value = "orders", method = RequestMethod.GET)
 	public @ResponseBody List<Order> getOrders(){
 		
-		Result<Order> result = null;
+		Result result = null;
 
 		try {
 			
@@ -82,13 +84,13 @@ public class OrderController {
 			e.printStackTrace();
 		}
 
-		return result.getUncheckedEntity();
+		return result.getEntity("orders");
 	}
 	
 	@RequestMapping(value = "orders/{orderId}", method = RequestMethod.GET)
 	public @ResponseBody Order getProductById(@PathVariable Long orderId) {
 
-		Result<Order> result = null;
+		Result result = null;
 
 		try {
 

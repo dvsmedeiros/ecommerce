@@ -26,8 +26,7 @@ public class FindProductByIdActivity implements IStrategy<Product> {
 			aCase.getResult().setMessage("Produto ID: " + aEntity.getId() + " não existe!");
 			return;
 		}
-
-		aCase.getResult().setEntity(product);
+		aCase.getContext().setAttribute("product", product);
 	}
 
 }

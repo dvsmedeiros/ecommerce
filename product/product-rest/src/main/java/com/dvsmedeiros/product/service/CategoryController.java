@@ -40,7 +40,7 @@ public class CategoryController {
 
 		try {
 
-			Result<Category> result = appFacade.save(category, new BusinessCaseBuilder().withName("SAVE_CATEGORY").build());
+			Result result = appFacade.save(category, new BusinessCaseBuilder().withName("SAVE_CATEGORY").build());
 
 			if (result.hasError()) {
 				response.setCode(Status.ERROR);
@@ -68,7 +68,7 @@ public class CategoryController {
 
 		try {
 
-			Result<Category> result = appFacade.update(category,
+			Result result = appFacade.update(category,
 					new BusinessCaseBuilder().forEntity(Category.class).build());
 
 			if (result.hasError()) {
@@ -93,7 +93,7 @@ public class CategoryController {
 	@RequestMapping(value = "products/category", method = RequestMethod.GET)
 	public @ResponseBody List<Category> getProductCategories(@RequestParam(value = "active", required = false) boolean active) {
 
-		Result<Category> result = null;
+		Result result = null;
 
 		try {
 
@@ -103,13 +103,13 @@ public class CategoryController {
 			e.printStackTrace();
 		}
 
-		return result.getEntityList();
+		return result.getEntities();
 	}
 
 	@RequestMapping(value = "products/category/{categoryId}", method = RequestMethod.GET)
 	public @ResponseBody Category getProductCategoryById(@PathVariable Long categoryId) {
 
-		Result<Category> result = null;
+		Result result = null;
 
 		try {
 
@@ -130,7 +130,7 @@ public class CategoryController {
 
 		try {
 
-			Category category = appFacade.find(categoryId, Category.class, new BusinessCaseBuilder<Category>().build()).getEntity();
+			Category category = appFacade.find(categoryId, Category.class, new BusinessCaseBuilder<Category>().build()).getEntity("entity");
 			appFacade.delete(category, new BusinessCaseBuilder().build());
 
 			response.setCode(Status.OK);
@@ -153,7 +153,7 @@ public class CategoryController {
 
 		try {
 			
-			Category category = appFacade.find(categoryId, Category.class, new BusinessCaseBuilder<Category>().build()).getEntity();
+			Category category = appFacade.find(categoryId, Category.class, new BusinessCaseBuilder<Category>().build()).getEntity("entity");
 			appFacade.delete(category.getCode(), Category.class, new BusinessCaseBuilder().build());
 			
 

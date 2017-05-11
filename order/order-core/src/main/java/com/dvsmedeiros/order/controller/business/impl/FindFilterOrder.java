@@ -23,7 +23,7 @@ public class FindFilterOrder implements IStrategy<Filter<Order>> {
 	public void process(Filter<Order> aFilter, INavigationCase<Filter<Order>> aCase) {
 		
 		List<Order> orders = dao.filter(aFilter);
-		aCase.getResult().setUncheckedEntity(orders);
+		aCase.getResult().addEntity("orders", orders);
 		
 	}
 

@@ -17,14 +17,14 @@ public class RemoveAllItemOfCart implements IStrategy<CartItem>{
 	@Override
 	public void process(CartItem aEntity, INavigationCase<CartItem> aCase) {
 		
-		CartItem target = aCase.getResult().getEntity();
+		CartItem target = aCase.getContext().getAttribute("item");
 		
 		if(target == null){
 			aCase.suspendExecution();
 			aCase.getResult().setMessage("Produto: " + aEntity.getProduct().getName() + " não está no carrinho!");
 		}
 		
-		cart.removeAllItem(target);
+		cart.removeItems(target);
 	}
 
 }

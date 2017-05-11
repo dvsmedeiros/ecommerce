@@ -26,14 +26,16 @@ public class FreightFindProductByIdActivity implements IStrategy<FreightFilter> 
 
 			BusinessCase<Product> bCase = new BusinessCaseBuilder<Product>().withName("FIND_PRODUCT_BY_ID").build();
 			navigator.run(aEntity.getEntity().getProduct(), bCase);
-
-			if (bCase.isSuspendExecution() || bCase.getResult().getEntity() == null) {
+			
+			Product product = bCase.getContext().getAttribute("product");
+			
+			if (bCase.isSuspendExecution() || product == null) {
 				aCase.suspendExecution();
 				aCase.getResult().setMessage(bCase.getResult().getMessage());
 				return;
 			}
 
-			aEntity.getEntity().setProduct(bCase.getResult().getEntity());
+			aEntity.getEntity().setProduct(product);
 
 		}
 	}

@@ -30,7 +30,7 @@ public class AddressController {
 		
 		try {
 
-			Result<Address> result = appFacade.save(address, new BusinessCaseBuilder().withName("SAVE_ADDRESS").build());
+			Result result = appFacade.save(address, new BusinessCaseBuilder().withName("SAVE_ADDRESS").build());
 
 			if (result.hasError()) {
 				response.setCode(Status.ERROR);

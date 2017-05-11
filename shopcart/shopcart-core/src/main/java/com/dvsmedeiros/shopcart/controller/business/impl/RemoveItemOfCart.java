@@ -18,7 +18,7 @@ public class RemoveItemOfCart implements IStrategy<CartItem>{
 	@Override
 	public void process(CartItem aEntity, INavigationCase<CartItem> aCase) {
 		
-		CartItem target = aCase.getResult().getEntity();
+		CartItem target = aCase.getContext().getAttribute("item");
 		
 		if(target == null){
 			aCase.suspendExecution();

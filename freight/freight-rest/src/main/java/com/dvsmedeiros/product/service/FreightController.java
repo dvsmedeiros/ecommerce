@@ -45,7 +45,7 @@ public class FreightController {
 		navigator.run(filter, aCase);
 		
 		if( ! aCase.isSuspendExecution() ){
-			return aCase.getResult().getUncheckedEntity();
+			return aCase.getResult().getEntity("freights");
 		}
 
 		return new ArrayList<>();
@@ -65,7 +65,7 @@ public class FreightController {
 		navigator.run(filter, aCase);
 		
 		if( !aCase.isSuspendExecution() ){
-			return aCase.getResult().getUncheckedEntity();
+			return aCase.getResult().getEntity("freights");
 		}
 		
 		return new ArrayList<>();

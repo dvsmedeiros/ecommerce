@@ -43,8 +43,7 @@ public class CalculateFreight implements IStrategy<FreightFilter> {
 		List<FreteRetorno> result = freteFacade.calculaFrete(frete);
 
 		List<Freight> response = freteRetornoToFreightResponse.adapt(result);
-
-		aCase.getResult().setUncheckedEntity(response);
+		aCase.getContext().setAttribute("freights", response);
 
 	}
 

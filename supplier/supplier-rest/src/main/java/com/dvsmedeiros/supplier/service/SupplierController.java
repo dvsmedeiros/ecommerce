@@ -36,7 +36,7 @@ public class SupplierController {
 
 		try {
 
-			Result<Supplier> result = appFacade.save(supplier,
+			Result result = appFacade.save(supplier,
 					new BusinessCaseBuilder().withName("SAVE_SUPPLIER").build());
 
 			if (result.hasError()) {
@@ -65,7 +65,7 @@ public class SupplierController {
 
 		try {
 
-			Result<Supplier> result = appFacade.update(supplier, new BusinessCaseBuilder().forEntity(Supplier.class).build());
+			Result result = appFacade.update(supplier, new BusinessCaseBuilder().forEntity(Supplier.class).build());
 
 			if (result.hasError()) {
 				response.setCode(Status.ERROR);
@@ -90,7 +90,7 @@ public class SupplierController {
 	public @ResponseBody List<Supplier> getProductCategories(
 			@RequestParam(value = "active", required = false) boolean active) {
 
-		Result<Supplier> result = null;
+		Result result = null;
 
 		try {
 
@@ -100,13 +100,13 @@ public class SupplierController {
 			e.printStackTrace();
 		}
 
-		return result.getEntityList();
+		return result.getEntities();
 	}
 
 	@RequestMapping(value = "supplier/{supplierId}", method = RequestMethod.GET)
 	public @ResponseBody Supplier getProductSupplierById(@PathVariable Long supplierId) {
 
-		Result<Supplier> result = null;
+		Result result = null;
 
 		try {
 
@@ -116,7 +116,7 @@ public class SupplierController {
 			e.printStackTrace();
 		}
 
-		return result.getEntity();
+		return result.getEntities();
 	}
 	
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
@@ -127,7 +127,7 @@ public class SupplierController {
 
 		try {
 
-			Supplier supplier = appFacade.find(supplierId, Supplier.class, new BusinessCaseBuilder<Supplier>().build()).getEntity();
+			Supplier supplier = appFacade.find(supplierId, Supplier.class, new BusinessCaseBuilder<Supplier>().build()).getEntity("entity");
 			appFacade.delete(supplier, new BusinessCaseBuilder().build());
 
 			response.setCode(Status.OK);
@@ -150,7 +150,7 @@ public class SupplierController {
 
 		try {
 
-			Supplier supplier = appFacade.find(supplierId, Supplier.class, new BusinessCaseBuilder<Supplier>().build()).getEntity();
+			Supplier supplier = appFacade.find(supplierId, Supplier.class, new BusinessCaseBuilder<Supplier>().build()).getEntity("entity");
 			appFacade.delete(supplier.getCode(), Supplier.class, new BusinessCaseBuilder().build());
 
 			response.setCode(Status.OK);

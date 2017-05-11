@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +37,7 @@ public class ProductController {
 		
 		try {
 
-			Result<Product> result = appFacade.save(product, new BusinessCaseBuilder().withName("SAVE_PRODUCT").build());
+			Result result = appFacade.save(product, new BusinessCaseBuilder().withName("SAVE_PRODUCT").build());
 
 			if (result.hasError()) {
 				response.setCode(Status.ERROR);
@@ -68,7 +66,7 @@ public class ProductController {
 
 		try {
 
-			Result<Product> result = appFacade.update(product,	new BusinessCaseBuilder().forEntity(Product.class).build());
+			Result result = appFacade.update(product,	new BusinessCaseBuilder().forEntity(Product.class).build());
 
 			if (result.hasError()) {
 				response.setCode(Status.ERROR);
@@ -91,7 +89,7 @@ public class ProductController {
 	@RequestMapping(value = "products/{productId}", method = RequestMethod.GET)
 	public @ResponseBody Product getProductById(@PathVariable Long productId) {
 
-		Result<Product> result = null;
+		Result result = null;
 
 		try {
 
@@ -152,7 +150,7 @@ public class ProductController {
 	@RequestMapping(value = "products", method = RequestMethod.GET)
 	public @ResponseBody List<Product> getProducts(@RequestParam(value = "active", required = false) Boolean active, @RequestParam(value = "categoryId", required = false) Long categoryId) {
 
-		Result<Product> result = null;
+		Result result = null;
 
 		try {
 			
@@ -175,6 +173,6 @@ public class ProductController {
 			e.printStackTrace();
 		}
 
-		return result.getUncheckedEntity();
+		return result.getEntity("products");
 	}
 }
