@@ -13,7 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.domain.DomainEntity;
@@ -36,9 +37,10 @@ public class Order extends DomainEntity {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Payment payment;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "ORDER_ID")
+	@OneToMany(cascade = CascadeType.ALL)
 	@JsonManagedReference
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinColumn(name = "ORDER_ID")
 	private List<OrderItem> items;
 
 	@Enumerated(EnumType.STRING)
