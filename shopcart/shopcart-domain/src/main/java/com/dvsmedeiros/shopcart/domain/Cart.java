@@ -23,33 +23,41 @@ public class Cart extends DomainEntity {
 	}
 
 	public void addItem(CartItem item) {
-		this.cartItems.add(item);
+
+		if (findProductInCart(item)) {
+			item.more();
+		} else {
+			this.cartItems.add(item);
+		}
 		calculateSubTotal();
 	}
 
-	public void removeAllItem(CartItem item) {
+	public void removeItems(CartItem item) {
 		this.cartItems.remove(item);
 		calculateSubTotal();
 	}
 	
-	public void removeAllItems() {
+	public void cleanCart() {
 		this.cartItems = new ArrayList<>();
 		calculateSubTotal();
 	}
 	
+	private boolean findProductInCart(CartItem target) {
+		for (CartItem item : cartItems) {
+			if (item.getProduct().getId() == target.getProduct().getId()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void removeItem(CartItem item) {
 
-		if (item.getQuantity() > 1) {
-			item.lessOneProduct();
-			calculateSubTotal();
-			return;
+		if (findProductInCart(item) && item.getQuantity() > 1) {
+			item.less();
+		} else {
+			this.cartItems.remove(item);
 		}
-		this.cartItems.remove(item);
-		calculateSubTotal();
-	}
-
-	public void moreOneProduct(CartItem item) {
-		item.moreOneProduct();
 		calculateSubTotal();
 	}
 

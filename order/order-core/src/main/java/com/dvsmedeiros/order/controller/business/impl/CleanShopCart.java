@@ -14,11 +14,11 @@ public class CleanShopCart implements IStrategy<Order> {
 
 	@Autowired
 	private Cart cart;
-	
+
 	@Override
 	public void process(Order aEntity, INavigationCase<Order> aCase) {
-		
-		cart.removeAllItems();
-		
+
+		cart.cleanCart();
+
 	}
 }

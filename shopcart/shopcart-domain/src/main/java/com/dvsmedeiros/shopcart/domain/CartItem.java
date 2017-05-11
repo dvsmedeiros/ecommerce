@@ -11,11 +11,11 @@ public class CartItem extends Item {
 		this.product = new Product();
 	}
 	
-	public void moreOneProduct() {
+	public void more() {
 		this.quantity++;
 	}
 	
-	public void lessOneProduct() {
+	public void less() {
 		this.quantity--;
 	}
 

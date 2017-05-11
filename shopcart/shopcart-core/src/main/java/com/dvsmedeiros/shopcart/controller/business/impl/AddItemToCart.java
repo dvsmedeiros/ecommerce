@@ -17,11 +17,9 @@ public class AddItemToCart implements IStrategy<CartItem>{
 	@Override
 	public void process(CartItem aEntity, INavigationCase<CartItem> aCase) {
 		
-		if( aCase.isSuspendExecution() ){
-			return;
-		}
-		if( aCase.getResult().getEntity() != null ){
-			cart.moreOneProduct(aCase.getResult().getEntity());
+		CartItem item = aCase.getContext().getAttribute("item");
+		if( item != null ){
+			cart.addItem(item);
 			return;
 		}
 		cart.addItem(aEntity);
