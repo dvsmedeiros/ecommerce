@@ -1,19 +1,21 @@
 package com.dvsmedeiros.bce.domain;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("unchecked")
-public class Result<T extends IEntity> extends ApplicationEntity {
+public class Result extends ApplicationEntity {
 	
-	private List<T> entityList;
-	private T entity;
-	private Object uncheckedEntity;
+	private static final String RESULT_KEY = "result";
+	private static final String RESULTS_KEY = "results";
+	
+	private Map<String, Object> params;
 	private String message;
 	private boolean error;
 	
 	public Result() {
-		this.entityList = new ArrayList<>();
+		this.params = new HashMap<>();
 	}
 	
 	public String getMessage() {
@@ -24,16 +26,8 @@ public class Result<T extends IEntity> extends ApplicationEntity {
 		this.message = message;
 	}
 
-	public List<T> getEntityList() {
-		return entityList;
-	}
-
-	public void setEntityList(List<T> entityList) {
-		this.entityList = entityList;
-	}
-	
 	public boolean hasError(){
-		if(!error && message == null && entityList != null){
+		if(!error && message == null && params != null){
 			return false;
 		}
 		return true;
@@ -42,20 +36,29 @@ public class Result<T extends IEntity> extends ApplicationEntity {
 	public void setError() {
 		this.error = true;
 	}
-
-	public T getEntity() {
-		return entity;
-	}
-
-	public void setEntity(T aEntity) {
-		this.entity = aEntity;
+	
+	public void addEntity(String key, Object entity){
+		params.put(key, entity);
 	}
 	
-	public void setUncheckedEntity(Object uncheckedEntity) {
-		this.uncheckedEntity = uncheckedEntity;
+	public void addEntity(Object entity){
+		params.put(RESULT_KEY, entity);
 	}
 	
-	public <R> R getUncheckedEntity() {
-		return (R) uncheckedEntity;
+	public void addEntities(List<Object> entities){
+		params.put(RESULTS_KEY, entities);
 	}
+	
+	public <R> R getEntity(String key){
+		return (R) params.get(key);
+	}
+	
+	public <R> R getEntity(){
+		return (R) params.get(RESULT_KEY);
+	}
+	
+	public <R> R getEntities(){
+		return (R) params.get(RESULTS_KEY);
+	}
+	
 }

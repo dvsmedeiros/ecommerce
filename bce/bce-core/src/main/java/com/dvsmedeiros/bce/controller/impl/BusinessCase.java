@@ -7,13 +7,15 @@ import com.dvsmedeiros.bce.domain.Result;
 
 public class BusinessCase<E extends IEntity> implements INavigationCase<E> {
 
-	private Result<E> result;
+	private Result result;
 	private String name;
 	private Boolean suspend = false;
 	private E entity;
+	private INavigatorContext context;
 	
 	public BusinessCase() {
-		this.result = new Result<>();
+		this.result = new Result();
+		this.context = new NavigatorContext();
 	}
 	
 	@Override
@@ -22,7 +24,7 @@ public class BusinessCase<E extends IEntity> implements INavigationCase<E> {
 	}
 
 	@Override
-	public Result<E> getResult() {
+	public Result getResult() {
 		return this.result;
 	}
 
@@ -36,7 +38,7 @@ public class BusinessCase<E extends IEntity> implements INavigationCase<E> {
 		return this.suspend;
 	}
 
-	public void setResult(Result<E> result) {
+	public void setResult(Result result) {
 		this.result = result;
 	}
 
@@ -50,6 +52,16 @@ public class BusinessCase<E extends IEntity> implements INavigationCase<E> {
 
 	public void setEntity(E entity) {
 		this.entity = entity;
+	}
+
+	@Override
+	public void setContext(INavigatorContext context) {
+		this.context = context;
+	}
+	
+	@Override
+	public INavigatorContext getContext() {
+		return context;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.dvsmedeiros.bce.controller;
 
+import com.dvsmedeiros.bce.controller.impl.INavigatorContext;
 import com.dvsmedeiros.bce.domain.IEntity;
 import com.dvsmedeiros.bce.domain.Result;
 
@@ -9,10 +10,14 @@ public interface INavigationCase<E extends IEntity> extends IEntity{
 
 	public String getName();
 
-	public Result<E> getResult();
+	public Result getResult();
 	
 	public void suspendExecution();
 	
 	public Boolean isSuspendExecution();
+	
+	public void setContext(INavigatorContext context);
+	
+	public INavigatorContext getContext();
 	
 }
