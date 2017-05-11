@@ -3,7 +3,6 @@ package com.dvsmedeiros.commons.domain;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
@@ -22,10 +21,9 @@ public class People extends DomainSpecificEntity {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Phone> phones;
-	
+	private List<Phone> phones;	
 	private String email;
-
+	
 	public Address getAddress() {
 		return address;
 	}
@@ -41,7 +39,6 @@ public class People extends DomainSpecificEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 	
 	public List<Phone> getPhones() {
 		return phones;

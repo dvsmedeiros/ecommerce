@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.domain.DomainEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Component
 @Entity
@@ -18,6 +19,7 @@ public class CreditCard extends DomainEntity {
 	private ExpiringDate expiringDate;
 	private String cvv;
 	@ManyToOne
+	@JsonBackReference
 	private User user;
 
 	public String getaNumber() {
