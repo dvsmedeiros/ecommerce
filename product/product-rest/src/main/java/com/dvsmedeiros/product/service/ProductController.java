@@ -1,9 +1,12 @@
 package com.dvsmedeiros.product.service;
 
+import java.security.Principal;
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dvsmedeiros.bce.conf.log.Log;
 import com.dvsmedeiros.bce.controller.IFacade;
 import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
@@ -24,6 +28,8 @@ import com.dvsmedeiros.product.domain.Product;
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ProductController {
+	
+	private @Log Logger LOGGER;
 
 	@Autowired
 	@Qualifier("applicationFacade")
@@ -168,7 +174,6 @@ public class ProductController {
 			filter.getEntity().setCategory(category);
 			
 			result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_PRODUCT").build());
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
