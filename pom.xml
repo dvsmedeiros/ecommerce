@@ -24,6 +24,7 @@
 	
 	<modules>
 		<module>bce</module>
+		<module>commons</module>
 		<module>product</module>
 		<module>freight</module>
 		<module>shopcart</module>
