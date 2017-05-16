@@ -30,7 +30,6 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
 		registry.addResourceHandler("/public/**").addResourceLocations("/public/");
 	}
 
@@ -44,8 +43,4 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 		return new ConcurrentMapCacheManager();
 	}
 	
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**");	
-	}
 }
