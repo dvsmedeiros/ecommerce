@@ -1,11 +1,9 @@
 package com.dvsmedeiros.order.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,18 +33,18 @@ public class OrderController {
 	@Qualifier("navigator")
 	private INavigator navigator;
 	
+	@Autowired
+	private User loggedUser;
+	
 	@RequestMapping(value = "checkout", method = RequestMethod.POST)
 	public @ResponseBody StatusResponse checkout(@RequestBody Order order) {
 
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		StatusResponse response = new StatusResponse();
 		
 		try {
 			
-			if(user == null || user.getId() == 0){
-				response.setCode(Status.ERROR);
-				response.setMessage("Usuário inexistente ou inválido!");
-				return response;
+			if(loggedUser != null && loggedUser.getId() > 0){
+				order.setUser(loggedUser);
 			}
 			
 			Result result = appFacade.save(order, new BusinessCaseBuilder().withName("CHECKOUT").build());
@@ -72,18 +70,16 @@ public class OrderController {
 	@RequestMapping(value = "orders", method = RequestMethod.GET)
 	public @ResponseBody List<Order> getOrders(){
 		
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Result result = null;
 
 		try {
 			
 			Filter<Order> filter = new Filter<>(Order.class);
 			
-			if(user == null || user.getId() == 0){
-				return new ArrayList<>();
+			if(loggedUser != null && loggedUser.getId() > 0){
+				filter.getEntity().setUser(loggedUser);
 			}
 			
-			filter.getEntity().setUser(user);	
 			result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_ORDER").build());
 
 		} catch (Exception e) {

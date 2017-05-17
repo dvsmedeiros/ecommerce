@@ -1,4 +1,4 @@
-package com.dvsmedeiros.supplier.controller.business;
+package com.dvsmedeiros.commons.controller.business;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

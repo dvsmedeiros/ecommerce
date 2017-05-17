@@ -39,13 +39,7 @@
 		    <artifactId>hibernate-jpa-2.1-api</artifactId>
 		    <version>${persistence.version}</version>
 		</dependency>
-		
-		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-core</artifactId>
-		    <version>4.1.1.RELEASE</version>
-		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

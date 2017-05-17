@@ -5,14 +5,13 @@ import javax.servlet.Filter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.dvsmedeiros.bce.conf.JPAConfiguration;
-import com.dvsmedeiros.ecommerce.conf.security.SecurityWebApplicationInitializer;
 import com.dvsmedeiros.ecommerce.filter.CORSFilter;
 
 public class ServletSpringConfiguration extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { AppWebConfiguration.class, JPAConfiguration.class, SecurityWebApplicationInitializer.class };
+		return new Class[] { AppWebConfiguration.class, JPAConfiguration.class };
 	}
 
 	@Override

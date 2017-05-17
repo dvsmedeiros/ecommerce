@@ -1,13 +1,7 @@
 package com.dvsmedeiros.product.service;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +20,7 @@ import com.dvsmedeiros.commons.domain.User;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class UserController {
 	
-	
+	@Autowired
 	@Qualifier("applicationFacade")
 	private IFacade<User> appFacade;
 		
