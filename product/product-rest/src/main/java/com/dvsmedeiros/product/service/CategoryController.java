@@ -21,12 +21,13 @@ import com.dvsmedeiros.bce.controller.impl.EntityRuleDefinition;
 import com.dvsmedeiros.bce.domain.Result;
 import com.dvsmedeiros.bce.domain.Status;
 import com.dvsmedeiros.bce.domain.StatusResponse;
+import com.dvsmedeiros.bce.service.BaseController;
 import com.dvsmedeiros.product.domain.Category;
 import com.dvsmedeiros.product.domain.Product;
 
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class CategoryController {
+public class CategoryController extends BaseController{
 
 	@Autowired
 	@Qualifier("applicationFacade")

@@ -20,25 +20,26 @@ import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
 import com.dvsmedeiros.bce.domain.Status;
 import com.dvsmedeiros.bce.domain.StatusResponse;
+import com.dvsmedeiros.bce.service.BaseController;
 import com.dvsmedeiros.product.domain.Category;
 import com.dvsmedeiros.product.domain.Product;
 
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class ProductController {
-	
+public class ProductController extends BaseController {
+
 	private @Log Logger LOGGER;
 
 	@Autowired
 	@Qualifier("applicationFacade")
 	IFacade<Product> appFacade;
 
-	//@CacheEvict(value = "cacheProducts", allEntries = true)
+	// @CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products", method = RequestMethod.POST)
 	public @ResponseBody StatusResponse saveProduct(@RequestBody Product product) {
 
 		StatusResponse response = new StatusResponse();
-		
+
 		try {
 
 			Result result = appFacade.save(product, new BusinessCaseBuilder().withName("SAVE_PRODUCT").build());
@@ -61,8 +62,8 @@ public class ProductController {
 		return response;
 
 	}
-	
-	//@CacheEvict(value = "cacheProducts", allEntries = true)
+
+	// @CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse updateProduct(@RequestBody Product product) {
 
@@ -70,7 +71,7 @@ public class ProductController {
 
 		try {
 
-			Result result = appFacade.update(product,	new BusinessCaseBuilder().forEntity(Product.class).build());
+			Result result = appFacade.update(product, new BusinessCaseBuilder().forEntity(Product.class).build());
 
 			if (result.hasError()) {
 				response.setCode(Status.ERROR);
@@ -105,8 +106,8 @@ public class ProductController {
 
 		return result.getEntity();
 	}
-	
-	//@CacheEvict(value = "cacheProducts", allEntries = true)
+
+	// @CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products/{productId}", method = RequestMethod.DELETE)
 	public @ResponseBody StatusResponse deleteProductById(@PathVariable Long productId) {
 
@@ -114,7 +115,8 @@ public class ProductController {
 
 		try {
 
-			Product product = appFacade.find(productId, Product.class, new BusinessCaseBuilder<Product>().build()).getEntity();
+			Product product = appFacade.find(productId, Product.class, new BusinessCaseBuilder<Product>().build())
+					.getEntity();
 			appFacade.delete(product, new BusinessCaseBuilder().build());
 
 			response.setCode(Status.OK);
@@ -128,15 +130,16 @@ public class ProductController {
 
 		return response;
 	}
-	
-	//@CacheEvict(value = "cacheProducts", allEntries = true)
+
+	// @CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products/{productId}", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse deleteLogicalProductById(@PathVariable Long productId) {
 
 		StatusResponse response = new StatusResponse();
 
 		try {
-			Product product = appFacade.find(productId, Product.class, new BusinessCaseBuilder<Product>().build()).getEntity();
+			Product product = appFacade.find(productId, Product.class, new BusinessCaseBuilder<Product>().build())
+					.getEntity();
 			appFacade.delete(product.getCode(), Product.class, new BusinessCaseBuilder<Product>().build());
 
 			response.setCode(Status.OK);
@@ -149,28 +152,29 @@ public class ProductController {
 
 		return response;
 	}
-	
-	//@Cacheable(value = "cacheProducts")
+
+	// @Cacheable(value = "cacheProducts")
 	@RequestMapping(value = "products", method = RequestMethod.GET)
-	public @ResponseBody List<Product> getProducts(@RequestParam(value = "active", required = false) Boolean active, @RequestParam(value = "categoryId", required = false) Long categoryId) {
+	public @ResponseBody List<Product> getProducts(@RequestParam(value = "active", required = false) Boolean active,
+			@RequestParam(value = "categoryId", required = false) Long categoryId) {
 
 		Result result = null;
 
 		try {
-			
+
 			Filter<Product> filter = new Filter<>(Product.class);
-			
+
 			Category category = new Category();
-			if(categoryId != null){
+			if (categoryId != null) {
 				category.setId(categoryId);
 			}
-			
-			if(active != null){
+
+			if (active != null) {
 				filter.getEntity().setActive(active);
 			}
-			
+
 			filter.getEntity().setCategory(category);
-			
+
 			result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_PRODUCT").build());
 		} catch (Exception e) {
 			e.printStackTrace();

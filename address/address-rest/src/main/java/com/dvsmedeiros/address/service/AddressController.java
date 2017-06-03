@@ -14,10 +14,11 @@ import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Result;
 import com.dvsmedeiros.bce.domain.Status;
 import com.dvsmedeiros.bce.domain.StatusResponse;
+import com.dvsmedeiros.bce.service.BaseController;
 
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class AddressController {
+public class AddressController extends BaseController{
 	
 	@Autowired
 	@Qualifier("applicationFacade")

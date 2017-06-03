@@ -17,10 +17,11 @@ import com.dvsmedeiros.bce.conf.log.Log;
 import com.dvsmedeiros.bce.controller.impl.BusinessCase;
 import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.controller.impl.Navigator;
+import com.dvsmedeiros.bce.service.BaseController;
 import com.dvsmedeiros.commons.domain.User;
 
 @Controller
-public class AuthenticateController {
+public class AuthenticateController extends BaseController{
 
 	private @Log Logger LOGGER;
 	

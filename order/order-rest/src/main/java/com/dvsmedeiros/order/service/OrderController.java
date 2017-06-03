@@ -18,12 +18,13 @@ import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
 import com.dvsmedeiros.bce.domain.Status;
 import com.dvsmedeiros.bce.domain.StatusResponse;
+import com.dvsmedeiros.bce.service.BaseController;
 import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.order.domain.Order;
 
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class OrderController {
+public class OrderController extends BaseController {
 
 	@Autowired
 	@Qualifier("applicationFacade")
@@ -32,21 +33,21 @@ public class OrderController {
 	@Autowired
 	@Qualifier("navigator")
 	private INavigator navigator;
-	
+
 	@Autowired
 	private User loggedUser;
-	
+
 	@RequestMapping(value = "checkout", method = RequestMethod.POST)
 	public @ResponseBody StatusResponse checkout(@RequestBody Order order) {
 
 		StatusResponse response = new StatusResponse();
-		
+
 		try {
-			
-			if(loggedUser != null && loggedUser.getId() > 0){
+
+			if (loggedUser != null && loggedUser.getId() > 0) {
 				order.setUser(loggedUser);
 			}
-			
+
 			Result result = appFacade.save(order, new BusinessCaseBuilder().withName("CHECKOUT").build());
 
 			if (result.hasError()) {
@@ -66,20 +67,20 @@ public class OrderController {
 
 		return response;
 	}
-	
+
 	@RequestMapping(value = "orders", method = RequestMethod.GET)
-	public @ResponseBody List<Order> getOrders(){
-		
+	public @ResponseBody List<Order> getOrders() {
+
 		Result result = null;
 
 		try {
-			
+
 			Filter<Order> filter = new Filter<>(Order.class);
-			
-			if(loggedUser != null && loggedUser.getId() > 0){
+
+			if (loggedUser != null && loggedUser.getId() > 0) {
 				filter.getEntity().setUser(loggedUser);
 			}
-			
+
 			result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_ORDER").build());
 
 		} catch (Exception e) {
@@ -88,7 +89,7 @@ public class OrderController {
 
 		return result.getEntity("orders");
 	}
-	
+
 	@RequestMapping(value = "orders/{orderId}", method = RequestMethod.GET)
 	public @ResponseBody Order getProductById(@PathVariable Long orderId) {
 
@@ -104,5 +105,5 @@ public class OrderController {
 
 		return result.getEntity();
 	}
-	
+
 }

@@ -19,16 +19,17 @@ import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Result;
 import com.dvsmedeiros.bce.domain.Status;
 import com.dvsmedeiros.bce.domain.StatusResponse;
+import com.dvsmedeiros.bce.service.BaseController;
 import com.dvsmedeiros.supplier.domain.Supplier;
 
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class SupplierController {
+public class SupplierController extends BaseController {
 
 	@Autowired
 	@Qualifier("applicationFacade")
 	IFacade<Supplier> appFacade;
-	
+
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier", method = RequestMethod.POST)
 	public @ResponseBody StatusResponse saveSupplier(@RequestBody Supplier supplier) {
@@ -36,8 +37,7 @@ public class SupplierController {
 
 		try {
 
-			Result result = appFacade.save(supplier,
-					new BusinessCaseBuilder().withName("SAVE_SUPPLIER").build());
+			Result result = appFacade.save(supplier, new BusinessCaseBuilder().withName("SAVE_SUPPLIER").build());
 
 			if (result.hasError()) {
 				response.setCode(Status.ERROR);
@@ -56,7 +56,7 @@ public class SupplierController {
 
 		return response;
 	}
-	
+
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse updateProductSupplier(@RequestBody Supplier supplier) {
@@ -84,7 +84,7 @@ public class SupplierController {
 
 		return response;
 	}
-	
+
 	@Cacheable(value = "cacheSuppliers")
 	@RequestMapping(value = "supplier", method = RequestMethod.GET)
 	public @ResponseBody List<Supplier> getProductCategories(
@@ -118,7 +118,7 @@ public class SupplierController {
 
 		return result.getEntities();
 	}
-	
+
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier/{supplierId}", method = RequestMethod.DELETE)
 	public @ResponseBody StatusResponse deleteProductSupplierById(@PathVariable Long supplierId) {
@@ -127,7 +127,8 @@ public class SupplierController {
 
 		try {
 
-			Supplier supplier = appFacade.find(supplierId, Supplier.class, new BusinessCaseBuilder<Supplier>().build()).getEntity("entity");
+			Supplier supplier = appFacade.find(supplierId, Supplier.class, new BusinessCaseBuilder<Supplier>().build())
+					.getEntity("entity");
 			appFacade.delete(supplier, new BusinessCaseBuilder().build());
 
 			response.setCode(Status.OK);
@@ -141,7 +142,7 @@ public class SupplierController {
 
 		return response;
 	}
-	
+
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier/{supplierId}", method = RequestMethod.PUT)
 	public @ResponseBody StatusResponse inactivateProductSupplierById(@PathVariable Long supplierId) {
@@ -150,7 +151,8 @@ public class SupplierController {
 
 		try {
 
-			Supplier supplier = appFacade.find(supplierId, Supplier.class, new BusinessCaseBuilder<Supplier>().build()).getEntity("entity");
+			Supplier supplier = appFacade.find(supplierId, Supplier.class, new BusinessCaseBuilder<Supplier>().build())
+					.getEntity("entity");
 			appFacade.delete(supplier.getCode(), Supplier.class, new BusinessCaseBuilder().build());
 
 			response.setCode(Status.OK);

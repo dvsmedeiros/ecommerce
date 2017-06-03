@@ -14,16 +14,17 @@ import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Result;
 import com.dvsmedeiros.bce.domain.Status;
 import com.dvsmedeiros.bce.domain.StatusResponse;
+import com.dvsmedeiros.bce.service.BaseController;
 import com.dvsmedeiros.commons.domain.User;
 
 @Controller
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class UserController {
-	
+public class UserController extends BaseController {
+
 	@Autowired
 	@Qualifier("applicationFacade")
 	private IFacade<User> appFacade;
-		
+
 	@RequestMapping(value = "singup", method = RequestMethod.POST)
 	public @ResponseBody StatusResponse saveUser(@RequestBody User user) {
 
