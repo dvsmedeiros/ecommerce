@@ -3,8 +3,8 @@ package com.dvsmedeiros.address.controller.business.impl;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.address.domain.Address;
-import com.dvsmedeiros.bce.controller.INavigationCase;
-import com.dvsmedeiros.bce.controller.business.IStrategy;
+import com.dvsmedeiros.bce.core.controller.INavigationCase;
+import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 
 @Component
 public class ZipCodeValidator implements IStrategy<Address>{

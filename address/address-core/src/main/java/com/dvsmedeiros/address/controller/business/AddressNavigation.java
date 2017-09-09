@@ -11,7 +11,8 @@ import com.dvsmedeiros.address.controller.business.impl.StateValidator;
 import com.dvsmedeiros.address.controller.business.impl.StreetValidator;
 import com.dvsmedeiros.address.controller.business.impl.ZipCodeValidator;
 import com.dvsmedeiros.address.domain.Address;
-import com.dvsmedeiros.bce.controller.impl.EntityRuleDefinition;
+import com.dvsmedeiros.bce.core.controller.impl.Navigation;
+import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 
 @Configuration
 public class AddressNavigation {
@@ -31,18 +32,17 @@ public class AddressNavigation {
 	
 	
 	@Bean(name="SAVE_ADDRESS")
-	public EntityRuleDefinition<Address> getSaveProductNavigation(){
+	public Navigation<Address> getSaveProductNavigation(){
 		
-		EntityRuleDefinition<Address> activities = new EntityRuleDefinition<>();
-		
-		activities.addActivity(zipCodeValidator);
-		activities.addActivity(streetValidator);
-		activities.addActivity(addressNumberValidator);
-		activities.addActivity(neighborhoodValidator);
-		activities.addActivity(cityValidator);
-		activities.addActivity(stateValidator);
-		
-		return activities;
+		return new NavigationBuilder<Address>()
+				.next(zipCodeValidator)
+				.next(zipCodeValidator)
+				.next(streetValidator)
+				.next(addressNumberValidator)
+				.next(neighborhoodValidator)
+				.next(cityValidator)
+				.next(stateValidator)
+				.build();
 	}
 	
 }
