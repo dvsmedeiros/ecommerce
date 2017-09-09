@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.bce.controller.IAdapter;
+import com.dvsmedeiros.bce.core.controller.IAdapter;
 import com.dvsmedeiros.correiows.domain.FreteRetorno;
 import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.freight.domain.FreightService;

@@ -5,15 +5,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.bce.controller.INavigationCase;
-import com.dvsmedeiros.bce.controller.business.IStrategy;
-import com.dvsmedeiros.freight.domain.Freight;
-import com.dvsmedeiros.freight.domain.FreightFilter;
+import com.dvsmedeiros.bce.core.controller.INavigationCase;
+import com.dvsmedeiros.bce.core.controller.business.IStrategy;import com.dvsmedeiros.freight.domain.FreightFilter;
 import com.dvsmedeiros.product.domain.Packing;
 import com.dvsmedeiros.product.domain.PackingType;
 import com.dvsmedeiros.product.domain.Price;
 import com.dvsmedeiros.product.domain.Product;
-import com.dvsmedeiros.shopcart.domain.Cart;
 import com.dvsmedeiros.shopcart.domain.CartItem;
 
 @Component

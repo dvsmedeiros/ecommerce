@@ -1,6 +1,6 @@
 package com.dvsmedeiros.product.service;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dvsmedeiros.bce.controller.IFacade;
-import com.dvsmedeiros.bce.controller.INavigator;
-import com.dvsmedeiros.bce.controller.impl.BusinessCase;
-import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
-import com.dvsmedeiros.bce.service.BaseController;
+import com.dvsmedeiros.bce.core.controller.IFacade;
+import com.dvsmedeiros.bce.core.controller.INavigator;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCase;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.freight.domain.Freight;
 import com.dvsmedeiros.freight.domain.FreightFilter;
 import com.dvsmedeiros.product.domain.Product;
+import com.dvsmedeiros.rest.rest.controller.BaseController;
 import com.dvsmedeiros.shopcart.domain.Cart;
 
 @Controller
@@ -26,7 +26,7 @@ public class FreightController extends BaseController {
 
 	@Autowired
 	@Qualifier("applicationFacade")
-	IFacade<Freight> appFacade;
+	private IFacade<Freight> appFacade;
 
 	@Autowired
 	@Qualifier("navigator")
@@ -42,20 +42,18 @@ public class FreightController extends BaseController {
 		filter.setCartItems(cart.getCartItems());
 		filter.getEntity().setPostalCodeDestine(postalCode);
 
-		BusinessCase<FreightFilter> aCase = new BusinessCaseBuilder<FreightFilter>().withName("CALCULATE_FREIGHT")
-				.build();
+		BusinessCase<FreightFilter> aCase = new BusinessCaseBuilder<FreightFilter>().withName("CALCULATE_FREIGHT").build();
 		navigator.run(filter, aCase);
 
 		if (!aCase.isSuspendExecution()) {
 			return aCase.getResult().getEntity("freights");
 		}
 
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	@RequestMapping(value = "freight/{productId}/{postalCode}", method = RequestMethod.GET)
-	public @ResponseBody List<Freight> calculteFreightAndDeadLine(@PathVariable Long productId,
-			@PathVariable String postalCode) {
+	public @ResponseBody List<Freight> calculteFreightAndDeadLine(@PathVariable Long productId, @PathVariable String postalCode) {
 
 		FreightFilter filter = new FreightFilter(Freight.class);
 		Product product = new Product();
@@ -64,14 +62,13 @@ public class FreightController extends BaseController {
 		filter.getEntity().setProduct(product);
 		filter.getEntity().setPostalCodeDestine(postalCode);
 
-		BusinessCase<FreightFilter> aCase = new BusinessCaseBuilder<FreightFilter>().withName("CALCULATE_FREIGHT")
-				.build();
+		BusinessCase<FreightFilter> aCase = new BusinessCaseBuilder<FreightFilter>().withName("CALCULATE_FREIGHT").build();
 		navigator.run(filter, aCase);
 
 		if (!aCase.isSuspendExecution()) {
 			return aCase.getResult().getEntity("freights");
 		}
 
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 }

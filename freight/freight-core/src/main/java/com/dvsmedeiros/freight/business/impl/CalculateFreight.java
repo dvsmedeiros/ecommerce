@@ -5,10 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.bce.controller.IAdapter;
-import com.dvsmedeiros.bce.controller.INavigationCase;
-import com.dvsmedeiros.bce.controller.business.IStrategy;
-import com.dvsmedeiros.correiows.controller.IFreteFacade;
+import com.dvsmedeiros.bce.core.controller.IAdapter;
+import com.dvsmedeiros.bce.core.controller.INavigationCase;
+import com.dvsmedeiros.bce.core.controller.business.IStrategy;import com.dvsmedeiros.correiows.controller.IFreteFacade;
 import com.dvsmedeiros.correiows.controller.impl.CorreioFacade;
 import com.dvsmedeiros.correiows.domain.Frete;
 import com.dvsmedeiros.correiows.domain.FreteConfig;

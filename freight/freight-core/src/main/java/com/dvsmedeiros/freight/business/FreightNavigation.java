@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.dvsmedeiros.bce.controller.impl.EntityRuleDefinition;
+import com.dvsmedeiros.bce.core.controller.impl.Navigation;
+import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.freight.business.impl.CalculateFreight;
 import com.dvsmedeiros.freight.business.impl.FreightFindProductByIdActivity;
 import com.dvsmedeiros.freight.business.impl.MinimalValuesFreightValidator;
@@ -79,72 +80,72 @@ public class FreightNavigation {
 	private PackingEnvelopeDiameterValidator packingEnvelopeDiameterValidator;
 
 	@Bean(name = "MIN_VALUES_PACKING")
-	public Map<PackingType, String> getMinValuesPacking(){
-		
+	public Map<PackingType, String> getMinValuesPacking() {
+
 		Map<PackingType, String> minValuesPacking = new HashMap<>();
-		
+
 		minValuesPacking.put(PackingType.BOX, "VALIDATE_PACKING_BOX");
 		minValuesPacking.put(PackingType.ENVELOPE, "VALIDATE_PACKING_ENVELOPE");
 		minValuesPacking.put(PackingType.ROLL, "VALIDATE_PACKING_ROLL");
-		
+
 		return minValuesPacking;
 	}
-	
+
 	@Bean(name = "CALCULATE_FREIGHT")
-	public EntityRuleDefinition<FreightFilter> calculateFreightForProduct() {
+	public Navigation<FreightFilter> calculateFreightForProduct() {
 
-		EntityRuleDefinition<FreightFilter> activities = new EntityRuleDefinition<>();
+		return new NavigationBuilder<FreightFilter>()
 
-		activities.addActivity(freightFindProductByIdActivity);
-		activities.addActivity(summarizeShopCart);
-		activities.addActivity(minimalValuesFreightValidator);
-		activities.addActivity(calculateFreight);
+				.next(freightFindProductByIdActivity)
+				.next(summarizeShopCart)
+				.next(minimalValuesFreightValidator)
+				.next(calculateFreight)
+				.build();
 
-		return activities;
 	}
 
 	@Bean(name = "VALIDATE_PACKING_BOX")
-	public EntityRuleDefinition<FreightFilter> validadePackingBox() {
+	public Navigation<FreightFilter> validadePackingBox() {
 
-		EntityRuleDefinition<FreightFilter> activities = new EntityRuleDefinition<>();
+		return new NavigationBuilder<FreightFilter>()
 
-		activities.addActivity(packingValidator);
-		activities.addActivity(packingBoxWidthValidator);
-		activities.addActivity(packingBoxHeightValidator);
-		activities.addActivity(packingBoxLenghtValidator);
-		activities.addActivity(packingBoxWeightValidator);
-		activities.addActivity(packingBoxDiameterValidator);
+				.next(packingValidator)
+				.next(packingBoxWidthValidator)
+				.next(packingBoxHeightValidator)
+				.next(packingBoxLenghtValidator)
+				.next(packingBoxWeightValidator)
+				.next(packingBoxDiameterValidator)
+				.build();
 
-		return activities;
 	}
 
 	@Bean(name = "VALIDATE_PACKING_ROLL")
-	public EntityRuleDefinition<FreightFilter> validadePackingRoll() {
+	public Navigation<FreightFilter> validadePackingRoll() {
 
-		EntityRuleDefinition<FreightFilter> activities = new EntityRuleDefinition<>();
+		return new NavigationBuilder<FreightFilter>()
 
-		activities.addActivity(packingValidator);
-		activities.addActivity(packingRollWidthValidator);
-		activities.addActivity(packingRollHeightValidator);
-		activities.addActivity(packingRollLenghtValidator);
-		activities.addActivity(packingRollWeightValidator);
-		activities.addActivity(packingRollDiameterValidator);
+				.next(packingValidator)
+				.next(packingRollWidthValidator)
+				.next(packingRollHeightValidator)
+				.next(packingRollLenghtValidator)
+				.next(packingRollWeightValidator)
+				.next(packingRollDiameterValidator)
+				.build();
 
-		return activities;
 	}
 
 	@Bean(name = "VALIDATE_PACKING_ENVELOPE")
-	public EntityRuleDefinition<FreightFilter> validadePackingEnvelope() {
+	public Navigation<FreightFilter> validadePackingEnvelope() {
 
-		EntityRuleDefinition<FreightFilter> activities = new EntityRuleDefinition<>();
+		return new NavigationBuilder<FreightFilter>()
 
-		activities.addActivity(packingValidator);
-		activities.addActivity(packingEnvelopeWidthValidator);
-		activities.addActivity(packingEnvelopeHeightValidator);
-		activities.addActivity(packingEnvelopeLenghtValidator);
-		activities.addActivity(packingEnvelopeWeightValidator);
-		activities.addActivity(packingEnvelopeDiameterValidator);
+				.next(packingValidator)
+				.next(packingEnvelopeWidthValidator)
+				.next(packingEnvelopeHeightValidator)
+				.next(packingEnvelopeLenghtValidator)
+				.next(packingEnvelopeWeightValidator)
+				.next(packingEnvelopeDiameterValidator)
+				.build();
 
-		return activities;
 	}
 }

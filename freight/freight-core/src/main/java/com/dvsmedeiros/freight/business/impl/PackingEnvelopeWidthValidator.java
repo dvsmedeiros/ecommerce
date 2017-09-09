@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.bce.controller.INavigationCase;
-import com.dvsmedeiros.bce.controller.business.IStrategy;
+import com.dvsmedeiros.bce.core.controller.INavigationCase;
+import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.freight.domain.FreightFilter;
 
 @Component
