@@ -1,12 +1,16 @@
 package com.dvsmedeiros.product.controller.dao;
 
- import java.util.List;
+import java.util.List;
 
-import com.dvsmedeiros.bce.dao.IDAO;
+import org.springframework.stereotype.Component;
+
+import com.dvsmedeiros.bce.core.dao.IDAO;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.product.domain.Product;
 
+@Component
 public interface IProductDAO extends IDAO<Product> {
 	
-	public List<Product> filter(Filter<Product> filter);
+	List<Product> filter(Filter<Product> filter);
+	
 }

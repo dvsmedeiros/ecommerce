@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.dvsmedeiros.bce.controller.impl.EntityRuleDefinition;
+import com.dvsmedeiros.bce.core.controller.impl.Navigation;
+import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.shopcart.controller.business.impl.AddItemToCart;
 import com.dvsmedeiros.shopcart.controller.business.impl.FindProductInCart;
 import com.dvsmedeiros.shopcart.controller.business.impl.RemoveAllItemOfCart;
@@ -27,39 +28,32 @@ public class ShopCartNavigation {
 	private RemoveAllItemOfCart removeAllItemOfCart;
 	
 	@Bean(name="ADD_ITEM_TO_CART")
-	public EntityRuleDefinition<CartItem> addProductToCartNavigation(){
+	public Navigation<CartItem> addProductToCartNavigation(){
 		
-		EntityRuleDefinition<CartItem> activities = new EntityRuleDefinition<>();
-
-		activities.addActivity(findProductInCart);
-		activities.addActivity(findProductByIdActivity);
-		activities.addActivity(addItemToCart);
-		
-		return activities;
+		return new NavigationBuilder<CartItem>()
+				.next(findProductInCart)
+				.next(findProductByIdActivity)
+				.next(addItemToCart)
+				.build();
 		
 	}
 	
 	@Bean(name="REMOVE_ITEM_TO_CART")
-	public EntityRuleDefinition<CartItem> removeProductToCartNavigation(){
+	public Navigation<CartItem> removeProductToCartNavigation(){
 		
-		EntityRuleDefinition<CartItem> activities = new EntityRuleDefinition<>();
-		
-		activities.addActivity(findProductInCart);
-		activities.addActivity(removeItemOfCart);
-		
-		return activities;
-		
+		return new NavigationBuilder<CartItem>()
+				.next(findProductInCart)
+				.next(removeItemOfCart)
+				.build();
 	}
 	
 	@Bean(name="REMOVE_ALL_ITEM_TO_CART")
-	public EntityRuleDefinition<CartItem> removeAllProductToCartNavigation(){
+	public Navigation<CartItem> removeAllProductToCartNavigation(){
 		
-		EntityRuleDefinition<CartItem> activities = new EntityRuleDefinition<>();
-		
-		activities.addActivity(findProductInCart);
-		activities.addActivity(removeAllItemOfCart);
-		
-		return activities;
+		return new NavigationBuilder<CartItem>()
+		.next(findProductInCart)
+		.next(removeAllItemOfCart)
+		.build();
 		
 	}
 }

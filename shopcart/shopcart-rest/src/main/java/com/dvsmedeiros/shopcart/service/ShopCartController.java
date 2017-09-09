@@ -2,19 +2,20 @@ package com.dvsmedeiros.shopcart.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dvsmedeiros.bce.controller.IFacade;
-import com.dvsmedeiros.bce.controller.INavigator;
-import com.dvsmedeiros.bce.controller.impl.BusinessCase;
-import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
-import com.dvsmedeiros.bce.domain.Status;
-import com.dvsmedeiros.bce.domain.StatusResponse;
-import com.dvsmedeiros.bce.service.BaseController;
+import com.dvsmedeiros.bce.core.controller.IFacade;
+import com.dvsmedeiros.bce.core.controller.INavigator;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCase;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.rest.domain.ResponseMessage;
+import com.dvsmedeiros.rest.rest.controller.BaseController;
 import com.dvsmedeiros.shopcart.domain.Cart;
 import com.dvsmedeiros.shopcart.domain.CartItem;
 
@@ -33,9 +34,7 @@ public class ShopCartController extends BaseController {
 	private Cart cart;
 
 	@RequestMapping(value = "cart/product/{productId}", method = RequestMethod.POST)
-	public @ResponseBody StatusResponse addProducToCart(@PathVariable Long productId) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity<ResponseMessage> addProducToCart(@PathVariable Long productId) {
 
 		CartItem item = new CartItem();
 		item.getProduct().setId(productId);
@@ -44,24 +43,16 @@ public class ShopCartController extends BaseController {
 		navigator.run(item, aCase);
 
 		if (aCase.isSuspendExecution()) {
-
-			response.setCode(Status.ERROR);
-			response.setMessage(aCase.getResult().getMessage());
-			return response;
+			return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, aCase.getResult().getMessage()) , HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		response.setCode(Status.OK);
-		response.setMessage(item.getProduct().getDescription() + " adicionado ao carrinho!");
-
-		return response;
-
+		
+		return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, item.getProduct().getDescription() + " adicionado ao carrinho!"), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "cart/product", method = RequestMethod.GET)
 	public @ResponseBody Cart getShopCart() {
 
 		return cart;
-
 	}
 
 	@RequestMapping(value = "cart/product/{productId}", method = RequestMethod.PUT)

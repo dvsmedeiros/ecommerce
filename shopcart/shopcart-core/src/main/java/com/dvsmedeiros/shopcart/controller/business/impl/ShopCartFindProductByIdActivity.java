@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.bce.controller.INavigationCase;
-import com.dvsmedeiros.bce.controller.INavigator;
-import com.dvsmedeiros.bce.controller.business.IStrategy;
-import com.dvsmedeiros.bce.controller.impl.BusinessCase;
-import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
-import com.dvsmedeiros.bce.dao.IDAO;
+import com.dvsmedeiros.bce.core.controller.INavigationCase;
+import com.dvsmedeiros.bce.core.controller.INavigator;
+import com.dvsmedeiros.bce.core.controller.business.IStrategy;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCase;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.product.domain.Product;
 import com.dvsmedeiros.shopcart.domain.CartItem;
 
@@ -39,6 +38,7 @@ public class ShopCartFindProductByIdActivity implements IStrategy<CartItem>{
 				aCase.getResult().setMessage(bCase.getResult().getMessage());
 				return;
 			}
+			
 			aEntity.setProduct(product);
 	}
 
