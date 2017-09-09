@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dvsmedeiros.bce.controller.IFacade;
-import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.bce.core.controller.IFacade;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Result;
-import com.dvsmedeiros.bce.domain.Status;
-import com.dvsmedeiros.bce.domain.StatusResponse;
-import com.dvsmedeiros.bce.service.BaseController;
+import com.dvsmedeiros.rest.domain.ResponseMessage;
+import com.dvsmedeiros.rest.rest.controller.BaseController;
 import com.dvsmedeiros.supplier.domain.Supplier;
 
 @Controller
@@ -32,137 +33,123 @@ public class SupplierController extends BaseController {
 
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier", method = RequestMethod.POST)
-	public @ResponseBody StatusResponse saveSupplier(@RequestBody Supplier supplier) {
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity saveSupplier(@RequestBody Supplier supplier) {
 
 		try {
 
 			Result result = appFacade.save(supplier, new BusinessCaseBuilder().withName("SAVE_SUPPLIER").build());
 
 			if (result.hasError()) {
-				response.setCode(Status.ERROR);
-				response.setMessage(result.getMessage());
-				return response;
+				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-
-			response.setCode(Status.OK);
-			response.setMessage("Fornecedor cadastrado com sucesso.");
+			
+			return new ResponseEntity<Supplier>(supplier, HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao cadastrar fornecedor.");
+			return new ResponseEntity(new ResponseMessage(Boolean.TRUE, "Erro ao cadastrar fornecedor."), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return response;
 	}
 
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier", method = RequestMethod.PUT)
-	public @ResponseBody StatusResponse updateProductSupplier(@RequestBody Supplier supplier) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity<Supplier> updateProductSupplier(@RequestBody Supplier supplier) {
 
 		try {
 
 			Result result = appFacade.update(supplier, new BusinessCaseBuilder().forEntity(Supplier.class).build());
 
 			if (result.hasError()) {
-				response.setCode(Status.ERROR);
-				response.setMessage(result.getMessage());
-				return response;
+				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-
-			response.setCode(Status.OK);
-			response.setMessage("Fornecedor atualizado com sucesso.");
+			
+			return new ResponseEntity<Supplier>(supplier, HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao atualizar fornecedor.");
+			return new ResponseEntity(new ResponseMessage(Boolean.TRUE, "Erro ao cadastrar fornecedor."), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return response;
 	}
 
 	@Cacheable(value = "cacheSuppliers")
 	@RequestMapping(value = "supplier", method = RequestMethod.GET)
-	public @ResponseBody List<Supplier> getProductCategories(
-			@RequestParam(value = "active", required = false) boolean active) {
-
-		Result result = null;
+	public @ResponseBody ResponseEntity getProductCategories(	@RequestParam(value = "active", required = false) Boolean active) {
 
 		try {
 
-			result = appFacade.findAll(active, Supplier.class, new BusinessCaseBuilder().build());
+			Result result;
+			
+			if(active != null) {
+				result = appFacade.findAll(Supplier.class, active, new BusinessCaseBuilder().build());
+			} else {
+				result = appFacade.findAll(Supplier.class, new BusinessCaseBuilder().build());
+			}
+			
+			List<Supplier> suppliers = result.getEntities();
+			return new ResponseEntity(suppliers, HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		return result.getEntities();
+		
 	}
 
 	@RequestMapping(value = "supplier/{supplierId}", method = RequestMethod.GET)
-	public @ResponseBody Supplier getProductSupplierById(@PathVariable Long supplierId) {
-
-		Result result = null;
+	public @ResponseBody ResponseEntity<Supplier> getProductSupplierById(@PathVariable Long supplierId) {
 
 		try {
 
-			result = appFacade.find(supplierId, Supplier.class, new BusinessCaseBuilder().build());
+			Result result = appFacade.find(supplierId, new BusinessCaseBuilder().build());
+			Supplier supplier = result.getEntity();
+			return new ResponseEntity<>(supplier, HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		return result.getEntities();
+		
 	}
 
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier/{supplierId}", method = RequestMethod.DELETE)
-	public @ResponseBody StatusResponse deleteProductSupplierById(@PathVariable Long supplierId) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity deleteProductSupplierById(@PathVariable Long supplierId) {
 
 		try {
 
-			Supplier supplier = appFacade.find(supplierId, Supplier.class, new BusinessCaseBuilder<Supplier>().build())
-					.getEntity("entity");
+			Supplier supplier = appFacade.find(supplierId, new BusinessCaseBuilder<Supplier>().build()).getEntity();
 			appFacade.delete(supplier, new BusinessCaseBuilder().build());
 
-			response.setCode(Status.OK);
-			response.setMessage("Fornecedor removida com sucesso.");
+			return new ResponseEntity<>(HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao remover Fornecedor");
+			return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, "Erro ao remover Fornecedor"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return response;
 	}
 
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "supplier/{supplierId}", method = RequestMethod.PUT)
-	public @ResponseBody StatusResponse inactivateProductSupplierById(@PathVariable Long supplierId) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity inactivateProductSupplierById(@PathVariable Long supplierId) {
 
 		try {
 
-			Supplier supplier = appFacade.find(supplierId, Supplier.class, new BusinessCaseBuilder<Supplier>().build())
-					.getEntity("entity");
-			appFacade.delete(supplier.getCode(), Supplier.class, new BusinessCaseBuilder().build());
+			Supplier supplier = appFacade.find(supplierId, new BusinessCaseBuilder<Supplier>().build()).getEntity();
+			supplier.setActive(Boolean.FALSE);
+			Result result = appFacade.inactivate(supplier);
+			
+			if(result.hasError()) {
+				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 
-			response.setCode(Status.OK);
-			response.setMessage("Fornecedor removida com sucesso.");
+			return new ResponseEntity<>(HttpStatus.OK);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao remover Fornecedor");
+			return new ResponseEntity(new ResponseMessage(Boolean.TRUE, "Erro ao remover Fornecedor"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		return response;
 	}
 }
