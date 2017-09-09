@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,16 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dvsmedeiros.bce.controller.IFacade;
-import com.dvsmedeiros.bce.controller.INavigator;
-import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.bce.core.controller.IFacade;
+import com.dvsmedeiros.bce.core.controller.INavigator;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
-import com.dvsmedeiros.bce.domain.Status;
-import com.dvsmedeiros.bce.domain.StatusResponse;
-import com.dvsmedeiros.bce.service.BaseController;
 import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.order.domain.Order;
+import com.dvsmedeiros.rest.domain.ResponseMessage;
+import com.dvsmedeiros.rest.rest.controller.BaseController;
 
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -38,12 +39,10 @@ public class OrderController extends BaseController {
 	private User loggedUser;
 
 	@RequestMapping(value = "checkout", method = RequestMethod.POST)
-	public @ResponseBody StatusResponse checkout(@RequestBody Order order) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity checkout(@RequestBody Order order) {
 
 		try {
-
+			
 			if (loggedUser != null && loggedUser.getId() > 0) {
 				order.setUser(loggedUser);
 			}
@@ -51,27 +50,19 @@ public class OrderController extends BaseController {
 			Result result = appFacade.save(order, new BusinessCaseBuilder().withName("CHECKOUT").build());
 
 			if (result.hasError()) {
-				response.setCode(Status.ERROR);
-				response.setMessage(result.getMessage());
-				return response;
+				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
-			response.setCode(Status.OK);
-			response.setMessage("Pedido cadastrado com sucesso.");
+			return new ResponseEntity(HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao cadastrar pedido.");
+			return new ResponseEntity(new ResponseMessage(Boolean.TRUE, "Erro ao cadastrar pedido."), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		return response;
 	}
-
+	
 	@RequestMapping(value = "orders", method = RequestMethod.GET)
-	public @ResponseBody List<Order> getOrders() {
-
-		Result result = null;
+	public @ResponseBody ResponseEntity getOrders() {
 
 		try {
 
@@ -81,29 +72,31 @@ public class OrderController extends BaseController {
 				filter.getEntity().setUser(loggedUser);
 			}
 
-			result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_ORDER").build());
-
+			Result result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_ORDER").build());
+			List<Order> orders =  result.getEntity("orders");
+			
+			return new ResponseEntity(orders, HttpStatus.OK);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		return result.getEntity("orders");
 	}
 
 	@RequestMapping(value = "orders/{orderId}", method = RequestMethod.GET)
-	public @ResponseBody Order getProductById(@PathVariable Long orderId) {
-
-		Result result = null;
+	public @ResponseBody ResponseEntity getProductById(@PathVariable Long orderId) {
 
 		try {
 
-			result = appFacade.find(orderId, Order.class, new BusinessCaseBuilder<Order>().build());
-
+			Result result = appFacade.find(orderId, new BusinessCaseBuilder<Order>().build());
+			Order order = result.getEntity();
+			return new ResponseEntity(order, HttpStatus.OK);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return result.getEntity();
 	}
 
 }

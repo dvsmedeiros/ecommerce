@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.dvsmedeiros.bce.controller.impl.EntityRuleDefinition;
+import com.dvsmedeiros.bce.core.controller.impl.Navigation;
+import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.order.controller.business.impl.AddOrderStatus;
 import com.dvsmedeiros.order.controller.business.impl.CleanShopCart;
 import com.dvsmedeiros.order.controller.business.impl.FindFilterOrder;
-import com.dvsmedeiros.order.controller.dao.OrderDAO;
 import com.dvsmedeiros.order.domain.Order;
-import com.dvsmedeiros.product.domain.Product;
 
 @Configuration
 public class OrderNavigation {
@@ -23,30 +22,20 @@ public class OrderNavigation {
 	@Autowired
 	private FindFilterOrder findFilterOrder;
 	
-	
-	@Bean(name="com.dvsmedeiros.order.domain.Order")
-	public OrderDAO getProductDAO(){
-		return new OrderDAO();
-	}
-	
 	@Bean(name="CHECKOUT")
-	public EntityRuleDefinition<Order> getSaveOrderNavigation(){
+	public Navigation<Order> getSaveOrderNavigation(){
 		
-		EntityRuleDefinition<Order> activities = new EntityRuleDefinition<>();
-		activities.addActivity(addOrderStatus);
-		activities.addActivity(cleanShopCart);
-		
-		return activities;
+		return new NavigationBuilder<Order>()
+		.next(addOrderStatus)
+		.next(cleanShopCart)
+		.build();
 	}
 	
 	@Bean(name = "FIND_FILTER_ORDER")
-	public EntityRuleDefinition<Filter<Order>> findFilterProduct() {
+	public Navigation<Filter<Order>> findFilterProduct() {
 
-		EntityRuleDefinition<Filter<Order>> activities = new EntityRuleDefinition<>();
-
-		activities.addActivity(findFilterOrder);
-
-		return activities;
+		return new NavigationBuilder<Filter<Order>>()
+				.next(findFilterOrder)
+				.build();
 	}
-
 }

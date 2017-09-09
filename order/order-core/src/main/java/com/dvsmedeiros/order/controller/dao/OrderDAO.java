@@ -2,20 +2,23 @@ package com.dvsmedeiros.order.controller.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
-import com.dvsmedeiros.bce.dao.impl.GenericDAO;
+import com.dvsmedeiros.bce.core.dao.impl.GenericDAO;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.order.controller.dao.impl.IOrderDAO;
 import com.dvsmedeiros.order.domain.Order;
-import com.dvsmedeiros.product.domain.Product;
 
 @Repository
-@SuppressWarnings("unchecked")
-public class OrderDAO extends GenericDAO<Order> implements IOrderDAO {
-
+public class OrderDAO extends GenericDAO<Order> implements IOrderDAO{
+	
+	@PersistenceContext
+	private EntityManager em;
+	
 	@Override
 	public List<Order> filter(Filter<Order> filter) {
 
@@ -34,7 +37,7 @@ public class OrderDAO extends GenericDAO<Order> implements IOrderDAO {
 			jpql.append(" AND u.id = :userId");
 		}
 
-		Query query = em.createQuery(jpql.toString());
+		TypedQuery<Order> query = em.createQuery(jpql.toString(), Order.class);
 		
 		if (validFilter && filter.getEntity().getUser() != null) {
 			query.setParameter("userId", filter.getEntity().getUser().getId());
@@ -42,5 +45,4 @@ public class OrderDAO extends GenericDAO<Order> implements IOrderDAO {
 
 		return query.getResultList();
 	}
-
 }

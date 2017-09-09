@@ -3,11 +3,10 @@ package com.dvsmedeiros.order.controller.business.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.bce.controller.INavigationCase;
-import com.dvsmedeiros.bce.controller.business.IStrategy;
+import com.dvsmedeiros.bce.core.controller.INavigationCase;
+import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.order.controller.dao.OrderDAO;
 import com.dvsmedeiros.order.domain.Order;
@@ -16,7 +15,6 @@ import com.dvsmedeiros.order.domain.Order;
 public class FindFilterOrder implements IStrategy<Filter<Order>> {
 	
 	@Autowired
-	@Qualifier("com.dvsmedeiros.order.domain.Order")
 	private OrderDAO dao;
 	
 	@Override
