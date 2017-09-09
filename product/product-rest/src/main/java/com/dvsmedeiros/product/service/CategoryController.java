@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,15 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dvsmedeiros.bce.controller.IFacade;
-import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
-import com.dvsmedeiros.bce.controller.impl.EntityRuleDefinition;
+import com.dvsmedeiros.bce.core.controller.IFacade;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Result;
-import com.dvsmedeiros.bce.domain.Status;
-import com.dvsmedeiros.bce.domain.StatusResponse;
-import com.dvsmedeiros.bce.service.BaseController;
 import com.dvsmedeiros.product.domain.Category;
-import com.dvsmedeiros.product.domain.Product;
+import com.dvsmedeiros.rest.domain.ResponseMessage;
+import com.dvsmedeiros.rest.rest.controller.BaseController;
 
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -35,138 +33,121 @@ public class CategoryController extends BaseController{
 
 	@CacheEvict(value = "cacheCategories", allEntries = true)
 	@RequestMapping(value = "products/category", method = RequestMethod.POST)
-	public @ResponseBody StatusResponse saveProductCategory(@RequestBody Category category) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity saveProductCategory(@RequestBody Category category) {
 
 		try {
 
 			Result result = appFacade.save(category, new BusinessCaseBuilder().withName("SAVE_CATEGORY").build());
 
-			if (result.hasError()) {
-				response.setCode(Status.ERROR);
-				response.setMessage(result.getMessage());
-				return response;
+			if (result.hasError()) {				
+				return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-
-			response.setCode(Status.OK);
-			response.setMessage("Categoria cadastrada com sucesso.");
+			return new ResponseEntity<>(HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao cadastrar categoria.");
+			return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, "Erro ao cadastrar categoria."), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return response;
 	}
 	
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "products/category", method = RequestMethod.PUT)
-	public @ResponseBody StatusResponse updateProductCategory(@RequestBody Category category) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity updateProductCategory(@RequestBody Category category) {
 
 		try {
 
-			Result result = appFacade.update(category,
-					new BusinessCaseBuilder().forEntity(Category.class).build());
+			Result result = appFacade.update(category, new BusinessCaseBuilder().forEntity(Category.class).build());
 
 			if (result.hasError()) {
-				response.setCode(Status.ERROR);
-				response.setMessage(result.getMessage());
-				return response;
+				return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-
-			response.setCode(Status.OK);
-			response.setMessage("Categoria atualizada com sucesso.");
+			return new ResponseEntity<>(HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao atualizar categoria.");
+			return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, "Erro ao atualizar categoria."), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return response;
 	}
 	
 	@Cacheable(value = "cacheCategories")
 	@RequestMapping(value = "products/category", method = RequestMethod.GET)
-	public @ResponseBody List<Category> getProductCategories(@RequestParam(value = "active", required = false) boolean active) {
-
-		Result result = null;
+	public @ResponseBody ResponseEntity<List<Category>> getProductCategories(@RequestParam(value = "active", required = false) Boolean active) {
 
 		try {
-
-			result = appFacade.findAll(active, Category.class, new BusinessCaseBuilder().build());
-
+			
+			Result result;
+			
+			if(active != null) {
+				result = appFacade.findAll(Category.class, active, new BusinessCaseBuilder().build());
+			} else {
+				result = appFacade.findAll(Category.class, new BusinessCaseBuilder().build());
+			}
+			
+			List<Category> categories = result.getEntities();
+			
+			return new ResponseEntity<>(categories, HttpStatus.OK);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return result.getEntities();
 	}
 
 	@RequestMapping(value = "products/category/{categoryId}", method = RequestMethod.GET)
-	public @ResponseBody Category getProductCategoryById(@PathVariable Long categoryId) {
-
-		Result result = null;
+	public @ResponseBody ResponseEntity<Category> getProductCategoryById(@PathVariable Long categoryId) {
 
 		try {
 
-			result = appFacade.find(categoryId, Category.class, new BusinessCaseBuilder().build());
-
+			Result result = appFacade.find(categoryId, new BusinessCaseBuilder().build());
+			Category category = result.getEntity();
+			
+			return new ResponseEntity<>(category, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return result.getEntity();
 	}
 	
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "products/category/{categoryId}", method = RequestMethod.DELETE)
-	public @ResponseBody StatusResponse deleteProductCategoryById(@PathVariable Long categoryId) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity deleteProductCategoryById(@PathVariable Long categoryId) {
 
 		try {
 
-			Category category = appFacade.find(categoryId, Category.class, new BusinessCaseBuilder<Category>().build()).getEntity("entity");
+			Category category = appFacade.find(categoryId, new BusinessCaseBuilder<Category>().build()).getEntity();
 			appFacade.delete(category, new BusinessCaseBuilder().build());
 
-			response.setCode(Status.OK);
-			response.setMessage("Categoria removida com sucesso.");
+			return new ResponseEntity<>(HttpStatus.OK);			
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao remover Categoria");
+			return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, "Erro ao remover Categoria"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return response;
 	}
 	
 	@CacheEvict(value = "cacheSuppliers", allEntries = true)
 	@RequestMapping(value = "products/category/{categoryId}", method = RequestMethod.PUT)
-	public @ResponseBody StatusResponse inactivateProductCategoryById(@PathVariable Long categoryId) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity inactivateProductCategoryById(@PathVariable Long categoryId) {
 
 		try {
 			
-			Category category = appFacade.find(categoryId, Category.class, new BusinessCaseBuilder<Category>().build()).getEntity("entity");
-			appFacade.delete(category.getCode(), Category.class, new BusinessCaseBuilder().build());
+			Category category = appFacade.find(categoryId, new BusinessCaseBuilder<Category>().build()).getEntity();
+			Result result = appFacade.inactivate(category);
 			
-
-			response.setCode(Status.OK);
-			response.setMessage("Categoria removida com sucesso.");
+			if(result.hasError()) {
+				return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			return new ResponseEntity<>(HttpStatus.OK);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao remover Categoria");
+			return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, "Erro ao remover Categoria"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		return response;
 	}
 
 }

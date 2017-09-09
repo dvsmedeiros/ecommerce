@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.dvsmedeiros.bce.controller.business.impl.ActiveValidator;
-import com.dvsmedeiros.bce.controller.business.impl.CodeValidator;
-import com.dvsmedeiros.bce.controller.business.impl.DescriptionValidator;
-import com.dvsmedeiros.bce.controller.business.impl.IdValidator;
-import com.dvsmedeiros.bce.controller.impl.EntityRuleDefinition;
+import com.dvsmedeiros.bce.core.controller.business.impl.ActiveValidator;
+import com.dvsmedeiros.bce.core.controller.business.impl.CodeValidator;
+import com.dvsmedeiros.bce.core.controller.business.impl.DescriptionValidator;
+import com.dvsmedeiros.bce.core.controller.business.impl.IdValidator;
+import com.dvsmedeiros.bce.core.controller.impl.Navigation;
+import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.product.controller.business.impl.FindFilterProduct;
 import com.dvsmedeiros.product.controller.business.impl.FindProductByIdActivity;
 import com.dvsmedeiros.product.controller.business.impl.ShortDescriptionValidator;
-import com.dvsmedeiros.product.controller.dao.impl.ProductDAO;
 import com.dvsmedeiros.product.domain.Category;
 import com.dvsmedeiros.product.domain.Product;
 
@@ -35,55 +35,46 @@ public class ProductNavigation {
 	@Autowired
 	private FindFilterProduct findFilterProduct;
 	
-	@Bean(name="com.dvsmedeiros.product.domain.Product")
-	public ProductDAO getProductDAO(){
-		return new ProductDAO();
-	}
-	
 	@Bean(name="SAVE_PRODUCT")
-	public EntityRuleDefinition<Product> getSaveProductNavigation(){
+	public Navigation<Product> getSaveProductNavigation(){
 		
-		EntityRuleDefinition<Product> activities = new EntityRuleDefinition<>();
+		return new NavigationBuilder<Product>()
+				.next(codeValidator)
+				.next(descriptionValidator)
+				.next(activeValidator)
+				.next(shortDescriptionValidator)
+				.next(null/*CREATE STOCK*/)
+				.build();
 		
-		activities.addActivity(codeValidator);
-		activities.addActivity(descriptionValidator);
-		activities.addActivity(activeValidator);
-		activities.addActivity(shortDescriptionValidator);
-		
-		return activities;
 	}
 	
 	@Bean(name="FIND_PRODUCT_BY_ID")
-	public EntityRuleDefinition<Product> findProductByIdNavigation(){
+	public Navigation<Product> findProductByIdNavigation(){
 		
-		EntityRuleDefinition<Product> activities = new EntityRuleDefinition<>();
-		
-		activities.addActivity(idValidator);
-		activities.addActivity(findProductByIdActivity);
-		
-		return activities;
+		return new NavigationBuilder<Product>()
+				.next(idValidator)
+				.next(findProductByIdActivity)
+				.build();		
 	}
 	
 	@Bean(name = "FIND_FILTER_PRODUCT")
-	public EntityRuleDefinition<Filter<Product>> findFilterProduct() {
+	public Navigation<Filter<Product>> findFilterProduct() {
 
-		EntityRuleDefinition<Filter<Product>> activities = new EntityRuleDefinition<>();
+		return new NavigationBuilder<Filter<Product>>()
+				.next(findFilterProduct)
+				.build();
 
-		activities.addActivity(findFilterProduct);
-
-		return activities;
 	}
 	
 	@Bean(name="SAVE_CATEGORY")
-	public EntityRuleDefinition<Category> getSaveCategoryNavigation(){
+	public Navigation<Category> getSaveCategoryNavigation(){
 		
-		EntityRuleDefinition<Category> activities = new EntityRuleDefinition<>();
+		return new NavigationBuilder<Category>()
+				.next(codeValidator)
+				.next(descriptionValidator)
+				.next(activeValidator)
+				.build();
 		
-		activities.addActivity(codeValidator);
-		activities.addActivity(descriptionValidator);
-		activities.addActivity(activeValidator);
-		
-		return activities;
 	}
 	
 	

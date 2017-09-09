@@ -2,9 +2,10 @@ package com.dvsmedeiros.product.service;
 
 import java.util.List;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,152 +14,119 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dvsmedeiros.bce.conf.log.Log;
-import com.dvsmedeiros.bce.controller.IFacade;
-import com.dvsmedeiros.bce.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.bce.core.controller.IFacade;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
-import com.dvsmedeiros.bce.domain.Status;
-import com.dvsmedeiros.bce.domain.StatusResponse;
-import com.dvsmedeiros.bce.service.BaseController;
 import com.dvsmedeiros.product.domain.Category;
 import com.dvsmedeiros.product.domain.Product;
+import com.dvsmedeiros.rest.domain.ResponseMessage;
+import com.dvsmedeiros.rest.rest.controller.BaseController;
 
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ProductController extends BaseController {
 
-	private @Log Logger LOGGER;
-
 	@Autowired
 	@Qualifier("applicationFacade")
-	IFacade<Product> appFacade;
+	private IFacade<Product> appFacade;
 
-	// @CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products", method = RequestMethod.POST)
-	public @ResponseBody StatusResponse saveProduct(@RequestBody Product product) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity saveProduct(@RequestBody Product product) {
 
 		try {
 
 			Result result = appFacade.save(product, new BusinessCaseBuilder().withName("SAVE_PRODUCT").build());
 
 			if (result.hasError()) {
-				response.setCode(Status.ERROR);
-				response.setMessage(result.getMessage());
-				return response;
+				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
-			response.setCode(Status.OK);
-			response.setMessage("Produto cadastrado com sucesso.");
+			return new ResponseEntity<>(HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao cadastrar produto.");
+			return new ResponseEntity(new ResponseMessage(Boolean.TRUE, "Erro ao cadastrar produto."), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return response;
-
 	}
-
-	// @CacheEvict(value = "cacheProducts", allEntries = true)
+	
 	@RequestMapping(value = "products", method = RequestMethod.PUT)
-	public @ResponseBody StatusResponse updateProduct(@RequestBody Product product) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity updateProduct(@RequestBody Product product) {
 
 		try {
 
 			Result result = appFacade.update(product, new BusinessCaseBuilder().forEntity(Product.class).build());
 
 			if (result.hasError()) {
-				response.setCode(Status.ERROR);
-				response.setMessage(result.getMessage());
-				return response;
+				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
-			response.setCode(Status.OK);
-			response.setMessage("Produto atualizado com sucesso.");
+			return new ResponseEntity<>(HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao atualizar produto.");
+			return new ResponseEntity(new ResponseMessage(Boolean.TRUE, "Erro ao atualizar produto."), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return response;
 	}
 
 	@RequestMapping(value = "products/{productId}", method = RequestMethod.GET)
-	public @ResponseBody Product getProductById(@PathVariable Long productId) {
+	public @ResponseBody ResponseEntity<Product> getProductById(@PathVariable Long productId) {
 
-		Result result = null;
 
 		try {
 
-			result = appFacade.find(productId, Product.class, new BusinessCaseBuilder<Product>().build());
-
+			Result result = appFacade.find(productId, new BusinessCaseBuilder<Product>().build());
+			Product product = result.getEntity();
+			return new ResponseEntity<Product>(product, HttpStatus.OK);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return result.getEntity();
 	}
 
-	// @CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products/{productId}", method = RequestMethod.DELETE)
-	public @ResponseBody StatusResponse deleteProductById(@PathVariable Long productId) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity deleteProductById(@PathVariable Long productId) {
 
 		try {
 
-			Product product = appFacade.find(productId, Product.class, new BusinessCaseBuilder<Product>().build())
-					.getEntity();
+			Product product = appFacade.find(productId, new BusinessCaseBuilder<Product>().build()).getEntity();
 			appFacade.delete(product, new BusinessCaseBuilder().build());
 
-			response.setCode(Status.OK);
-			response.setMessage("Produto removido com sucesso.");
+			return new ResponseEntity<>(HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao remover Produto");
+			return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, "Erro ao remover Produto"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		return response;
 	}
 
-	// @CacheEvict(value = "cacheProducts", allEntries = true)
 	@RequestMapping(value = "products/{productId}", method = RequestMethod.PUT)
-	public @ResponseBody StatusResponse deleteLogicalProductById(@PathVariable Long productId) {
-
-		StatusResponse response = new StatusResponse();
+	public @ResponseBody ResponseEntity deleteLogicalProductById(@PathVariable Long productId) {
 
 		try {
-			Product product = appFacade.find(productId, Product.class, new BusinessCaseBuilder<Product>().build())
-					.getEntity();
-			appFacade.delete(product.getCode(), Product.class, new BusinessCaseBuilder<Product>().build());
-
-			response.setCode(Status.OK);
-			response.setMessage("Produto removido com sucesso.");
+			
+			Product product = appFacade.find(productId, new BusinessCaseBuilder<Product>().build()).getEntity();
+			Result result = appFacade.inactivate(product);
+			
+			if(result.hasError()) {
+				return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+			return new ResponseEntity<>(product, HttpStatus.OK);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setCode(Status.ERROR);
-			response.setMessage("Erro ao remover Produto.");
+			return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, "Erro ao remover Produto."), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		return response;
 	}
 
-	// @Cacheable(value = "cacheProducts")
 	@RequestMapping(value = "products", method = RequestMethod.GET)
-	public @ResponseBody List<Product> getProducts(@RequestParam(value = "active", required = false) Boolean active,
+	public @ResponseBody ResponseEntity getProducts(@RequestParam(value = "active", required = false) Boolean active,
 			@RequestParam(value = "categoryId", required = false) Long categoryId) {
-
-		Result result = null;
 
 		try {
 
@@ -175,11 +143,19 @@ public class ProductController extends BaseController {
 
 			filter.getEntity().setCategory(category);
 
-			result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_PRODUCT").build());
+			Result result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_PRODUCT").build());
+			
+			if(result.hasError()) {
+				return new ResponseEntity(new ResponseMessage(Boolean.FALSE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+			List<Product> products = result.getEntity("products");
+			return new ResponseEntity(products, HttpStatus.OK);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		return result.getEntity("products");
+		
 	}
 }

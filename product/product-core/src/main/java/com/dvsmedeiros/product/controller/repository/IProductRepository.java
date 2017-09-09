@@ -1,12 +1,9 @@
-package com.dvsmedeiros.product.controller.dao;
+package com.dvsmedeiros.product.controller.repository;
 
- import java.util.List;
+import org.springframework.data.repository.CrudRepository;
 
-import com.dvsmedeiros.bce.dao.IDAO;
-import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.product.domain.Product;
 
-public interface IProductDAO extends IDAO<Product> {
+public interface IProductRepository extends CrudRepository<Product, Long>{
 	
-	public List<Product> filter(Filter<Product> filter);
 }
