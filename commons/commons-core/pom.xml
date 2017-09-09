@@ -25,14 +25,7 @@
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
 			<artifactId>bce-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
+			<version>${bce.version}</version>
 		</dependency>
 
 		<dependency>

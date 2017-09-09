@@ -22,8 +22,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "USERS")
 public class User extends Individual {
 
-	// @Transient
-	// private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	private String password;
 
 	@OneToMany(cascade = CascadeType.ALL)
@@ -35,9 +33,6 @@ public class User extends Individual {
 	@OneToMany(cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Role> roles;
-
-	@Transient
-	private boolean authenticated;
 	
 	public List<CreditCard> getCards() {
 		return cards;
@@ -53,14 +48,6 @@ public class User extends Individual {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public boolean isAuthenticated() {
-		return authenticated;
-	}
-
-	public void setAuthenticated(boolean authenticated) {
-		this.authenticated = authenticated;
 	}
 
 	public List<Role> getRoles() {
