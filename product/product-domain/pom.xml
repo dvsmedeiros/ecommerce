@@ -15,13 +15,13 @@
 	</parent>
 	
 	<dependencies>
-
+		
 		<dependency>
 		    <groupId>com.dvsmedeiros</groupId>
-		    <artifactId>bce-domain</artifactId>
+		    <artifactId>commons-domain</artifactId>
 		    <version>${project.version}</version>
 		</dependency>
-	
+		
 		<dependency>
 		    <groupId>com.dvsmedeiros</groupId>
 		    <artifactId>supplier-domain</artifactId>
