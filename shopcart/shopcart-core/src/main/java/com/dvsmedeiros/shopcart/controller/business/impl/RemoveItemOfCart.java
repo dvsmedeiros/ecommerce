@@ -22,7 +22,7 @@ public class RemoveItemOfCart implements IStrategy<CartItem>{
 		
 		if(target == null){
 			aCase.suspendExecution();
-			aCase.getResult().setMessage("Produto: " + aEntity.getProduct().getName() + " não está no carrinho!");
+			aCase.getResult().setMessage("Produto: " + aEntity.getProduct().getDescription() + " não está no carrinho!");
 		}
 		
 		cart.removeItem(target);
