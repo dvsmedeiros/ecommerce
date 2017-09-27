@@ -44,7 +44,14 @@
 			<artifactId>product-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>category-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
+		<!-- 
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
 			<artifactId>shopcart-rest</artifactId>
@@ -59,19 +66,7 @@
 
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
-			<artifactId>stock-rest</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.dvsmedeiros</groupId>
 			<artifactId>payment-rest</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.dvsmedeiros</groupId>
-			<artifactId>supplier-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -86,7 +81,25 @@
 			<artifactId>order-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		 
+		 -->
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>stock-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>supplier-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>bce-auth</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		 -->
 	</dependencies>
 
 	<build>
