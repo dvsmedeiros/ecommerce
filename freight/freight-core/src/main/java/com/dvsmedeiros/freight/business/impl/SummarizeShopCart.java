@@ -37,7 +37,7 @@ public class SummarizeShopCart implements IStrategy<FreightFilter> {
 				height = height.add(cartItem.getProduct().getPacking().getHeight()).multiply(quantity);
 				width = width.add(cartItem.getProduct().getPacking().getWidth()).multiply(quantity);
 				weight = weight.add(cartItem.getProduct().getPacking().getWeight()).multiply(quantity);
-				declaredValue = declaredValue.add(cartItem.getProduct().getPrice().getValue()).multiply(quantity);
+				declaredValue = declaredValue.add(cartItem.getProduct().getSalePrice().getValue()).multiply(quantity);
 				
 			}
 			
@@ -53,7 +53,7 @@ public class SummarizeShopCart implements IStrategy<FreightFilter> {
 			price.setValue(declaredValue);
 			
 			Product product = new Product();
-			product.setPrice(price);
+			product.setSalePrice(price);
 			product.setPacking(packing);
 						
 			aEntity.getEntity().setProduct(product);			

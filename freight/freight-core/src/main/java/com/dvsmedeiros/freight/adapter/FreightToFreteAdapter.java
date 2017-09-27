@@ -21,7 +21,7 @@ public class FreightToFreteAdapter implements IAdapter<Freight, Frete>{
 		frete.setFormato(source.getProduct().getPacking().getType().getValue());
 		frete.setLargura(source.getProduct().getPacking().getWidth());
 		frete.setPeso(source.getProduct().getPacking().getWeight().toString());
-		frete.setValorDeclarado(source.getProduct().getPrice().getValue());
+		frete.setValorDeclarado(source.getProduct().getSalePrice().getValue());
 		
 		return frete;
 	}
