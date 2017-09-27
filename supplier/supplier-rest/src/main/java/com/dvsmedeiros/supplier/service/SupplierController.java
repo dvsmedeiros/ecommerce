@@ -102,7 +102,7 @@ public class SupplierController extends BaseController {
 
 		try {
 
-			Result result = appFacade.find(supplierId, new BusinessCaseBuilder().build());
+			Result result = appFacade.find(supplierId, Supplier.class);
 			Supplier supplier = result.getEntity();
 			return new ResponseEntity<>(supplier, HttpStatus.OK);
 
@@ -119,7 +119,7 @@ public class SupplierController extends BaseController {
 
 		try {
 
-			Supplier supplier = appFacade.find(supplierId, new BusinessCaseBuilder<Supplier>().build()).getEntity();
+			Supplier supplier = appFacade.find(supplierId, Supplier.class).getEntity();
 			appFacade.delete(supplier, new BusinessCaseBuilder().build());
 
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -137,7 +137,7 @@ public class SupplierController extends BaseController {
 
 		try {
 
-			Supplier supplier = appFacade.find(supplierId, new BusinessCaseBuilder<Supplier>().build()).getEntity();
+			Supplier supplier = appFacade.find(supplierId, Supplier.class).getEntity();
 			supplier.setActive(Boolean.FALSE);
 			Result result = appFacade.inactivate(supplier);
 			
