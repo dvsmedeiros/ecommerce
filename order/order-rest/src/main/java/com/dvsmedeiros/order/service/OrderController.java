@@ -88,7 +88,7 @@ public class OrderController extends BaseController {
 
 		try {
 
-			Result result = appFacade.find(orderId, new BusinessCaseBuilder<Order>().build());
+			Result result = appFacade.find(orderId, Order.class);
 			Order order = result.getEntity();
 			return new ResponseEntity(order, HttpStatus.OK);
 			
