@@ -23,6 +23,12 @@
 		</dependency>
 		
 		<dependency>
+		    <groupId>com.dvsmedeiros</groupId>
+		    <artifactId>category-domain</artifactId>
+		    <version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
 			<artifactId>bce-domain</artifactId>
 			<version>${bce.version}</version>
