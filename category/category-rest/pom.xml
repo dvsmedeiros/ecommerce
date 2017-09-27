@@ -2,42 +2,30 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>product-domain</artifactId>
+	<artifactId>category-rest</artifactId>
 	<packaging>jar</packaging>
-	<name>product-domain</name>
+	<name>category-rest</name>
 	<url>http://dvsmedeiros.com.br</url>
-	
+
 	<parent>
 		<groupId>com.dvsmedeiros</groupId>
-		<artifactId>product</artifactId>
+		<artifactId>category</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	
+
 	<dependencies>
+
+		<dependency>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>category-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>		
 		
 		<dependency>
-		    <groupId>com.dvsmedeiros</groupId>
-		    <artifactId>commons-domain</artifactId>
-		    <version>${project.version}</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>com.dvsmedeiros</groupId>
-		    <artifactId>category-domain</artifactId>
-		    <version>${project.version}</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>com.dvsmedeiros</groupId>
-		    <artifactId>supplier-domain</artifactId>
-		    <version>${project.version}</version>
-		</dependency>
-	
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-context</artifactId>
-		    <version>${spring.version}</version>
+			<groupId>com.dvsmedeiros</groupId>
+			<artifactId>commons-rest</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		
 		<dependency>
@@ -50,7 +38,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>product-domain</finalName>
+		<finalName>category-rest</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -63,4 +51,5 @@
 			</plugin>
 		</plugins>
 	</build>
+
 </project>

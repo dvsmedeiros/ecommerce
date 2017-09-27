@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+ 
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.dvsmedeiros</groupId>
+	<artifactId>category</artifactId>
+	<packaging>pom</packaging>
+	<name>category-codebase</name>
+	<version>1.0.0-SNAPSHOT</version>
+	<url>http://dvsmedeiros.com.br</url>
+	
+	<properties>
+		<spring.version>4.3.6.RELEASE</spring.version>
+		<junit.version>4.8.2</junit.version>
+		<java.version>1.8</java.version>
+		<bce.version>0.0.1-SNAPSHOT</bce.version>		
+	</properties>
+	
+	<modules>
+		<module>category-domain</module>
+		<module>category-core</module>
+		<module>category-rest</module>
+	</modules>
+	
+</project>

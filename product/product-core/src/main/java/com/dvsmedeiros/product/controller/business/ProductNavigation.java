@@ -14,7 +14,6 @@ import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.product.controller.business.impl.FindFilterProduct;
 import com.dvsmedeiros.product.controller.business.impl.FindProductByIdActivity;
 import com.dvsmedeiros.product.controller.business.impl.ShortDescriptionValidator;
-import com.dvsmedeiros.product.domain.Category;
 import com.dvsmedeiros.product.domain.Product;
 
 @Configuration
@@ -35,6 +34,13 @@ public class ProductNavigation {
 	@Autowired
 	private FindFilterProduct findFilterProduct;
 	
+	@Bean(name="SAVE_RESPONSEMESSAGE")
+	public Navigation<Product> getSaveResponseMessageNavigation(){
+		
+		return new NavigationBuilder<Product>()
+				.build();
+	}
+	
 	@Bean(name="SAVE_PRODUCT")
 	public Navigation<Product> getSaveProductNavigation(){
 		
@@ -43,7 +49,6 @@ public class ProductNavigation {
 				.next(descriptionValidator)
 				.next(activeValidator)
 				.next(shortDescriptionValidator)
-				.next(null/*CREATE STOCK*/)
 				.build();
 		
 	}
@@ -65,17 +70,5 @@ public class ProductNavigation {
 				.build();
 
 	}
-	
-	@Bean(name="SAVE_CATEGORY")
-	public Navigation<Category> getSaveCategoryNavigation(){
-		
-		return new NavigationBuilder<Category>()
-				.next(codeValidator)
-				.next(descriptionValidator)
-				.next(activeValidator)
-				.build();
-		
-	}
-	
 	
 }
