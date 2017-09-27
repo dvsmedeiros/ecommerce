@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dvsmedeiros.bce.core.controller.IFacade;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCase;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
-import com.dvsmedeiros.product.domain.Category;
+import com.dvsmedeiros.category.domain.Category;
 import com.dvsmedeiros.product.domain.Product;
+import com.dvsmedeiros.product.domain.ProductStock;
 import com.dvsmedeiros.rest.domain.ResponseMessage;
 import com.dvsmedeiros.rest.rest.controller.BaseController;
+import com.dvsmedeiros.stock.domain.Stock;
 
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -29,19 +32,34 @@ public class ProductController extends BaseController {
 
 	@Autowired
 	@Qualifier("applicationFacade")
-	private IFacade<Product> appFacade;
+	private IFacade appFacade;
 
 	@RequestMapping(value = "products", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity saveProduct(@RequestBody Product product) {
+	public @ResponseBody ResponseEntity saveProduct(@RequestBody ProductStock productStock) {
 
 		try {
+			
+			BusinessCase aCase = new BusinessCaseBuilder().withName("SAVE_PRODUCT").build();
 
-			Result result = appFacade.save(product, new BusinessCaseBuilder().withName("SAVE_PRODUCT").build());
+			Product product = productStock.getProduct();
+			Stock stock = productStock.getStock();
+			
+			aCase.getContext().setAttribute("stock", stock);
+			
+			Result result = appFacade.save(product, aCase);
 
 			if (result.hasError()) {
 				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-
+			
+			stock.setProduct(product);
+			aCase = new BusinessCaseBuilder<Stock>().withName("CREATE_STOCK").build();
+			result = appFacade.save(stock, aCase);
+			
+			if (result.hasError()) {
+				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
 			return new ResponseEntity<>(HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -77,7 +95,7 @@ public class ProductController extends BaseController {
 
 		try {
 
-			Result result = appFacade.find(productId, new BusinessCaseBuilder<Product>().build());
+			Result result = appFacade.find(productId, Product.class);
 			Product product = result.getEntity();
 			return new ResponseEntity<Product>(product, HttpStatus.OK);
 			
@@ -93,7 +111,7 @@ public class ProductController extends BaseController {
 
 		try {
 
-			Product product = appFacade.find(productId, new BusinessCaseBuilder<Product>().build()).getEntity();
+			Product product = appFacade.find(productId, Product.class).getEntity();
 			appFacade.delete(product, new BusinessCaseBuilder().build());
 
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -109,7 +127,7 @@ public class ProductController extends BaseController {
 
 		try {
 			
-			Product product = appFacade.find(productId, new BusinessCaseBuilder<Product>().build()).getEntity();
+			Product product = appFacade.find(productId, Product.class).getEntity();
 			Result result = appFacade.inactivate(product);
 			
 			if(result.hasError()) {
@@ -140,8 +158,8 @@ public class ProductController extends BaseController {
 			if (active != null) {
 				filter.getEntity().setActive(active);
 			}
-
-			filter.getEntity().setCategory(category);
+			
+			//filter.getEntity().setCategory(category);
 
 			Result result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_PRODUCT").build());
 			

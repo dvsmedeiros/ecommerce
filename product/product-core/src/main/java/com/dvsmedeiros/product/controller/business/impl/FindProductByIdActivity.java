@@ -19,7 +19,7 @@ public class FindProductByIdActivity implements IStrategy<Product> {
 	@Override
 	public void process(Product aEntity, INavigationCase<Product> aCase) {
 
-		Product product = dao.find(aEntity.getId());
+		Product product = dao.find(aEntity.getId(), Product.class);
 
 		if (product == null) {
 			aCase.suspendExecution();

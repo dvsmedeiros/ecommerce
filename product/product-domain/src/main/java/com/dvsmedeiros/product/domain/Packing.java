@@ -3,12 +3,17 @@ package com.dvsmedeiros.product.domain;
 import java.math.BigDecimal;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.dvsmedeiros.bce.domain.DomainEntity;
+
 @Component
-@Embeddable
-public class Packing {
+@Entity
+@Table(name = "PACKINGS")
+public class Packing extends DomainEntity {
 
 	private PackingType type;
 	private BigDecimal weight = BigDecimal.ZERO;

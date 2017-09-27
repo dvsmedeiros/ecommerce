@@ -13,13 +13,14 @@ public class ShortDescriptionValidator implements IStrategy<Product> {
 	@Override
 	public void process(Product aEntity, INavigationCase<Product> aCase) {
 		
+		/*
 		if(aEntity != null && aEntity.getShortDescription() != null && !StringUtils.isEmpty(aEntity.getShortDescription())){
 			return;
 		}
 		
 		aCase.suspendExecution();
 		aCase.getResult().setMessage("Descrição resumida inexistente ou inválida!");
-		
+		*/
 	}
 
 }

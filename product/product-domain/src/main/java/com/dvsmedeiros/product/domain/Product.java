@@ -1,62 +1,48 @@
 package com.dvsmedeiros.product.domain;
 
+import java.util.List;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
-import com.dvsmedeiros.supplier.domain.Supplier;
+import com.dvsmedeiros.category.domain.Category;
 
 @Component
 @Entity
 @Table(name = "PRODUCTS")
 public class Product extends DomainSpecificEntity {
 
-	private String name;
-	private String shortDescription;
-	@Embedded
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Packing packing;
-	@Enumerated(EnumType.STRING)
-	private UnitType unitType;
 	@Embedded
-	private Price price;
+	@AttributeOverride(name = "value", column = @Column(name = "SALE_PRICE"))
+	private Price salePrice;
+	@ManyToMany(cascade = CascadeType.MERGE)
+	private List<Category> categories;
 	@ManyToOne
-	private Category category;
-	@ManyToOne
-	private Supplier supplier;
+	private PriceGroup priceGroup;
+	private String barCode;
 
 	public Product() {
 	}
-
-	@Autowired
-	public Product(Packing packing, Price price, Category category) {
-		this.packing = packing;
-		this.price = price;
-		this.category = category;
+	
+	public List<Category> getCategories() {
+		return categories;
 	}
 
-	public String getName() {
-		return name;
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getShortDescription() {
-		return shortDescription;
-	}
-
-	public void setShortDescription(String shortDescription) {
-		this.shortDescription = shortDescription;
-	}
-
+	
 	public Packing getPacking() {
 		return packing;
 	}
@@ -65,36 +51,28 @@ public class Product extends DomainSpecificEntity {
 		this.packing = packing;
 	}
 
-	public Price getPrice() {
-		return price;
+	public Price getSalePrice() {
+		return salePrice;
 	}
 
-	public void setPrice(Price price) {
-		this.price = price;
+	public void setSalePrice(Price salePrice) {
+		this.salePrice = salePrice;
 	}
 
-	public Category getCategory() {
-		return category;
+	public String getBarCode() {
+		return barCode;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
 	}
 
-	public UnitType getUnitType() {
-		return unitType;
+	public PriceGroup getPriceGroup() {
+		return priceGroup;
 	}
 
-	public void setUnitType(UnitType unitType) {
-		this.unitType = unitType;
-	}
-
-	public Supplier getSupplier() {
-		return supplier;
-	}
-
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
+	public void setPriceGroup(PriceGroup priceGroup) {
+		this.priceGroup = priceGroup;
 	}
 	
 }

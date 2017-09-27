@@ -2,7 +2,6 @@ package com.dvsmedeiros.product.domain;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import org.springframework.stereotype.Component;
@@ -11,8 +10,7 @@ import org.springframework.stereotype.Component;
 @Embeddable
 public class Price {
 	
-	@Column(name = "PRICE")
-	private BigDecimal value;
+	private BigDecimal value = BigDecimal.ZERO;
 
 	public BigDecimal getValue() {
 		return value;

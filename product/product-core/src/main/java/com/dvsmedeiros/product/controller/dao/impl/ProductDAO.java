@@ -25,11 +25,12 @@ public class ProductDAO extends GenericDAO<Product> implements IProductDAO {
 
 		StringBuilder jpql = new StringBuilder();
 		jpql.append("SELECT p FROM ").append(Product.class.getName()).append(" p ");
-
+		
+		/*
 		if (validFilter && filter.getEntity().getCategory().getId() > 0) {
 			jpql.append(" JOIN FETCH p.category c ");
 		}
-
+		 */
 		jpql.append(" WHERE 1=1 ");
 
 		if (validFilter && filter.getEntity().getDescription() != null) {
@@ -39,11 +40,11 @@ public class ProductDAO extends GenericDAO<Product> implements IProductDAO {
 		if (validFilter && filter.getEntity().getActive() != null) {
 			jpql.append(" AND p.active = :active");
 		}
-
+		/*
 		if (validFilter && filter.getEntity().getCategory().getId() > 0) {
 			jpql.append(" AND c.id = :categoryId");
 		}
-
+		*/
 		TypedQuery<Product> query = em.createQuery(jpql.toString(), Product.class);
 
 		if (validFilter && filter.getEntity().getDescription() != null) {
@@ -53,11 +54,11 @@ public class ProductDAO extends GenericDAO<Product> implements IProductDAO {
 		if (validFilter && filter.getEntity().getActive() != null) {
 			query.setParameter("active", filter.getEntity().getActive());
 		}
-
+		/*
 		if (validFilter && filter.getEntity().getCategory().getId() > 0) {
 			query.setParameter("categoryId", filter.getEntity().getCategory().getId());
 		}
-
+		*/
 		return query.getResultList();
 	} 
 
