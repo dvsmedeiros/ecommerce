@@ -12,7 +12,9 @@ import com.dvsmedeiros.bce.domain.DomainEntity;
 @Entity
 @Table(name = "ADRRESSES")
 public class Address extends DomainEntity {
-
+	
+	private static final String ZIPCODE_SEPARATOR = "-";
+	
 	@Embedded
 	private Neighborhood neighborhood;
 	private String complement;
@@ -41,7 +43,7 @@ public class Address extends DomainEntity {
 	}
 
 	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
+		this.zipCode = zipCode.trim().replace(ZIPCODE_SEPARATOR, "");
 	}
 
 	public String getStreet() {
