@@ -1,5 +1,6 @@
 package com.dvsmedeiros.product.controller.job;
 
+import java.net.Socket;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class InactivateBookTask extends ApplicationEntity implements ITask {
 
 	@Override
 	public void run() {
-		getLogger(this.getClass()).info("********************************* Iniciando Inativação automática de Livros! *********************************");
+		getLogger(this.getClass()).info("********** Iniciando Inativação automática de Livros! **********");
 
 		Result result = appFacade.find(new Filter<Stock>(),
 				new BusinessCaseBuilder<Filter<Stock>>().withName("FIND_STOCK_ZERO").build());
@@ -54,6 +55,10 @@ public class InactivateBookTask extends ApplicationEntity implements ITask {
 				reasonFacade.inactivate(Book.class, stock.getProduct().getCode(), new Reason("Inativado automaticamente", category));
 			}
 		}
+		int size = stocks != null ? stocks.size() : 0;
+		getLogger(this.getClass()).info("********* "+ size +" Inativações realizadas                    **********");
+		
+		
 	}
 
 	@Override
