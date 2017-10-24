@@ -2,16 +2,18 @@ package com.dvsmedeiros.address.domain;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.bce.domain.DomainEntity;
+import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 
 @Component
 @Entity
 @Table(name = "ADRRESSES")
-public class Address extends DomainEntity {
+public class Address extends DomainSpecificEntity {
 	
 	private static final String ZIPCODE_SEPARATOR = "-";
 	
@@ -21,6 +23,12 @@ public class Address extends DomainEntity {
 	private String aNumber;
 	private String zipCode;
 	private String street;
+	@ManyToOne	
+	private AddressType type;
+	private Boolean delivery;
+	private Boolean billing;
+	private Boolean home;
+	
 	
 	public String getComplement() {
 		return complement;
@@ -62,4 +70,39 @@ public class Address extends DomainEntity {
 		this.neighborhood = neighborhood;
 	}
 
+	public AddressType getType() {
+		return type;
+	}
+
+	public void setType(AddressType type) {
+		this.type = type;
+	}
+
+	public Boolean getDelivery() {
+		return delivery;
+	}
+
+	public void setDelivery(Boolean delivery) {
+		this.delivery = delivery;
+	}
+
+	public Boolean getBilling() {
+		if(billing == null) {
+			return Boolean.FALSE;
+		}
+		return billing;
+	}
+
+	public void setBilling(Boolean billing) {
+		this.billing = billing;
+	}
+
+	public Boolean getHome() {
+		return home;
+	}
+
+	public void setHome(Boolean home) {
+		this.home = home;
+	}
+	
 }

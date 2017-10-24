@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.dvsmedeiros.address.controller.business.impl.AddressNumberValidator;
+import com.dvsmedeiros.address.controller.business.impl.AddressTypeValidator;
 import com.dvsmedeiros.address.controller.business.impl.CityValidator;
+import com.dvsmedeiros.address.controller.business.impl.FindStateByCode;
 import com.dvsmedeiros.address.controller.business.impl.NeighborhoodValidator;
 import com.dvsmedeiros.address.controller.business.impl.StateValidator;
 import com.dvsmedeiros.address.controller.business.impl.StreetValidator;
@@ -29,19 +31,42 @@ public class AddressNavigation {
 	private CityValidator cityValidator;
 	@Autowired
 	private StateValidator stateValidator;
-	
+	@Autowired
+	private AddressTypeValidator addressTypeValidator;
+	@Autowired
+	private FindStateByCode findCityByCode;
 	
 	@Bean(name="SAVE_ADDRESS")
 	public Navigation<Address> getSaveProductNavigation(){
 		
 		return new NavigationBuilder<Address>()
 				.next(zipCodeValidator)
+				.next(streetValidator)
+				.next(addressNumberValidator)
+				.next(neighborhoodValidator)
+				.next(cityValidator)
+				.next(stateValidator)
+				.build();
+	}
+	
+	@Bean(name="ADDRESS_VALIDATOR")
+	public Navigation<Address> addressValidator(){
+		
+		return new NavigationBuilder<Address>()
 				.next(zipCodeValidator)
 				.next(streetValidator)
 				.next(addressNumberValidator)
 				.next(neighborhoodValidator)
 				.next(cityValidator)
 				.next(stateValidator)
+				.next(addressTypeValidator)				
+				.build();
+	}
+	
+	@Bean(name="UPDATE_ADDRESS")
+	public Navigation<Address> updateValidator(){
+		
+		return new NavigationBuilder<Address>()
 				.build();
 	}
 	
