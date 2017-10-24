@@ -1,13 +1,10 @@
 package com.dvsmedeiros.order.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,14 +15,20 @@ import com.dvsmedeiros.bce.core.controller.INavigator;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
+import com.dvsmedeiros.commons.controller.dao.impl.UserDAO;
 import com.dvsmedeiros.commons.domain.User;
+import com.dvsmedeiros.commons.service.CommonsController;
 import com.dvsmedeiros.order.domain.Order;
 import com.dvsmedeiros.rest.domain.ResponseMessage;
-import com.dvsmedeiros.rest.rest.controller.BaseController;
 
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class OrderController extends BaseController {
+@RequestMapping("${bce.app.context}/order")
+public class OrderController<T extends Order> extends CommonsController<T> {
+
+	public OrderController() {
+		super((Class<? extends T>) Order.class);
+	}
 
 	@Autowired
 	@Qualifier("applicationFacade")
@@ -34,19 +37,19 @@ public class OrderController extends BaseController {
 	@Autowired
 	@Qualifier("navigator")
 	private INavigator navigator;
-
+	
 	@Autowired
-	private User loggedUser;
-
+	@Qualifier("userDAO")
+	private UserDAO dao;
+	
 	@RequestMapping(value = "checkout", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity checkout(@RequestBody Order order) {
 
 		try {
 			
-			if (loggedUser != null && loggedUser.getId() > 0) {
-				order.setUser(loggedUser);
-			}
-
+			User loggedUser = getLoggedUser();
+			order.setUser(loggedUser);
+			
 			Result result = appFacade.save(order, new BusinessCaseBuilder().withName("CHECKOUT").build());
 
 			if (result.hasError()) {
@@ -61,42 +64,13 @@ public class OrderController extends BaseController {
 		}
 	}
 	
-	@RequestMapping(value = "orders", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity getOrders() {
-
-		try {
-
-			Filter<Order> filter = new Filter<>(Order.class);
-
-			if (loggedUser != null && loggedUser.getId() > 0) {
-				filter.getEntity().setUser(loggedUser);
-			}
-
-			Result result = appFacade.find(filter, new BusinessCaseBuilder().withName("FIND_FILTER_ORDER").build());
-			List<Order> orders =  result.getEntity("orders");
-			
-			return new ResponseEntity(orders, HttpStatus.OK);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	@Override
+	public @ResponseBody ResponseEntity findEntityByFilter(@RequestBody Filter<T> filter) {
+		
+		User loggedUser = getLoggedUser();
+		filter.getEntity().setUser(loggedUser);	
+		return super.findEntityByFilter(filter);
+		
 	}
-
-	@RequestMapping(value = "orders/{orderId}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity getProductById(@PathVariable Long orderId) {
-
-		try {
-
-			Result result = appFacade.find(orderId, Order.class);
-			Order order = result.getEntity();
-			return new ResponseEntity(order, HttpStatus.OK);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-	}
-
+	
 }

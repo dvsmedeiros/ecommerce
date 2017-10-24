@@ -18,6 +18,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.domain.DomainEntity;
+import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.freight.domain.FreightService;
 import com.dvsmedeiros.payment.domain.Payment;
@@ -26,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Component
 @Entity
 @Table(name = "ORDERS")
-public class Order extends DomainEntity {
+public class Order extends DomainSpecificEntity {
 
 	private BigDecimal total;
 	private BigDecimal subTotal;

@@ -31,7 +31,7 @@ public class OrderNavigation {
 		.build();
 	}
 	
-	@Bean(name = "FIND_FILTER_ORDER")
+	@Bean(name = "FILTER_ORDER")
 	public Navigation<Filter<Order>> findFilterProduct() {
 
 		return new NavigationBuilder<Filter<Order>>()
