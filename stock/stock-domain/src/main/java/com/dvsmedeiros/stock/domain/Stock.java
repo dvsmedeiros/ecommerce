@@ -16,13 +16,15 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.domain.DomainEntity;
+import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
+import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.product.domain.Product;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Component
 @Entity
 @Table(name = "STOCKS")
-public class Stock extends DomainEntity {
+public class Stock extends DomainSpecificEntity {
 
 	@ManyToOne
 	private Product product;
@@ -34,7 +36,7 @@ public class Stock extends DomainEntity {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "STOCK_ID")
 	private List<StockRecord> records;
-
+		
 	public Stock() {
 		this.records = new ArrayList<>();
 	}
