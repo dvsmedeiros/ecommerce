@@ -24,7 +24,7 @@ public class CreateStockRecord implements IStrategy<Stock> {
 
 		if(aEntity != null && aEntity.getRecords() != null && !aEntity.getRecords().isEmpty() ) {
 			
-			BusinessCase<StockRecord> bCase = new BusinessCaseBuilder<StockRecord>().withName("CREATE_STOCK_RECORD").build();
+			BusinessCase<StockRecord> bCase = new BusinessCaseBuilder<StockRecord>().withName("SAVE_STOCKRECORD").build();
 			navigator.run(aEntity.getRecords().get(0), bCase);
 			
 			if (bCase.getResult().hasError()) {

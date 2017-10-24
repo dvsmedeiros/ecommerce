@@ -32,7 +32,7 @@ public class StockNavigation {
 	@Autowired
 	private FindStockZero findStockZero;
 	
-	@Bean(name = "CREATE_STOCK")
+	@Bean(name = "SAVE_STOCK")
 	public Navigation<Stock> createStock(){
 		
 		return new NavigationBuilder<Stock>()
@@ -40,7 +40,7 @@ public class StockNavigation {
 				.build();
 	}
 	
-	@Bean(name = "CREATE_STOCK_RECORD")
+	@Bean(name = "SAVE_STOCKRECORD")
 	public Navigation<StockRecord> createStockRecord(){
 		
 		return new NavigationBuilder<StockRecord>()
@@ -49,7 +49,7 @@ public class StockNavigation {
 				.build();
 	}
 	
-	@Bean(name = "FIND_FILTER_STOCK")
+	@Bean(name = "FILTER_STOCK")
 	public Navigation<Filter<Stock>> findStockByProductId(){
 		
 		return new NavigationBuilder<Filter<Stock>>()
