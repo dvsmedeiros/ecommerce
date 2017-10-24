@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.dvsmedeiros.bce.core.controller.INavigationCase;
 import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.bce.domain.Filter;
+import com.dvsmedeiros.bce.domain.Result;
 import com.dvsmedeiros.stock.controller.dao.IStockDAO;
 import com.dvsmedeiros.stock.domain.Stock;
 
@@ -21,7 +22,7 @@ public class FindFilterStock implements IStrategy<Filter<Stock>> {
 	public void process(Filter<Stock> aEntity, INavigationCase<Filter<Stock>> aCase) {
 
 		List<Stock> stocks = dao.filter(aEntity);
-		aCase.getResult().addEntity("stocks", stocks);
+		aCase.getResult().addEntity(Result.RESULTS_KEY, stocks);
 	}
 
 }
