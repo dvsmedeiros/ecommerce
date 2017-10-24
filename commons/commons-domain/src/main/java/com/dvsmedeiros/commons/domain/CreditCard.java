@@ -6,22 +6,22 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.bce.domain.DomainEntity;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 
 @Component
 @Entity
 @Table(name = "CREDIT_CARD")
-public class CreditCard extends DomainEntity {
+public class CreditCard extends DomainSpecificEntity {
 
 	private String aNumber;
 	private String name;
 	private ExpiringDate expiringDate;
 	private String cvv;
 	@ManyToOne
-	@JsonBackReference
-	private User user;
-
+	private CardFlag flag;
+	
+	private Boolean principal;
+	
 	public String getaNumber() {
 		return aNumber;
 	}
@@ -54,12 +54,22 @@ public class CreditCard extends DomainEntity {
 		this.cvv = cvv;
 	}
 
-	public User getUser() {
-		return user;
+	public CardFlag getFlag() {
+		return flag;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setFlag(CardFlag flag) {
+		this.flag = flag;
 	}
 
+	public Boolean getPrincipal() {
+		return principal;
+	}
+
+	public void setPrincipal(Boolean principal) {
+		this.principal = principal;
+	}
+	
+	
+	
 }
