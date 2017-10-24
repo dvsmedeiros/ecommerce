@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.domain.DomainEntity;
+import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.product.domain.Price;
 import com.dvsmedeiros.product.domain.UnitType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -43,6 +44,8 @@ public class StockRecord extends DomainEntity {
 	@ManyToOne
 	@JsonBackReference
 	private Stock stock;
+	@ManyToOne(cascade = CascadeType.DETACH)
+	private User user;
 	
 	public StockRecord() {
 		this.salePrice = new Price();
@@ -104,4 +107,12 @@ public class StockRecord extends DomainEntity {
 		this.recordType = recordType;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }
