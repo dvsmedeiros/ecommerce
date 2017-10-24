@@ -34,7 +34,7 @@ public class ShopCartController extends BaseController {
 	private Cart cart;
 
 	@RequestMapping(value = "cart/product/{productId}", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<ResponseMessage> addProducToCart(@PathVariable Long productId) {
+	public @ResponseBody ResponseEntity<?> addProducToCart(@PathVariable Long productId) {
 
 		CartItem item = new CartItem();
 		item.getProduct().setId(productId);
@@ -46,7 +46,7 @@ public class ShopCartController extends BaseController {
 			return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, aCase.getResult().getMessage()) , HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<>(new ResponseMessage(Boolean.TRUE, item.getProduct().getDescription() + " adicionado ao carrinho!"), HttpStatus.OK);
+		return new ResponseEntity<>(cart, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "cart/product", method = RequestMethod.GET)
