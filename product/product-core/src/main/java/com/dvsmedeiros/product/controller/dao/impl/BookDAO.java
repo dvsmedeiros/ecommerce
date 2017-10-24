@@ -85,31 +85,31 @@ public class BookDAO extends GenericDAO<Book> implements IBookDAO {
 		}
 
 		if (validFilter && filter.getEntity().getSynopsis() != null) {
-			query.setParameter("title", "%" + filter.getEntity().getTitle() + "%");
+			query.setParameter("title", "%" + filter.getEntity().getSynopsis() + "%");
 		}
 
 		if (validFilter && filter.getEntity().getISBN() != null) {
-			query.setParameter("isbn", filter.getEntity().getActive());
+			query.setParameter("isbn", filter.getEntity().getISBN());
 		}
 
 		if (validFilter && filter.getEntity().getBarCode() != null) {
-			query.setParameter("barcode", filter.getEntity().getActive());
+			query.setParameter("barcode", filter.getEntity().getBarCode());
 		}
 
 		if (validFilter && filter.getEntity().getYear() != null) {
-			query.setParameter("year", filter.getEntity().getActive());
+			query.setParameter("year", filter.getEntity().getYear());
 		}
 
 		if (validFilter && filter.getEntity().getCode() != null) {
-			query.setParameter("code", filter.getEntity().getActive());
+			query.setParameter("code", filter.getEntity().getCode());
 		}
 
 		if (validFilter && filter.getEntity().getPages() != null) {
-			query.setParameter("pages", filter.getEntity().getActive());
+			query.setParameter("pages", filter.getEntity().getPages());
 		}
 
 		if (validFilter && filter.getEntity().getEdition() != null) {
-			query.setParameter("edition", filter.getEntity().getActive());
+			query.setParameter("edition", filter.getEntity().getEdition());
 		}
 
 		if (validFilter && filter.getEntity().getActive() != null) {
