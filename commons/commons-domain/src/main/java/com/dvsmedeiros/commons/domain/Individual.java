@@ -14,7 +14,7 @@ public class Individual extends People {
 
 	private String firstName;
 	private String lastName;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
 	private Calendar bornDate;
 	@Enumerated(EnumType.STRING)
 	private Gender gender;

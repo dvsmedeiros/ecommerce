@@ -1,39 +1,44 @@
 package com.dvsmedeiros.commons.domain;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Component
 @SessionScoped
 @Entity
 @Table(name = "USERS")
-public class User extends Individual {
+public class User extends Individual implements UserDetails {
 
 	private String password;
+	private String confirmPassword;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JsonManagedReference
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinColumn(name = "USER_ID")
 	private List<CreditCard> cards;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Role> roles;
-	
+	public CreditCard getPrincipalCreditCard() {
+		if (cards != null && !cards.isEmpty()) {
+			for (CreditCard creditCard : cards) {
+				if (creditCard.getPrincipal()) {
+					return creditCard;
+				}
+			}
+		}
+		return null;
+	}
+
 	public List<CreditCard> getCards() {
 		return cards;
 	}
@@ -50,12 +55,42 @@ public class User extends Individual {
 		this.password = password;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
+	public String getConfirmPassword() {
+		return confirmPassword;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.getEmail();
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
 	}
 
 }
