@@ -9,6 +9,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,10 +20,12 @@ import org.springframework.stereotype.Component;
 public class Book extends Product {
 
 	@ManyToMany(cascade = CascadeType.MERGE)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Author> authors;
 	private Long year;
 	private String title;
 	@ManyToMany(cascade = CascadeType.MERGE)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Publisher> publishers;
 	private String edition;
 	private String ISBN;
