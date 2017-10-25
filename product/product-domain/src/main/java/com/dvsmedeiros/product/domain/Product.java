@@ -46,6 +46,11 @@ public class Product extends DomainSpecificEntity {
 		this.categories = Collections.EMPTY_LIST;
 	}
 	
+	public Product(Long id) {
+		this.setId(id);
+		this.categories = Collections.EMPTY_LIST;
+	}
+	
 	public List<Category> getCategories() {
 		return categories;
 	}

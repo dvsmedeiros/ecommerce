@@ -7,7 +7,7 @@ import com.dvsmedeiros.bce.domain.DomainEntity;
 @MappedSuperclass
 public class Item extends DomainEntity {
 
-	private static final int MINIMAL_QUANTITY = 1;
+	public static final int MINIMAL_QUANTITY = 0;
 
 	protected int quantity;
 

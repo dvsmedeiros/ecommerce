@@ -24,9 +24,8 @@ public class Cart extends DomainEntity {
 
 	public void addItem(CartItem item) {
 
-		if (findProductInCart(item)) {
-			item.more();
-		} else {
+		item.more();
+		if (!findProductInCart(item)) {
 			this.cartItems.add(item);
 		}
 		calculateSubTotal();

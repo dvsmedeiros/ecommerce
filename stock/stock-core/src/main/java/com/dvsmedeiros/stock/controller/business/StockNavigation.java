@@ -4,17 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.dvsmedeiros.bce.core.controller.business.impl.IdValidator;
-import com.dvsmedeiros.bce.core.controller.business.impl.TestStrategy;
 import com.dvsmedeiros.bce.core.controller.impl.Navigation;
 import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.stock.controller.business.impl.CreateStockRecord;
 import com.dvsmedeiros.stock.controller.business.impl.FindFilterStock;
 import com.dvsmedeiros.stock.controller.business.impl.FindStockZero;
+import com.dvsmedeiros.stock.controller.business.impl.HasStock;
 import com.dvsmedeiros.stock.controller.business.impl.StockRecordFindRecordTypeByCode;
 import com.dvsmedeiros.stock.controller.business.impl.StockRecordValidator;
-import com.dvsmedeiros.stock.controller.dao.IStockDAO;
 import com.dvsmedeiros.stock.domain.Stock;
 import com.dvsmedeiros.stock.domain.StockRecord;
 
@@ -31,6 +29,8 @@ public class StockNavigation {
 	private StockRecordValidator stockRecordValidator;
 	@Autowired
 	private FindStockZero findStockZero;
+	@Autowired
+	private HasStock hasStock;
 	
 	@Bean(name = "SAVE_STOCK")
 	public Navigation<Stock> createStock(){
@@ -64,6 +64,15 @@ public class StockNavigation {
 				.next(findStockZero)
 				.build();
 	}
+	
+	@Bean(name = "HAS_STOCK")
+	public Navigation<Filter<Stock>> hasStock(){
+		
+		return new NavigationBuilder<Filter<Stock>>()
+				.next(hasStock)
+				.build();
+	}
+	
 	
 	
 }

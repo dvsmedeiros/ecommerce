@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import com.dvsmedeiros.bce.core.controller.impl.Navigation;
 import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.shopcart.controller.business.impl.AddItemToCart;
+import com.dvsmedeiros.shopcart.controller.business.impl.CartItemHasStockValidator;
 import com.dvsmedeiros.shopcart.controller.business.impl.FindProductInCart;
 import com.dvsmedeiros.shopcart.controller.business.impl.RemoveAllItemOfCart;
 import com.dvsmedeiros.shopcart.controller.business.impl.RemoveItemOfCart;
@@ -26,6 +27,8 @@ public class ShopCartNavigation {
 	private RemoveItemOfCart removeItemOfCart;
 	@Autowired
 	private RemoveAllItemOfCart removeAllItemOfCart;
+	@Autowired
+	private CartItemHasStockValidator cartItemHasStockValidator;
 	
 	@Bean(name="ADD_ITEM_TO_CART")
 	public Navigation<CartItem> addProductToCartNavigation(){
@@ -33,6 +36,7 @@ public class ShopCartNavigation {
 		return new NavigationBuilder<CartItem>()
 				.next(findProductInCart)
 				.next(findProductByIdActivity)
+				.next(cartItemHasStockValidator)
 				.next(addItemToCart)
 				.build();
 		

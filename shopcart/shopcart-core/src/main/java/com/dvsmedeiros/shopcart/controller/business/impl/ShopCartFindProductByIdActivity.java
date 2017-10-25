@@ -1,5 +1,7 @@
 package com.dvsmedeiros.shopcart.controller.business.impl;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,7 @@ public class ShopCartFindProductByIdActivity implements IStrategy<CartItem>{
 			
 			CartItem item = aCase.getContext().getAttribute("item");
 			if(item != null){
+				aEntity.setQuantity(item.getQuantity());
 				return;
 			}
 		
@@ -38,7 +41,6 @@ public class ShopCartFindProductByIdActivity implements IStrategy<CartItem>{
 				aCase.getResult().setMessage(bCase.getResult().getMessage());
 				return;
 			}
-			
 			aEntity.setProduct(product);
 	}
 
