@@ -36,7 +36,7 @@ public class CartItemHasStockValidator implements IStrategy<CartItem> {
 				return;
 			}
 			aCase.suspendExecution();
-			aCase.getResult().setMessage(((Book)stock.getProduct()).getTitle() + " não possui estoque!");
+			aCase.getResult().setMessage(((Book)stock.getProduct()).getTitle().toUpperCase() + " não possui estoque suficiente no momento!");
 			return;
 		}
 		aCase.suspendExecution();
