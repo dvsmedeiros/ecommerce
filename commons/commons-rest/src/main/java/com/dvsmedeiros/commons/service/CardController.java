@@ -30,7 +30,18 @@ public class CardController extends CommonsController<CreditCard> {
 	public CardController() {
 		super(CreditCard.class);
 	}
+	
+	@Override
+	public ResponseEntity<?> getEntities() {
 
+		User loggedUser = getLoggedUser();
+
+		if (loggedUser != null && loggedUser.getCards() != null && !loggedUser.getCards().isEmpty()) {
+			return new ResponseEntity<>(loggedUser.getCards(), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
 	@Override
 	public @ResponseBody ResponseEntity<?> createEntity(@RequestBody CreditCard entity) {
 		try {
@@ -97,7 +108,7 @@ public class CardController extends CommonsController<CreditCard> {
 
 			if (loggedUser.getCards() != null) {
 
-				if (entity.getPrincipal()) {
+				if (entity.getPrincipal() != null && entity.getPrincipal()) {
 					for (CreditCard card : loggedUser.getCards()) {
 						if (entity.getId() > 0 && entity.getId() != card.getId()) {
 							card.setPrincipal(Boolean.FALSE);
