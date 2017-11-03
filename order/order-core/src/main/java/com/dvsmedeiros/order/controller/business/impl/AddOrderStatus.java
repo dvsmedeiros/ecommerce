@@ -13,7 +13,7 @@ public class AddOrderStatus implements IStrategy<Order> {
 	public void process(Order aEntity, INavigationCase<Order> aCase) {
 		
 		if (!aCase.isSuspendExecution() && !aCase.getResult().hasError()) {
-			aEntity.setStatusOrder(StatusOrder.RECEBIDO);
+			aEntity.setStatusOrder(StatusOrder.PROCESSING);
 		}
 	}
 }
