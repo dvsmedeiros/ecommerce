@@ -17,6 +17,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
+import com.dvsmedeiros.address.domain.Address;
 import com.dvsmedeiros.bce.domain.DomainEntity;
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 import com.dvsmedeiros.commons.domain.User;
@@ -38,6 +39,9 @@ public class Order extends DomainSpecificEntity {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Payment payment;
 
+	@ManyToOne(cascade = CascadeType.DETACH)
+	private Address deliveryAddress;
+	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JsonManagedReference
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -106,4 +110,12 @@ public class Order extends DomainSpecificEntity {
 		this.subTotal = subTotal;
 	}
 
+	public Address getDeliveryAddress() {
+		return deliveryAddress;
+	}
+
+	public void setDeliveryAddress(Address deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
+	}
+		
 }
