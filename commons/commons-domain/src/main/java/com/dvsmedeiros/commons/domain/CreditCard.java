@@ -10,7 +10,7 @@ import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 
 @Component
 @Entity
-@Table(name = "CREDIT_CARD")
+@Table(name = "CREDIT_CARDS")
 public class CreditCard extends DomainSpecificEntity {
 
 	private String aNumber;

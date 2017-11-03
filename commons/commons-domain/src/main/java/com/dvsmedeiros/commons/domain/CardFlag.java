@@ -9,7 +9,7 @@ import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 
 @Component
 @Entity
-@Table(name = "CARD_FLAG")
+@Table(name = "CARD_FLAGS")
 public class CardFlag extends DomainSpecificEntity {
 
 }

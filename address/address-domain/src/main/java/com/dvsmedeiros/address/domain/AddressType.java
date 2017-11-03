@@ -10,7 +10,7 @@ import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 
 @Component
 @Entity
-@Table(name="ADDRESS_TYPE")
+@Table(name="ADDRESS_TYPES")
 public class AddressType extends DomainSpecificEntity {
 	
 	

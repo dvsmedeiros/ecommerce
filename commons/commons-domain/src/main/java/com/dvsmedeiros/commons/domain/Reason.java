@@ -12,7 +12,7 @@ import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 import com.dvsmedeiros.category.domain.Category;
 
 @Entity
-@Table(name = "STATUS_HISTORY")
+@Table(name = "ACTIVE_HISTORY")
 public class Reason extends DomainSpecificEntity {
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
