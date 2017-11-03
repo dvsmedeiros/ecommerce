@@ -8,6 +8,7 @@ import com.dvsmedeiros.bce.core.controller.business.impl.CodeGenerator;
 import com.dvsmedeiros.bce.core.controller.impl.Navigation;
 import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
+import com.dvsmedeiros.commons.controller.business.impl.ActualPasswordValidator;
 import com.dvsmedeiros.commons.controller.business.impl.BornDateValidator;
 import com.dvsmedeiros.commons.controller.business.impl.CPFValidator;
 import com.dvsmedeiros.commons.controller.business.impl.EmailValidator;
@@ -36,6 +37,7 @@ public class UserNavigation {
 	@Autowired private GenderValidator genderValidator;
 	@Autowired private UserAddressValidator userAddressValidator;
 	@Autowired private FillUserAddress fillUserAddress;
+	@Autowired private ActualPasswordValidator actualPasswordValidator;
 	
 	
 	@Bean("SAVE_USER")
@@ -65,6 +67,14 @@ public class UserNavigation {
 				.next(genderValidator)
 				.next(bornDateValidator)
 				.next(phoneValidator)												
+				.build();
+	}
+	
+	@Bean("CHANGE_PASSWORD")
+	public Navigation<User> changePassword(){
+		return new NavigationBuilder<User>()
+				.next(actualPasswordValidator)
+				.next(passwordValidator)
 				.build();
 	}
 	

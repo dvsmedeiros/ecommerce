@@ -13,17 +13,18 @@ public class PasswordValidator implements IStrategy<User> {
 	@Override
 	public void process(User aEntity, INavigationCase<User> aCase) {
 
-		if (aEntity != null && !Strings.isNullOrEmpty(aEntity.getPassword()) && !Strings.isNullOrEmpty(aEntity.getConfirmPassword())) {
-			if(!aEntity.getPassword().equals(aEntity.getConfirmPassword())) {
+		if (aEntity != null && !Strings.isNullOrEmpty(aEntity.getNewPassword()) && !Strings.isNullOrEmpty(aEntity.getConfirmPassword())) {
+			if(!aEntity.getNewPassword().equals(aEntity.getConfirmPassword())) {
 				aCase.suspendExecution();
 				aCase.getResult().setMessage("Senhas não são compativeis");
 				return;
 			}
-			if(!aEntity.getPassword().matches(REGEX)) {
+			if(!aEntity.getNewPassword().matches(REGEX)) {
 				aCase.suspendExecution();
 				aCase.getResult().setMessage("A senha deve ter no mínimo 8 caracteres sendo [a-z], [A-Z], [0-9] e [!@#$%&]");
 				return;
 			}
+			aEntity.setPassword(aEntity.getNewPassword());
 			return;
 		}
 

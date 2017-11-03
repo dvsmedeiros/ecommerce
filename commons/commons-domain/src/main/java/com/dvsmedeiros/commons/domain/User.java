@@ -8,12 +8,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Component
 @SessionScoped
@@ -22,8 +25,13 @@ import org.springframework.stereotype.Component;
 public class User extends Individual implements UserDetails {
 
 	private String password;
+	@Transient @JsonIgnore
 	private String confirmPassword;
-
+	@Transient @JsonIgnore
+	private String actualPassword;
+	@Transient @JsonIgnore
+	private String newPassword;
+	
 	@OneToMany(cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<CreditCard> cards;
@@ -61,6 +69,22 @@ public class User extends Individual implements UserDetails {
 
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
+	}
+	
+	public String getActualPassword() {
+		return actualPassword;
+	}
+
+	public void setActualPassword(String actualPassword) {
+		this.actualPassword = actualPassword;
+	}
+	
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 
 	@Override
