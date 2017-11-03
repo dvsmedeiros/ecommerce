@@ -25,11 +25,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User extends Individual implements UserDetails {
 
 	private String password;
-	@Transient @JsonIgnore
+	@Transient
 	private String confirmPassword;
-	@Transient @JsonIgnore
+	@Transient
 	private String actualPassword;
-	@Transient @JsonIgnore
+	@Transient
 	private String newPassword;
 	
 	@OneToMany(cascade = CascadeType.ALL)
