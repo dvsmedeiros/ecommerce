@@ -25,7 +25,7 @@ public class Payment extends DomainEntity {
 	private BigDecimal purchaseValue;
 	private Quota quota;
 	
-	@ManyToOne( optional = true, cascade = CascadeType.ALL)
+	@ManyToOne( optional = true, cascade = CascadeType.DETACH)
 	private CreditCard card;
 
 	@Enumerated(EnumType.STRING)
