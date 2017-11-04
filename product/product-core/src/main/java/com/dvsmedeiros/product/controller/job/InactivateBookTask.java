@@ -1,6 +1,5 @@
 package com.dvsmedeiros.product.controller.job;
 
-import java.net.Socket;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
