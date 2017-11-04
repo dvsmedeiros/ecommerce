@@ -32,7 +32,7 @@ public class Drink extends Product {
 	private Supplier supplier;
 	
 	private Double alchoholContent = 0D;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.MERGE)
 	@JsonManagedReference
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "DRINK_ID")

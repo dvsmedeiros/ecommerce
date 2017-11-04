@@ -39,7 +39,7 @@ public class StockRecord extends DomainEntity {
 	private UnitType unitType;
 	private Calendar fabricationDate;
 	private Calendar expiryDate;
-	@ManyToOne(cascade = CascadeType.ALL)	
+	@ManyToOne(cascade = CascadeType.MERGE)	
 	private RecordType recordType;
 	@ManyToOne
 	@JsonBackReference

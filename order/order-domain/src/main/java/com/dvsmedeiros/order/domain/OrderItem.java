@@ -20,7 +20,7 @@ public class OrderItem extends Item {
 
 	@ManyToOne(cascade = CascadeType.DETACH)
 	private Product product;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JsonBackReference
 	private Order order;
 	private BigDecimal salePrice;

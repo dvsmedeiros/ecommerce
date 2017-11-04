@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @Table(name = "PRODUCTS")
 public class Product extends DomainSpecificEntity {
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private Packing packing;
 	@Embedded
 	@AttributeOverride(name = "value", column = @Column(name = "SALE_PRICE"))

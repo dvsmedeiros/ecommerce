@@ -32,7 +32,7 @@ public class User extends Individual implements UserDetails {
 	@Transient
 	private String newPassword;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.MERGE)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<CreditCard> cards;
 
