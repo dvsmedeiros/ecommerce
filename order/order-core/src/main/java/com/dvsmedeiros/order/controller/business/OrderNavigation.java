@@ -10,6 +10,7 @@ import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.order.controller.business.impl.AddOrderStatus;
 import com.dvsmedeiros.order.controller.business.impl.CleanShopCart;
 import com.dvsmedeiros.order.controller.business.impl.FindFilterOrder;
+import com.dvsmedeiros.order.controller.business.impl.OrderHasStockValidator;
 import com.dvsmedeiros.order.domain.Order;
 
 @Configuration
@@ -21,13 +22,15 @@ public class OrderNavigation {
 	private CleanShopCart cleanShopCart;
 	@Autowired
 	private FindFilterOrder findFilterOrder;
+	@Autowired OrderHasStockValidator orderHasStockValidator;
 	
 	@Bean(name="CHECKOUT")
 	public Navigation<Order> getSaveOrderNavigation(){
 		
 		return new NavigationBuilder<Order>()
-		.next(addOrderStatus)
-		.next(cleanShopCart)
+				.next(orderHasStockValidator)		
+				.next(addOrderStatus)
+				.next(cleanShopCart)
 		.build();
 	}
 	
