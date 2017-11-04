@@ -15,9 +15,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
-import com.dvsmedeiros.bce.domain.DomainEntity;
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
-import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.product.domain.Product;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -30,8 +28,9 @@ public class Stock extends DomainSpecificEntity {
 	private Product product;
 	private BigDecimal min;
 	private BigDecimal max;
+	private BigDecimal reserved = BigDecimal.ZERO;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.MERGE)
 	@JsonManagedReference
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "STOCK_ID")
@@ -81,17 +80,28 @@ public class Stock extends DomainSpecificEntity {
 	}
 
 	public BigDecimal getCurrent() {
-			BigDecimal sum = BigDecimal.ZERO;
-			if(records != null && !records.isEmpty()) {				
-				for (StockRecord record : records) {
-					if(record.getRecordType().getCode().equals(RecordType.IN)) {
-						sum = sum.add(record.getVolume());
-					}else {
-						sum = sum.subtract(record.getVolume());
-					}
+		BigDecimal sum = BigDecimal.ZERO;
+		if(records != null && !records.isEmpty()) {				
+			for (StockRecord record : records) {
+				if(record.getRecordType().getCode().equals(RecordType.IN)) {
+					sum = sum.add(record.getVolume());
+				}else {
+					sum = sum.subtract(record.getVolume());
 				}
 			}
-		return sum;
+		}
+		return sum.subtract(getReserved());
 	}
 
+	public BigDecimal getReserved() {
+		if(reserved != null) {
+			return reserved;
+		}
+		return BigDecimal.ZERO;
+	}
+
+	public void setReserved(BigDecimal reserved) {
+		this.reserved = reserved;
+	}
+	
 }
