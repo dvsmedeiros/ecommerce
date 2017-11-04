@@ -33,7 +33,7 @@ public class HasStock implements IStrategy<Filter<Stock>> {
 			return;
 		}
 		aCase.suspendExecution();
-		aCase.getResult().setMessage("Estoqueinexistente ou inválido");
+		aCase.getResult().setMessage("Estoque inexistente ou inválido");
 		return;
 	}
 
