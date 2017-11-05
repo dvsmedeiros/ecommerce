@@ -15,7 +15,7 @@ import com.dvsmedeiros.bce.domain.DomainEntity;
 @Table(name = "PACKINGS")
 public class Packing extends DomainEntity {
 
-	private PackingType type;
+	private PackingType type = PackingType.BOX;
 	private BigDecimal weight = BigDecimal.ZERO;
 	private BigDecimal height = BigDecimal.ZERO;
 	private BigDecimal width = BigDecimal.ZERO;
