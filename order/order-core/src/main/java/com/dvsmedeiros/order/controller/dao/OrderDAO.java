@@ -36,13 +36,20 @@ public class OrderDAO extends GenericDAO<Order> implements IOrderDAO{
 		if (validFilter && filter.getEntity().getUser() != null) {
 			jpql.append(" AND u.id = :userId");
 		}
-
+		
+		if (validFilter && filter.getEntity().getStatusOrder() != null && filter.getEntity().getStatusOrder().getId() > 0) {
+			jpql.append(" AND o.statusOrder.id = :statusOrderId");
+		}
+		
 		TypedQuery<Order> query = em.createQuery(jpql.toString(), Order.class);
 		
 		if (validFilter && filter.getEntity().getUser() != null) {
 			query.setParameter("userId", filter.getEntity().getUser().getId());
 		}
-
+		
+		if (validFilter && filter.getEntity().getStatusOrder() != null && filter.getEntity().getStatusOrder().getId() > 0) {
+			query.setParameter("statusOrderId", filter.getEntity().getStatusOrder().getId());
+		}
 		return query.getResultList();
 	}
 }
