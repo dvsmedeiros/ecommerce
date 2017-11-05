@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dvsmedeiros.bce.core.controller.IFacade;
@@ -46,6 +47,8 @@ public class OrderController<T extends Order> extends CommonsController<T> {
 	public @ResponseBody ResponseEntity checkout(@RequestBody Order order) {
 
 		try {
+			//TODO Analisar CascadeType e remover! 
+			order.getPayment().getCard().setId(0);
 			
 			User loggedUser = getLoggedUser();
 			order.setUser(loggedUser);
@@ -65,11 +68,13 @@ public class OrderController<T extends Order> extends CommonsController<T> {
 	}
 	
 	@Override
-	public @ResponseBody ResponseEntity findEntityByFilter(@RequestBody Filter<T> filter) {
+	public @ResponseBody ResponseEntity findEntityByFilter(@RequestBody Filter<T> filter, @RequestParam(name="logged", required = false) boolean logged) {
 		
-		User loggedUser = getLoggedUser();
-		filter.getEntity().setUser(loggedUser);	
-		return super.findEntityByFilter(filter);
+		if(logged) {
+			User loggedUser = getLoggedUser();
+			filter.getEntity().setUser(loggedUser);				
+		}
+		return super.findEntityByFilter(filter, logged);
 		
 	}
 	
