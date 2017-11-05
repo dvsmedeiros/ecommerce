@@ -15,9 +15,10 @@ public class PhoneValidator implements IStrategy<User> {
 	public void process(User aEntity, INavigationCase<User> aCase) {
 
 		if (aEntity != null && aEntity.getPhones() != null && !aEntity.getPhones().isEmpty()) {
-
+			
+			boolean first = true;
 			for (Phone phone : aEntity.getPhones()) {
-				if (Strings.isNullOrEmpty(phone.getPhone())) {
+				if (Strings.isNullOrEmpty(phone.getPhone()) && first) {
 					aCase.suspendExecution();
 					aCase.getResult().setMessage("Telefone inexistente ou inválido");
 					return;
