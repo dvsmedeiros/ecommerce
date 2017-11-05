@@ -39,7 +39,7 @@ public class User extends Individual implements UserDetails {
 	public CreditCard getPrincipalCreditCard() {
 		if (cards != null && !cards.isEmpty()) {
 			for (CreditCard creditCard : cards) {
-				if (creditCard.getPrincipal()) {
+				if (creditCard.getPrincipal() != null && creditCard.getPrincipal()) {
 					return creditCard;
 				}
 			}
