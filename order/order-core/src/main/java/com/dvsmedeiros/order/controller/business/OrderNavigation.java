@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.dvsmedeiros.bce.core.controller.business.impl.CodeGenerator;
 import com.dvsmedeiros.bce.core.controller.impl.Navigation;
 import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
@@ -16,13 +17,11 @@ import com.dvsmedeiros.order.domain.Order;
 @Configuration
 public class OrderNavigation {
 
-	@Autowired
-	private AddOrderStatus addOrderStatus;
-	@Autowired
-	private CleanShopCart cleanShopCart;
-	@Autowired
-	private FindFilterOrder findFilterOrder;
-	@Autowired OrderHasStockValidator orderHasStockValidator;
+	@Autowired private AddOrderStatus addOrderStatus;
+	@Autowired private CleanShopCart cleanShopCart;
+	@Autowired private FindFilterOrder findFilterOrder;
+	@Autowired private OrderHasStockValidator orderHasStockValidator;
+	@Autowired private CodeGenerator codeGenerator;
 	
 	@Bean(name="CHECKOUT")
 	public Navigation<Order> getSaveOrderNavigation(){
@@ -30,6 +29,7 @@ public class OrderNavigation {
 		return new NavigationBuilder<Order>()
 				.next(orderHasStockValidator)		
 				.next(addOrderStatus)
+				.next(codeGenerator)
 				.next(cleanShopCart)
 		.build();
 	}
