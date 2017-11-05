@@ -33,22 +33,22 @@ public class Order extends DomainSpecificEntity {
 	private BigDecimal total;
 	private BigDecimal subTotal;
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.DETACH })
 	private FreightService freight;
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.DETACH })
 	private Payment payment;
 
 	@ManyToOne(cascade = CascadeType.DETACH)
 	private Address deliveryAddress;
 	
-	@OneToMany(cascade = CascadeType.MERGE)
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.DETACH })
 	@JsonManagedReference
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "ORDER_ID")
 	private List<OrderItem> items;
 
-	@Enumerated(EnumType.STRING)
+	@ManyToOne(cascade = CascadeType.DETACH)
 	private StatusOrder statusOrder;
 
 	@ManyToOne(cascade = CascadeType.DETACH)

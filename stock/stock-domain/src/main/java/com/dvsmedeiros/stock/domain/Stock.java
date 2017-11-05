@@ -30,7 +30,7 @@ public class Stock extends DomainSpecificEntity {
 	private BigDecimal max;
 	private BigDecimal reserved = BigDecimal.ZERO;
 
-	@OneToMany(cascade = CascadeType.MERGE)
+	@OneToMany(cascade = { CascadeType.DETACH, CascadeType.PERSIST })
 	@JsonManagedReference
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "STOCK_ID")

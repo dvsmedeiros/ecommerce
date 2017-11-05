@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Embeddable
 public class Neighborhood {
 	
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne(cascade = { CascadeType.DETACH, CascadeType.PERSIST })
 	private City city;
 	private String name;
 

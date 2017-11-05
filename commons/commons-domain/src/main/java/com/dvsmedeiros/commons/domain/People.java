@@ -15,11 +15,11 @@ import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 @MappedSuperclass
 public class People extends DomainSpecificEntity {
 
-	@OneToMany(cascade = CascadeType.MERGE)
+	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Address> addresses;
 
-	@OneToMany(cascade = CascadeType.MERGE)
+	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Phone> phones;
 	private String email;

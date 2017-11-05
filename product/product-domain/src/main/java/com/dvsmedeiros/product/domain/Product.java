@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @Table(name = "PRODUCTS")
 public class Product extends DomainSpecificEntity {
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	private Packing packing;
 	@Embedded
 	@AttributeOverride(name = "value", column = @Column(name = "SALE_PRICE"))
