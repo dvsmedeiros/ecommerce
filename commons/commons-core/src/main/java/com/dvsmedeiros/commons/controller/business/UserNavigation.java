@@ -61,8 +61,7 @@ public class UserNavigation {
 	public Navigation<User> updateUser(){
 		return new NavigationBuilder<User>()
 				.next(firstNameValidator)
-				.next(lastNameValidator)				
-				.next(passwordValidator)
+				.next(lastNameValidator)								
 				.next(cpfValidator)
 				.next(genderValidator)
 				.next(bornDateValidator)
