@@ -28,7 +28,7 @@ public class ShopCartController extends BaseController {
 
 	@Autowired
 	@Qualifier("navigator")
-	private INavigator navigator;
+	private INavigator<Cart> navigator;
 
 	@Autowired
 	private Cart cart;
@@ -74,6 +74,13 @@ public class ShopCartController extends BaseController {
 
 		navigator.run(item, new BusinessCaseBuilder<CartItem>().withName("REMOVE_ALL_ITEM_TO_CART").build());
 
+		return cart;
+	}
+	
+	@RequestMapping(value = "cart/product", method = RequestMethod.DELETE)
+	public @ResponseBody Cart cleanCart() {
+
+		cart.cleanCart();
 		return cart;
 	}
 }
