@@ -5,9 +5,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -18,7 +15,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.address.domain.Address;
-import com.dvsmedeiros.bce.domain.DomainEntity;
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.freight.domain.FreightService;
@@ -36,13 +32,17 @@ public class Order extends DomainSpecificEntity {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.DETACH })
 	private FreightService freight;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.DETACH })
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
 	private Payment payment;
 
 	@ManyToOne(cascade = CascadeType.DETACH)
-	private Address deliveryAddress;
+	private Cupom cupom;
 	
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.DETACH })
+	
+	@ManyToOne(cascade = CascadeType.DETACH)
+	private Address deliveryAddress;
+
+	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH })
 	@JsonManagedReference
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "ORDER_ID")
@@ -53,7 +53,7 @@ public class Order extends DomainSpecificEntity {
 
 	@ManyToOne(cascade = CascadeType.DETACH)
 	private User user;
-
+	
 	public BigDecimal getTotal() {
 		return total;
 	}
@@ -117,5 +117,13 @@ public class Order extends DomainSpecificEntity {
 	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
-		
+	
+	public Cupom getCupom() {
+		return cupom;
+	}
+
+	public void setCupom(Cupom cupom) {
+		this.cupom = cupom;
+	}
+	
 }

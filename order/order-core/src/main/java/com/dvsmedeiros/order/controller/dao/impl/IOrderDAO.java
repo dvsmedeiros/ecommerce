@@ -9,4 +9,5 @@ import com.dvsmedeiros.order.domain.Order;
 public interface IOrderDAO extends IDAO<Order> {
 	
 	public List<Order> filter(Filter<Order> filter);
+	public Order updateStatus(Order order);
 }
