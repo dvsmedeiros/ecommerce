@@ -20,15 +20,16 @@ import com.dvsmedeiros.commons.controller.dao.impl.UserDAO;
 import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.commons.service.CommonsController;
 import com.dvsmedeiros.order.domain.Order;
+import com.dvsmedeiros.payment.domain.PaymentType;
 import com.dvsmedeiros.rest.domain.ResponseMessage;
 
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
 @RequestMapping("${bce.app.context}/order")
-public class OrderController<T extends Order> extends CommonsController<T> {
+public class OrderController extends CommonsController<Order> {
 
 	public OrderController() {
-		super((Class<? extends T>) Order.class);
+		super(Order.class);
 	}
 
 	@Autowired
@@ -39,16 +40,16 @@ public class OrderController<T extends Order> extends CommonsController<T> {
 	@Qualifier("navigator")
 	private INavigator navigator;
 	
-	@Autowired
-	@Qualifier("userDAO")
-	private UserDAO dao;
-	
 	@RequestMapping(value = "checkout", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity checkout(@RequestBody Order order) {
 
 		try {
-			//TODO Analisar CascadeType e remover! 
-			order.getPayment().getCard().setId(0);
+			
+			if(order != null && order.getPayment() != null && order.getPayment().getPaymentType() != null && order.getPayment().getPaymentType().equals(PaymentType.CREDIT_CARD)) {
+				order.getPayment().getCard().setId(0);
+			}else {
+				order.getPayment().setCard(null);
+			}
 			
 			User loggedUser = getLoggedUser();
 			order.setUser(loggedUser);
@@ -67,8 +68,28 @@ public class OrderController<T extends Order> extends CommonsController<T> {
 		}
 	}
 	
+	@RequestMapping(value = "status", method = RequestMethod.PUT)
+	public @ResponseBody ResponseEntity changeStatus(@RequestBody Order order) {
+
+		try {
+			
+			Result result = appFacade.update(order, new BusinessCaseBuilder()
+					.withName("UPDATE_STATUS#".concat(order.getStatusOrder().getCode())).build());
+
+			if (result.hasError()) {
+				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
+			return new ResponseEntity(order, HttpStatus.OK);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity(new ResponseMessage(Boolean.TRUE, "Erro ao cadastrar pedido."), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@Override
-	public @ResponseBody ResponseEntity findEntityByFilter(@RequestBody Filter<T> filter, @RequestParam(name="logged", required = false) boolean logged) {
+	public @ResponseBody ResponseEntity findEntityByFilter(@RequestBody Filter<Order> filter, @RequestParam(name="logged", required = false) boolean logged) {
 		
 		if(logged) {
 			User loggedUser = getLoggedUser();

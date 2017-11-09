@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
@@ -51,5 +52,26 @@ public class OrderDAO extends GenericDAO<Order> implements IOrderDAO{
 			query.setParameter("statusOrderId", filter.getEntity().getStatusOrder().getId());
 		}
 		return query.getResultList();
+	}
+
+	@Override
+	public Order updateStatus(Order order) {
+
+		StringBuilder jpql = new StringBuilder();
+		jpql.append("UPDATE ").append(Order.class.getName()).append(" o ");
+		jpql.append(" SET o.statusOrder.id = :statusOrderId ");
+		jpql.append(" WHERE o.id = :id ");
+
+		Query query = em.createQuery(jpql.toString());
+
+		if (order != null && order.getStatusOrder() != null && order.getStatusOrder().getId() > 0) {
+			query.setParameter("statusOrderId", order.getStatusOrder().getId());
+		}
+
+		if (order != null && order.getId() > 0) {
+			query.setParameter("id", order.getId());
+		}
+		query.executeUpdate();
+		return order;
 	}
 }

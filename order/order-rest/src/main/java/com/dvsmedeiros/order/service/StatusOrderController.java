@@ -8,11 +8,10 @@ import com.dvsmedeiros.order.domain.StatusOrder;
 
 @Controller
 @RequestMapping("${bce.app.context}/statusOrder")
-@SuppressWarnings("unchecked")
-public class StatusOrderController<T extends StatusOrder> extends CommonsController<T> {
+public class StatusOrderController extends CommonsController<StatusOrder> {
 
 	public StatusOrderController() {
-		super((Class<? extends T>) StatusOrder.class);
+		super(StatusOrder.class);
 	}
 	
 }

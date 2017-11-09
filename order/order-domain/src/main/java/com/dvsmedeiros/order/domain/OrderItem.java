@@ -12,16 +12,18 @@ import org.springframework.stereotype.Component;
 import com.dvsmedeiros.commons.domain.Item;
 import com.dvsmedeiros.product.domain.Product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 @Component
 @Entity
 @Table(name = "ORDER_ITEMS")
 public class OrderItem extends Item {
 
-	@ManyToOne(cascade = CascadeType.DETACH)
+	@ManyToOne(cascade = { CascadeType.DETACH })
 	private Product product;
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JsonBackReference
+	@JsonIdentityReference(alwaysAsId=true)
 	private Order order;
 	private BigDecimal salePrice;
 
