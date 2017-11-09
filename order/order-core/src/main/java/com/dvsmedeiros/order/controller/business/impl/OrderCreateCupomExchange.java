@@ -26,7 +26,7 @@ public class OrderCreateCupomExchange extends ApplicationEntity implements IStra
 		
 		Cupom cupom = new Cupom();
 		cupom.setOwner(aEntity.getUser());
-		cupom.setValue(aEntity.getTotal().doubleValue());
+		cupom.setValue(aEntity.getSubTotal().doubleValue());
 		
 		BusinessCase<Cupom> bCase = new BusinessCaseBuilder<Cupom>().withName("CREATE_CUPOM#".concat(CupomType.EXCHANGE.name())).build();
 		appFacade.save(cupom, bCase);
