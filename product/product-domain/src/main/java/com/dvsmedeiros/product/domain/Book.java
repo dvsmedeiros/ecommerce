@@ -13,6 +13,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+
 @Component
 @Entity
 @Table(name = "BOOKS")
@@ -22,11 +24,13 @@ public class Book extends Product {
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Author> authors;
-	private Long year;
-	private String title;
+	
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Publisher> publishers;
+
+	private Long year;
+	private String title;
 	private String edition;
 	private String ISBN;
 	private Integer pages;

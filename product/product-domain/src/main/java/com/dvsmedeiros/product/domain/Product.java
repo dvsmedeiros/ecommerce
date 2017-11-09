@@ -1,8 +1,7 @@
 package com.dvsmedeiros.product.domain;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
@@ -10,20 +9,16 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 import com.dvsmedeiros.category.domain.Category;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Component
@@ -33,23 +28,27 @@ public class Product extends DomainSpecificEntity {
 
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	private Packing packing;
+	
 	@Embedded
 	@AttributeOverride(name = "value", column = @Column(name = "SALE_PRICE"))
 	private Price salePrice;
+	
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Category> categories;
+	
 	@ManyToOne
 	private PriceGroup priceGroup;
+	
 	private String barCode;
 
 	public Product() {
-		this.categories = Collections.EMPTY_LIST;
+		this.categories = Arrays.asList();
 	}
 	
 	public Product(Long id) {
 		this.setId(id);
-		this.categories = Collections.EMPTY_LIST;
+		this.categories = Arrays.asList();
 	}
 	
 	public List<Category> getCategories() {
