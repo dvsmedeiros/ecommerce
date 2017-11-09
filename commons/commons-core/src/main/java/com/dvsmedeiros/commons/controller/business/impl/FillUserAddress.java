@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 import com.dvsmedeiros.address.domain.Address;
 import com.dvsmedeiros.bce.core.controller.INavigationCase;
 import com.dvsmedeiros.bce.core.controller.business.IStrategy;
-import com.dvsmedeiros.commons.domain.User;
+import com.dvsmedeiros.commons.domain.Individual;
 
 @Component
-public class FillUserAddress implements IStrategy<User>{
+public class FillUserAddress implements IStrategy<Individual>{
 
 	@Override
-	public void process(User aEntity, INavigationCase<User> aCase) {
+	public void process(Individual aEntity, INavigationCase<Individual> aCase) {
 		
 		if(aEntity != null && aEntity.getAddresses() != null && !aEntity.getAddresses().isEmpty() ) {
 			

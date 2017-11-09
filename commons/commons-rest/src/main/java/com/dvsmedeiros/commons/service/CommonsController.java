@@ -1,13 +1,10 @@
 package com.dvsmedeiros.commons.service;
 
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,13 +15,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 import com.dvsmedeiros.bce.domain.Result;
 import com.dvsmedeiros.commons.controller.IReasonFacade;
+import com.dvsmedeiros.commons.controller.dao.impl.UserDAO;
+import com.dvsmedeiros.commons.domain.Client;
+import com.dvsmedeiros.commons.domain.Individual;
 import com.dvsmedeiros.commons.domain.Reason;
 import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.rest.domain.ResponseMessage;
 import com.dvsmedeiros.rest.rest.controller.DomainSpecificEntityController;
 
 public class CommonsController<T extends DomainSpecificEntity> extends DomainSpecificEntityController<T> {
-
+	
+	@Autowired
+	@Qualifier("userDAO")
+	private UserDAO dao;
+	
 	public CommonsController(Class<? extends T> clazz) {
 		super(clazz);
 	}
@@ -57,7 +61,6 @@ public class CommonsController<T extends DomainSpecificEntity> extends DomainSpe
 		
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "inactivate/{id}", method = RequestMethod.PUT)
 	public @ResponseBody ResponseEntity<?> inactivateEntityById(@PathVariable Long id, @RequestBody Reason reason) {
 
@@ -83,5 +86,10 @@ public class CommonsController<T extends DomainSpecificEntity> extends DomainSpe
 	
 	public User getLoggedUser() {
 		return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+		
+	public Client getLoggedClient() {
+		User loggedUser = getLoggedUser();
+		return dao.findClientByUser(loggedUser.getId());
 	}
 }

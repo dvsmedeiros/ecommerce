@@ -10,17 +10,17 @@ import com.dvsmedeiros.bce.core.controller.INavigator;
 import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCase;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
-import com.dvsmedeiros.commons.domain.User;
+import com.dvsmedeiros.commons.domain.Individual;
 
 @Component
-public class UserAddressValidator implements IStrategy<User>{
+public class UserAddressValidator implements IStrategy<Individual>{
 
 	@Autowired
 	@Qualifier("navigator")
 	private INavigator navigator;
 	
 	@Override
-	public void process(User aEntity, INavigationCase<User> aCase) {
+	public void process(Individual aEntity, INavigationCase<Individual> aCase) {
 		
 		BusinessCase<Address> bCase = new BusinessCaseBuilder<Address>().withName("ADDRESS_VALIDATOR").build();
 		

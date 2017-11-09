@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dvsmedeiros.bce.core.controller.IFacade;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.commons.domain.Client;
 import com.dvsmedeiros.commons.domain.CreditCard;
-import com.dvsmedeiros.commons.domain.User;
+import com.dvsmedeiros.commons.domain.Individual;
 import com.dvsmedeiros.rest.domain.ResponseMessage;
 
 @Controller
@@ -25,7 +26,7 @@ public class CardController extends CommonsController<CreditCard> {
 
 	@Autowired
 	@Qualifier("applicationFacade")
-	private IFacade<User> appFacade;
+	private IFacade<Individual> appFacade;
 
 	public CardController() {
 		super(CreditCard.class);
@@ -34,10 +35,9 @@ public class CardController extends CommonsController<CreditCard> {
 	@Override
 	public ResponseEntity<?> getEntities() {
 
-		User loggedUser = getLoggedUser();
-
-		if (loggedUser != null && loggedUser.getCards() != null && !loggedUser.getCards().isEmpty()) {
-			return new ResponseEntity<>(loggedUser.getCards(), HttpStatus.OK);
+		Client loggedClient = getLoggedClient();
+		if (loggedClient != null && loggedClient.getCards() != null && !loggedClient.getCards().isEmpty()) {
+			return new ResponseEntity<>(loggedClient.getCards(), HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
@@ -48,14 +48,14 @@ public class CardController extends CommonsController<CreditCard> {
 
 			super.createEntity(entity);
 
-			User loggedUser = getLoggedUser();
-			if (entity != null && entity.getId() > 0) {
-				updatePrincipal(entity, loggedUser);
+			Client loggedClient = getLoggedClient();
+			if (entity != null) {
+				updatePrincipal(entity, loggedClient);
 				return new ResponseEntity<>(entity, HttpStatus.OK);
 			}
 			return new ResponseEntity<>(
 					new ResponseMessage(Boolean.TRUE,
-							"Não foi possivel associar endereço ao usuario: " + loggedUser.getFirstName()),
+							"Não foi possivel associar cartão ao usuario: " + loggedClient.getFirstName()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 
 		} catch (Exception e) {
@@ -74,14 +74,14 @@ public class CardController extends CommonsController<CreditCard> {
 
 			super.updateEntity(entity);
 
-			User loggedUser = getLoggedUser();
+			Client loggedClient = getLoggedClient();
 			if (entity != null && entity.getId() > 0) {
-				updatePrincipal(entity, loggedUser);
+				updatePrincipal(entity, loggedClient);
 				return new ResponseEntity<>(entity, HttpStatus.OK);
 			}
 			return new ResponseEntity<>(
 					new ResponseMessage(Boolean.TRUE,
-							"Não foi possivel associar endereço ao usuario: " + loggedUser.getFirstName()),
+							"Não foi possivel associar cartão ao usuario: " + loggedClient.getFirstName()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 
 		} catch (Exception e) {
@@ -95,29 +95,29 @@ public class CardController extends CommonsController<CreditCard> {
 	
 	@RequestMapping(value = "principal", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getPrincipalCreditCard() {
-		User loggedUser = getLoggedUser();
-		if (loggedUser.getPrincipalCreditCard() != null) {
-			return new ResponseEntity<>(loggedUser.getPrincipalCreditCard(), HttpStatus.OK);
+		Client loggedClient = getLoggedClient();
+		if (loggedClient.getPrincipalCreditCard() != null) {
+			return new ResponseEntity<>(loggedClient.getPrincipalCreditCard(), HttpStatus.OK);
 		}
 		return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
 	}
 	
-	private void updatePrincipal(CreditCard entity, User loggedUser) {
+	private void updatePrincipal(CreditCard entity, Client loggedClient) {
 
-		if (loggedUser != null) {
+		if (loggedClient != null) {
 
-			if (loggedUser.getCards() != null) {
+			if (loggedClient.getCards() != null) {
 
 				if (entity.getPrincipal() != null && entity.getPrincipal()) {
-					for (CreditCard card : loggedUser.getCards()) {
+					for (CreditCard card : loggedClient.getCards()) {
 						if (entity.getId() > 0 && entity.getId() != card.getId()) {
 							card.setPrincipal(Boolean.FALSE);
 						}
 					}
 				} else {
 					boolean hasPrincipal = false;
-					for(CreditCard card : loggedUser.getCards()) {
-						if(card.getPrincipal() && entity.getId() != card.getId()) {
+					for(CreditCard card : loggedClient.getCards()) {
+						if(card.getPrincipal() != null && card.getPrincipal() && entity.getId() != card.getId()) {
 							hasPrincipal = true;
 							break;
 						}
@@ -128,17 +128,17 @@ public class CardController extends CommonsController<CreditCard> {
 				}
 								
 
-				if (!loggedUser.getCards().contains(entity)) {
-					loggedUser.getCards().add(entity);
+				if (!loggedClient.getCards().contains(entity)) {
+					loggedClient.getCards().add(entity);
 				} else {
-					loggedUser.getCards().remove(entity);
-					loggedUser.getCards().add(entity);
+					loggedClient.getCards().remove(entity);
+					loggedClient.getCards().add(entity);
 				}
 
 			} else {
-				loggedUser.setCards(Arrays.asList(entity));
+				loggedClient.setCards(Arrays.asList(entity));
 			}
-			appFacade.update(loggedUser, new BusinessCaseBuilder<>().build());
+			appFacade.update(loggedClient, new BusinessCaseBuilder<>().build());
 		}
 	}
 }

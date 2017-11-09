@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -18,10 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dvsmedeiros.address.domain.Address;
 import com.dvsmedeiros.bce.core.controller.IFacade;
-import com.dvsmedeiros.bce.core.controller.impl.BusinessCase;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
-import com.dvsmedeiros.commons.domain.CreditCard;
-import com.dvsmedeiros.commons.domain.User;
+import com.dvsmedeiros.commons.domain.Client;
 import com.dvsmedeiros.commons.service.CommonsController;
 import com.dvsmedeiros.rest.domain.ResponseMessage;
 
@@ -31,7 +28,7 @@ public class AddressController extends CommonsController<Address> {
 
 	@Autowired
 	@Qualifier("applicationFacade")
-	private IFacade<User> appFacade;
+	private IFacade<Client> appFacade;
 
 	public AddressController() {
 		super(Address.class);
@@ -44,14 +41,14 @@ public class AddressController extends CommonsController<Address> {
 
 			super.createEntity(entity);
 
-			User loggedUser = getLoggedUser();
-			if (entity != null && entity.getId() > 0) {
-				updateBilling(entity, loggedUser);
+			Client loggedClient = getLoggedClient();
+			if (entity != null) {
+				updateBilling(entity, loggedClient);
 				return new ResponseEntity<>(entity, HttpStatus.OK);
 			}
 			return new ResponseEntity<>(
 					new ResponseMessage(Boolean.TRUE,
-							"Não foi possivel associar endereço ao usuario: " + loggedUser.getFirstName()),
+							"Não foi possivel associar endereço ao usuario: " + loggedClient.getEmail()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 
 		} catch (Exception e) {
@@ -69,14 +66,14 @@ public class AddressController extends CommonsController<Address> {
 
 			super.updateEntity(entity);
 
-			User loggedUser = getLoggedUser();
+			Client loggedClient = getLoggedClient();
 			if (entity != null && entity.getId() > 0) {
-				updateBilling(entity, loggedUser);
+				updateBilling(entity, loggedClient);
 				return new ResponseEntity<>(entity, HttpStatus.OK);
 			}
 			return new ResponseEntity<>(
 					new ResponseMessage(Boolean.TRUE,
-							"Não foi possivel associar endereço ao usuario: " + loggedUser.getFirstName()),
+							"Não foi possivel associar endereço ao usuario: " + loggedClient.getEmail()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 
 		} catch (Exception e) {
@@ -90,19 +87,19 @@ public class AddressController extends CommonsController<Address> {
 	
 	@RequestMapping(value = "billing", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getBillingAddress() {
-		User loggedUser = getLoggedUser();
-		if (loggedUser.getBillingAddress() != null) {
-			return new ResponseEntity<>(loggedUser.getBillingAddress(), HttpStatus.OK);
+		Client loggedClient = getLoggedClient();
+		if (loggedClient.getBillingAddress() != null) {
+			return new ResponseEntity<>(loggedClient.getBillingAddress(), HttpStatus.OK);
 		}
 		return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "delivery", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> getDeliveryAddresses() {
-		User loggedUser = getLoggedUser();
-		if (loggedUser.getAddresses() != null && !loggedUser.getAddresses().isEmpty()) {
+		Client loggedClient = getLoggedClient();
+		if (loggedClient.getAddresses() != null && !loggedClient.getAddresses().isEmpty()) {
 			List<Address> addresses = new ArrayList<>();
-			for (Address address : loggedUser.getAddresses()) {
+			for (Address address : loggedClient.getAddresses()) {
 				if(address.getDelivery()) {
 					addresses.add(address);
 				}
@@ -112,22 +109,22 @@ public class AddressController extends CommonsController<Address> {
 		return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
 	}
 	
-	private void updateBilling(Address entity, User loggedUser) {
+	private void updateBilling(Address entity, Client loggedClient) {
 
-		if (loggedUser != null) {
+		if (loggedClient != null) {
 
-			if (loggedUser.getAddresses() != null) {
+			if (loggedClient.getAddresses() != null) {
 
 				if (entity.getBilling()) {
-					for (Address address : loggedUser.getAddresses()) {
+					for (Address address : loggedClient.getAddresses()) {
 						if(entity.getId() > 0 && entity.getId() != address.getId()) {
 							address.setBilling(Boolean.FALSE);
 						} 
 					}
 				} else {
 					boolean hasBilling = false;
-					for(Address address : loggedUser.getAddresses()) {
-						if(address.getBilling() && entity.getId() != address.getId()) {
+					for(Address address : loggedClient.getAddresses()) {
+						if(address.getBilling() != null && address.getBilling() && entity.getId() != address.getId()) {
 							hasBilling = true;
 							break;
 						}
@@ -137,17 +134,17 @@ public class AddressController extends CommonsController<Address> {
 					}
 				}
 
-				if(!loggedUser.getAddresses().contains(entity)) {
-					loggedUser.getAddresses().add(entity);
+				if(!loggedClient.getAddresses().contains(entity)) {
+					loggedClient.getAddresses().add(entity);
 				} else {
-					loggedUser.getAddresses().remove(entity);
-					loggedUser.getAddresses().add(entity);
+					loggedClient.getAddresses().remove(entity);
+					loggedClient.getAddresses().add(entity);
 				}
 
 			} else {
-				loggedUser.setAddresses(Arrays.asList(entity));
+				loggedClient.setAddresses(Arrays.asList(entity));
 			}
-			appFacade.update(loggedUser, new BusinessCaseBuilder<>().build());
+			appFacade.update(loggedClient, new BusinessCaseBuilder<>().build());
 		}
 	}
 	

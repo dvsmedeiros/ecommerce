@@ -1,29 +1,26 @@
 package com.dvsmedeiros.commons.domain;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 
 @Component
 @SessionScoped
 @Entity
 @Table(name = "USERS")
-public class User extends Individual implements UserDetails {
+@SuppressWarnings("serial")
+public class User extends DomainSpecificEntity implements UserDetails {
 
+	private String email;
 	private String password;
 	@Transient
 	private String confirmPassword;
@@ -32,29 +29,6 @@ public class User extends Individual implements UserDetails {
 	@Transient
 	private String newPassword;
 	
-	@OneToMany(cascade = CascadeType.MERGE)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<CreditCard> cards;
-
-	public CreditCard getPrincipalCreditCard() {
-		if (cards != null && !cards.isEmpty()) {
-			for (CreditCard creditCard : cards) {
-				if (creditCard.getPrincipal() != null && creditCard.getPrincipal()) {
-					return creditCard;
-				}
-			}
-		}
-		return null;
-	}
-
-	public List<CreditCard> getCards() {
-		return cards;
-	}
-
-	public void setCards(List<CreditCard> cards) {
-		this.cards = cards;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -86,10 +60,17 @@ public class User extends Individual implements UserDetails {
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
 
-	@Override
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getUsername() {
-		return this.getEmail();
+		return this.email;
 	}
 
 	@Override

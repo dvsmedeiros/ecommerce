@@ -15,7 +15,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.dvsmedeiros.auth.token._TokenAuthenticationService;
 import com.dvsmedeiros.commons.domain.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
