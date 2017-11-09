@@ -41,7 +41,7 @@ public class StockRecord extends DomainEntity {
 	private Calendar expiryDate;
 	@ManyToOne(cascade = CascadeType.MERGE)	
 	private RecordType recordType;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JsonBackReference
 	private Stock stock;
 	@ManyToOne(cascade = CascadeType.DETACH)
@@ -113,6 +113,14 @@ public class StockRecord extends DomainEntity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
 	}
 	
 }

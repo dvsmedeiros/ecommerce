@@ -15,7 +15,7 @@ import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 @Table(name = "STATES")
 public class State extends DomainSpecificEntity {
 	
-	@OneToOne(cascade = { CascadeType.DETACH, CascadeType.PERSIST })
+	@OneToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE })
 	private Country country;
 
 	public Country getCountry() {
