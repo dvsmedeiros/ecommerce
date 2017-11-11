@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Embeddable
 public class Price {
 	
-	private BigDecimal value;
+	private BigDecimal value = BigDecimal.ZERO;
 	
 	public Price() {
 	}
