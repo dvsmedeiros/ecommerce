@@ -10,8 +10,8 @@ import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCase;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.ApplicationEntity;
-import com.dvsmedeiros.order.domain.Cupom;
-import com.dvsmedeiros.order.domain.CupomType;
+import com.dvsmedeiros.commons.domain.Cupom;
+import com.dvsmedeiros.commons.domain.CupomType;
 import com.dvsmedeiros.order.domain.Order;
 
 @Component

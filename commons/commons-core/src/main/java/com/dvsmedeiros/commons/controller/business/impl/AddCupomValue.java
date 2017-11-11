@@ -1,11 +1,11 @@
-package com.dvsmedeiros.order.controller.business.impl;
+package com.dvsmedeiros.commons.controller.business.impl;
 
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.core.controller.INavigationCase;
 import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.bce.domain.ApplicationEntity;
-import com.dvsmedeiros.order.domain.Cupom;
+import com.dvsmedeiros.commons.domain.Cupom;
 
 @Component
 public class AddCupomValue extends ApplicationEntity implements IStrategy<Cupom> {

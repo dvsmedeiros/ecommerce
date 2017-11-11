@@ -1,4 +1,4 @@
-package com.dvsmedeiros.order.controller.business.impl;
+package com.dvsmedeiros.commons.controller.business.impl;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import com.dvsmedeiros.bce.core.controller.INavigationCase;
 import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
-import com.dvsmedeiros.order.controller.dao.CupomDAO;
-import com.dvsmedeiros.order.domain.Cupom;
+import com.dvsmedeiros.commons.controller.dao.impl.CupomDAO;
+import com.dvsmedeiros.commons.domain.Cupom;
 
 @Component
 public class FindFilterCupom implements IStrategy<Filter<Cupom>> {

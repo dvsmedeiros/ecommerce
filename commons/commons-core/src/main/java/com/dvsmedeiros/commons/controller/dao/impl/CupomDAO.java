@@ -1,4 +1,4 @@
-package com.dvsmedeiros.order.controller.dao;
+package com.dvsmedeiros.commons.controller.dao.impl;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.dvsmedeiros.bce.core.dao.impl.GenericDAO;
 import com.dvsmedeiros.bce.domain.Filter;
-import com.dvsmedeiros.order.controller.dao.impl.ICupomDAO;
-import com.dvsmedeiros.order.domain.Cupom;
+import com.dvsmedeiros.commons.controller.dao.ICupomDAO;
+import com.dvsmedeiros.commons.domain.Cupom;
 import com.google.common.base.Strings;
 
 @Repository

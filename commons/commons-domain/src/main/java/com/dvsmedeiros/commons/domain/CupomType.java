@@ -1,4 +1,4 @@
-package com.dvsmedeiros.order.domain;
+package com.dvsmedeiros.commons.domain;
 
 public enum CupomType {
 	

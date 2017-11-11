@@ -1,4 +1,4 @@
-package com.dvsmedeiros.order.controller.business.impl;
+package com.dvsmedeiros.commons.controller.business.impl;
 
 import java.util.Calendar;
 
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 import com.dvsmedeiros.bce.core.controller.INavigationCase;
 import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.bce.domain.ApplicationEntity;
-import com.dvsmedeiros.order.domain.Cupom;
-import com.dvsmedeiros.order.domain.CupomType;
+import com.dvsmedeiros.commons.domain.Cupom;
+import com.dvsmedeiros.commons.domain.CupomType;
 
 @Component
 public class CreateCupomExchange extends ApplicationEntity implements IStrategy<Cupom> {

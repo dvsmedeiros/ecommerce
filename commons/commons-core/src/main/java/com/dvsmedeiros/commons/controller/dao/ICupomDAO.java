@@ -1,10 +1,10 @@
-package com.dvsmedeiros.order.controller.dao.impl;
+package com.dvsmedeiros.commons.controller.dao;
 
  import java.util.List;
 
 import com.dvsmedeiros.bce.core.dao.IDAO;
 import com.dvsmedeiros.bce.domain.Filter;
-import com.dvsmedeiros.order.domain.Cupom;
+import com.dvsmedeiros.commons.domain.Cupom;
 
 public interface ICupomDAO extends IDAO<Cupom> {
 	
