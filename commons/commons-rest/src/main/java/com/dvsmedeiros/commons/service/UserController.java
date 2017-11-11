@@ -37,7 +37,11 @@ public class UserController extends CommonsController<User> {
 	
 	@RequestMapping(value = "/active", method = RequestMethod.GET)
 	public ResponseEntity<?> getLogged() {
-		return new ResponseEntity<>(getLoggedUser(), HttpStatus.OK);
+		User loggedUser = getLoggedUser();
+		if(loggedUser != null) {
+			return new ResponseEntity<>(getLoggedUser(), HttpStatus.OK);			
+		}
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 	@RequestMapping(value = "change/password", method = RequestMethod.POST)
