@@ -1,5 +1,6 @@
 package com.dvsmedeiros.order.service;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import com.dvsmedeiros.commons.controller.dao.impl.UserDAO;
 import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.commons.service.CommonsController;
 import com.dvsmedeiros.order.domain.Order;
+import com.dvsmedeiros.order.domain.StatusOrder;
 import com.dvsmedeiros.payment.domain.PaymentType;
 import com.dvsmedeiros.rest.domain.ResponseMessage;
 
@@ -59,7 +61,9 @@ public class OrderController extends CommonsController<Order> {
 			if (result.hasError()) {
 				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-
+			
+			navigator.run(order, new BusinessCaseBuilder<>().withName("SEND_ORDER_TO_PROCESS").build());
+			
 			return new ResponseEntity(HttpStatus.OK);
 
 		} catch (Exception e) {

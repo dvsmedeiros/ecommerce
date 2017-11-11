@@ -10,14 +10,13 @@ import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.order.controller.business.impl.AddOrderStatus;
 import com.dvsmedeiros.order.controller.business.impl.CleanShopCart;
-import com.dvsmedeiros.order.controller.business.impl.CreateCupomExchange;
-import com.dvsmedeiros.order.controller.business.impl.FindFilterCupom;
 import com.dvsmedeiros.order.controller.business.impl.FindFilterOrder;
 import com.dvsmedeiros.order.controller.business.impl.OrderCreateCupomExchange;
 import com.dvsmedeiros.order.controller.business.impl.OrderHasStockValidator;
+import com.dvsmedeiros.order.controller.business.impl.SendOrderToProcess;
+import com.dvsmedeiros.order.controller.business.impl.SimulatesPayment;
 import com.dvsmedeiros.order.controller.business.impl.UpdateStatusOrder;
 import com.dvsmedeiros.order.controller.business.impl.UpdateStockByOrder;
-import com.dvsmedeiros.order.domain.Cupom;
 import com.dvsmedeiros.order.domain.Order;
 
 @Configuration
@@ -26,23 +25,31 @@ public class OrderNavigation {
 	@Autowired private AddOrderStatus addOrderStatus;
 	@Autowired private CleanShopCart cleanShopCart;
 	@Autowired private FindFilterOrder findFilterOrder;
-	@Autowired private FindFilterCupom findFilterCupom;
 	@Autowired private OrderHasStockValidator orderHasStockValidator;
 	@Autowired private CodeGenerator codeGenerator;
 	@Autowired private UpdateStatusOrder updateStatusOrder;
 	@Autowired private UpdateStockByOrder updateStockByOrder;
-	@Autowired private CreateCupomExchange createCupomExchange;
 	@Autowired private OrderCreateCupomExchange orderCreateCupomExchange;
+	@Autowired private SendOrderToProcess sendOrderToProcess;
+	@Autowired private SimulatesPayment simulatesPayment;
 	
 	@Bean(name="CHECKOUT")
 	public Navigation<Order> getSaveOrderNavigation(){
 		
 		return new NavigationBuilder<Order>()
 				.next(orderHasStockValidator)		
-				.next(addOrderStatus)
 				.next(codeGenerator)
 				.next(cleanShopCart)
+				.next(addOrderStatus)
 		.build();
+	}
+	
+	@Bean(name = "SEND_ORDER_TO_PROCESS")
+	public Navigation<Order> sendOrderToProcess() {
+
+		return new NavigationBuilder<Order>()
+				.next(sendOrderToProcess)
+				.build();
 	}
 	
 	@Bean(name = "FILTER_ORDER")
@@ -53,23 +60,6 @@ public class OrderNavigation {
 				.build();
 	}
 	
-	@Bean(name = "CREATE_CUPOM#EXCHANGE")
-	public Navigation<Cupom> createCupom() {
-
-		return new NavigationBuilder<Cupom>()
-				.next(codeGenerator)
-				.next(createCupomExchange)
-				.build();
-	}
-	
-	@Bean(name = "FILTER_CUPOM")
-	public Navigation<Filter<Cupom>> findFilterCupom() {
-
-		return new NavigationBuilder<Filter<Cupom>>()
-				.next(findFilterCupom)
-				.build();
-	}
-
 	@Bean(name = "UPDATE_STATUS#EXCHANGED")
 	public Navigation<Order> updateOrderExchanged() {
 
@@ -132,6 +122,7 @@ public class OrderNavigation {
 
 		return new NavigationBuilder<Order>()
 				.next(updateStatusOrder)
+				.next(simulatesPayment)
 				.build();
 	}
 	
