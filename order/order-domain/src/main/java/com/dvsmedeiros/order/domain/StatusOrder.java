@@ -17,7 +17,18 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @Entity
 @Table(name = "STATUS_ORDER")
 public class StatusOrder extends DomainSpecificEntity {
-	
+
+	public static final String PROCESSING = "PROCESSING";
+	public static final String PAYMENT = "PAYMENT";
+	public static final String SEPARATION = "SEPARATION";
+	public static final String TRANSPORTATION = "TRANSPORTATION";
+	public static final String DELIVERY = "DELIVERY";
+	public static final String CANCELED = "CANCELED";
+	public static final String EXCHANGE = "EXCHANGE";
+	public static final String EXCHANGED = "EXCHANGED";
+	public static final String APPROVED = "APPROVED";
+	public static final String DISAPPROVED = "DISAPPROVED";
+
 	public static final Map<String, List<String>> status = new HashMap<>();
 
 	public StatusOrder() {
@@ -30,7 +41,7 @@ public class StatusOrder extends DomainSpecificEntity {
 		status.put("EXCHANGE", Arrays.asList("EXCHANGE", "EXCHANGED", "DISAPPROVED"));
 		status.put("EXCHANGED", Arrays.asList("EXCHANGED"));
 	}
-	
+
 	private List<String> getPossibleStatus(String current) {
 
 		List<String> list = status.get(current);
@@ -39,13 +50,13 @@ public class StatusOrder extends DomainSpecificEntity {
 		}
 		return Arrays.asList(current);
 	}
-	
+
 	@JsonSerialize
 	public List<String> possibleStatus() {
-		return getPossibleStatus(this.getCode()); 
+		return getPossibleStatus(this.getCode());
 	}
-	
-	public void setPossibleStatus(List<String> possibleStatus){
+
+	public void setPossibleStatus(List<String> possibleStatus) {
 		return;
 	}
 
