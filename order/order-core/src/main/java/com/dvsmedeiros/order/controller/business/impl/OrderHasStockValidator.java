@@ -35,7 +35,7 @@ public class OrderHasStockValidator implements IStrategy<Order> {
 				if(! hasStockItem(item)) {
 					hasError = true;
 					builder.append(item.getProduct().getDescription());
-					builder.append(" ");
+					builder.append(",");
 				}
 			}
 			if(hasError) {				
