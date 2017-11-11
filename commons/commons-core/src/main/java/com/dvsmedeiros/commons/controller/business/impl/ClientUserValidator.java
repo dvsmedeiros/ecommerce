@@ -5,30 +5,29 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.core.controller.INavigationCase;
-import com.dvsmedeiros.bce.core.controller.INavigator;
 import com.dvsmedeiros.bce.core.controller.business.IStrategy;
-import com.dvsmedeiros.bce.core.controller.impl.BusinessCase;
-import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.bce.core.dao.impl.GenericDAO;
+import com.dvsmedeiros.bce.domain.ApplicationEntity;
 import com.dvsmedeiros.commons.domain.Client;
-import com.dvsmedeiros.commons.domain.User;
+import com.dvsmedeiros.commons.domain.Role;
 
 @Component
-public class ClientUserValidator implements IStrategy<Client> {
+public class ClientUserValidator extends ApplicationEntity implements IStrategy<Client> {
 
 	@Autowired
-	@Qualifier("navigator")
-	private INavigator<User> navigator;
+	@Qualifier("genericDAO")
+	private GenericDAO<Role> dao;
 	
 	@Override
 	public void process(Client aEntity, INavigationCase<Client> aCase) {
 		
-		BusinessCase<User> bCase = new BusinessCaseBuilder<User>().withName("USER_VALIDATOR").build();
-		navigator.run(aEntity.getUser(), bCase);
-		
-		if(bCase.isSuspendExecution() || bCase.getResult().hasError()) {
-			aCase.suspendExecution(bCase.getResult().getMessage());
+		Role userRole = (Role) dao.find(Role.class, Role.USER_ROLE);
+		if(userRole != null) {
+			aEntity.getUser().addRole(userRole);
+			return;
 		}
-		aEntity.setEmail(aEntity.getUser().getEmail());
+		aCase.suspendExecution("Permissão inexistente ou inválida");
+		getLogger(this.getClass()).debug("ROLE: " + Role.USER_ROLE + " não foi encontrada!");
 	}
 
 }

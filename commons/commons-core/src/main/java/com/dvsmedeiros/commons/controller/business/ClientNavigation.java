@@ -8,6 +8,7 @@ import com.dvsmedeiros.bce.core.controller.business.impl.CodeGenerator;
 import com.dvsmedeiros.bce.core.controller.impl.Navigation;
 import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
+import com.dvsmedeiros.commons.controller.business.impl.AddUserRole;
 import com.dvsmedeiros.commons.controller.business.impl.BornDateValidator;
 import com.dvsmedeiros.commons.controller.business.impl.CPFValidator;
 import com.dvsmedeiros.commons.controller.business.impl.ClientUserValidator;
@@ -34,6 +35,7 @@ public class ClientNavigation {
 	@Autowired private FillUserAddress fillUserAddress;
 	@Autowired private ClientUserValidator clientUserValidator;
 	@Autowired private FindFilterClient findFilterClient;
+	@Autowired private AddUserRole addUserRole;
 	
 	
 	@Bean("SAVE_CLIENT")
@@ -48,7 +50,8 @@ public class ClientNavigation {
 				.next(phoneValidator)
 				.next(userAddressValidator)
 				.next(fillUserAddress)
-				.next(codeGenarator)				
+				.next(codeGenarator)
+				.next(addUserRole)
 				.build();
 	}
 	

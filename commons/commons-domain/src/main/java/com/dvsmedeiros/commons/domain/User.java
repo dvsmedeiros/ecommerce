@@ -1,17 +1,27 @@
 package com.dvsmedeiros.commons.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Component
 @SessionScoped
@@ -21,6 +31,7 @@ import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 public class User extends DomainSpecificEntity implements UserDetails {
 
 	private String email;
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	@Transient
 	private String confirmPassword;
@@ -28,6 +39,11 @@ public class User extends DomainSpecificEntity implements UserDetails {
 	private String actualPassword;
 	@Transient
 	private String newPassword;
+	
+	@ManyToMany(cascade = CascadeType.MERGE)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonProperty("authorities")
+	private List<Role> roles;
 	
 	public String getPassword() {
 		return password;
@@ -72,7 +88,14 @@ public class User extends DomainSpecificEntity implements UserDetails {
 	public String getUsername() {
 		return this.email;
 	}
-
+	
+	public void addRole(Role role) {
+		if (roles == null) {
+			roles = new ArrayList<>();
+		}
+		roles.add(role);
+	}
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
@@ -94,8 +117,9 @@ public class User extends DomainSpecificEntity implements UserDetails {
 	}
 
 	@Override
+	@JsonSerialize
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return roles;
 	}
 
 }
