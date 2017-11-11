@@ -39,10 +39,13 @@ public class InactivateBookTask extends ApplicationEntity implements ITask {
 
 	@Override
 	public void run() {
-		getLogger(this.getClass()).info("********** Iniciando Inativação automática de Livros! **********");
-
+		
+		getLogger(this.getClass()).debug("==================== INICIO: JOB INATIVAÇÃO DE LIVROS SEM ESTOQUE ====================");
+		
+		long start = System.currentTimeMillis();
+		
 		Result result = appFacade.find(new Filter<Stock>(),
-				new BusinessCaseBuilder<Filter<Stock>>().withName("FIND_STOCK_ZERO").build());
+				new BusinessCaseBuilder<Filter<Stock>>().withName("FIND_EMPTY_STOCK").build());
 
 		List<Stock> stocks = result.getEntities();
 
@@ -54,8 +57,13 @@ public class InactivateBookTask extends ApplicationEntity implements ITask {
 				reasonFacade.inactivate(Book.class, stock.getProduct().getCode(), new Reason("Inativado automaticamente", category));
 			}
 		}
+		
 		int size = stocks != null ? stocks.size() : 0;
-		getLogger(this.getClass()).info("********* "+ size +" Inativações realizadas                    **********");
+		long end = System.currentTimeMillis();
+		
+		getLogger(this.getClass()).debug("= TOTAL INATIVAÇOES: " + size);
+		getLogger(this.getClass()).debug("= EXECUTADO EM: " + (end - start) + " (ms)");
+		getLogger(this.getClass()).debug("==================== FIM   : JOB INATIVAÇÃO DE LIVROS SEM ESTOQUE ==================== ");
 		
 		
 	}

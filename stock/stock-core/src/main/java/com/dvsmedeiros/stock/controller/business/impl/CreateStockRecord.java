@@ -17,7 +17,7 @@ public class CreateStockRecord implements IStrategy<Stock> {
 	
 	@Autowired
 	@Qualifier("navigator")
-	private INavigator navigator;
+	private INavigator<StockRecord> navigator;
 	
 	@Override
 	public void process(Stock aEntity, INavigationCase<Stock> aCase) {

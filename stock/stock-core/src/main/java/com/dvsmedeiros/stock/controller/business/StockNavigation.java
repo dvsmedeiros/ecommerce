@@ -8,8 +8,8 @@ import com.dvsmedeiros.bce.core.controller.impl.Navigation;
 import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.stock.controller.business.impl.CreateStockRecord;
+import com.dvsmedeiros.stock.controller.business.impl.FindEmptyStock;
 import com.dvsmedeiros.stock.controller.business.impl.FindFilterStock;
-import com.dvsmedeiros.stock.controller.business.impl.FindStockZero;
 import com.dvsmedeiros.stock.controller.business.impl.HasStock;
 import com.dvsmedeiros.stock.controller.business.impl.StockRecordFindRecordTypeByCode;
 import com.dvsmedeiros.stock.controller.business.impl.StockRecordValidator;
@@ -28,7 +28,7 @@ public class StockNavigation {
 	@Autowired
 	private StockRecordValidator stockRecordValidator;
 	@Autowired
-	private FindStockZero findStockZero;
+	private FindEmptyStock findStockZero;
 	@Autowired
 	private HasStock hasStock;
 	
@@ -57,7 +57,7 @@ public class StockNavigation {
 				.build();
 	}
 	
-	@Bean(name = "FIND_STOCK_ZERO")
+	@Bean(name = "FIND_EMPTY_STOCK")
 	public Navigation<Filter<Stock>> findStockZero(){
 		
 		return new NavigationBuilder<Filter<Stock>>()
