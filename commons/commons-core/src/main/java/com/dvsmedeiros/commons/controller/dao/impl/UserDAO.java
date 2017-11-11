@@ -96,43 +96,54 @@ public class UserDAO extends GenericDAO<User> implements IUserDAO, UserDetailsSe
 	}
 
 	public Individual findIndividualByUser(long id) {
+		try {
+			StringBuilder jpql = new StringBuilder();
+			jpql.append("SELECT i FROM ").append(Individual.class.getName()).append(" i ");
 
-		StringBuilder jpql = new StringBuilder();
-		jpql.append("SELECT i FROM ").append(Individual.class.getName()).append(" i ");
+			jpql.append(" WHERE 1=1 ");
 
-		jpql.append(" WHERE 1=1 ");
+			if (id > 0) {
+				jpql.append(" AND i.user.id = :id");
+			}
 
-		if (id > 0) {
-			jpql.append(" AND i.user.id = :id");
+			TypedQuery<Individual> query = em.createQuery(jpql.toString(), Individual.class);
+
+			if (id > 0) {
+				query.setParameter("id", id);
+			}
+
+			return query.getSingleResult();
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		TypedQuery<Individual> query = em.createQuery(jpql.toString(), Individual.class);
-
-		if (id > 0) {
-			query.setParameter("id", id);
-		}
-
-		return query.getSingleResult();
+		return null;
 	}
 
 	public Client findClientByUser(long id) {
 
-		StringBuilder jpql = new StringBuilder();
-		jpql.append("SELECT c FROM ").append(Client.class.getName()).append(" c ");
+		try {
 
-		jpql.append(" WHERE 1=1 ");
+			StringBuilder jpql = new StringBuilder();
+			jpql.append("SELECT c FROM ").append(Client.class.getName()).append(" c ");
 
-		if (id > 0) {
-			jpql.append(" AND c.user.id = :id");
+			jpql.append(" WHERE 1=1 ");
+
+			if (id > 0) {
+				jpql.append(" AND c.user.id = :id");
+			}
+
+			TypedQuery<Client> query = em.createQuery(jpql.toString(), Client.class);
+
+			if (id > 0) {
+				query.setParameter("id", id);
+			}
+
+			return query.getSingleResult();
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		TypedQuery<Client> query = em.createQuery(jpql.toString(), Client.class);
-
-		if (id > 0) {
-			query.setParameter("id", id);
-		}
-
-		return query.getSingleResult();
-
+		return null;
 	}
 }
