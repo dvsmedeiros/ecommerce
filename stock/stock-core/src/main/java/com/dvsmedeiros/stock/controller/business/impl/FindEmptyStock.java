@@ -16,7 +16,7 @@ import com.dvsmedeiros.bce.domain.Result;
 import com.dvsmedeiros.stock.domain.Stock;
 
 @Component
-public class FindStockZero extends ApplicationEntity implements IStrategy<Filter<Stock>> {
+public class FindEmptyStock extends ApplicationEntity implements IStrategy<Filter<Stock>> {
 
 	@Autowired
 	@Qualifier("genericDAO")

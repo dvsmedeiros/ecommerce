@@ -49,6 +49,10 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 			FilterChain filterChain,
 			Authentication auth) throws IOException, ServletException {
 		
+		String json = new ObjectMapper().writeValueAsString(auth.getPrincipal());
+		response.setContentType("application/json");
+		response.getWriter().write(json);
+		
 		new TokenAuthenticationService().addAuthentication(response, auth.getName());
 	}
 

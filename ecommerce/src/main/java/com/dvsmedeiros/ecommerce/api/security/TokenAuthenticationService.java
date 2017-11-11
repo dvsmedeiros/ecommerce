@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import com.dvsmedeiros.bce.domain.ApplicationEntity;
 import com.dvsmedeiros.commons.controller.dao.impl.UserDAO;
 import com.dvsmedeiros.commons.domain.User;
 
@@ -18,7 +19,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
-public class TokenAuthenticationService {
+public class TokenAuthenticationService extends ApplicationEntity {
 	
 	@Autowired
 	@Qualifier("userDAO")
@@ -29,6 +30,7 @@ public class TokenAuthenticationService {
 	static final String SECRET = "MySecret";
 	static final String TOKEN_PREFIX = "Bearer";
 	static final String HEADER_STRING = "Authorization";
+	static final String EXPOSE_HEADER = "Access-Control-Expose-Headers";
 	
 	public void addAuthentication(HttpServletResponse response, String username) {
 		String JWT = Jwts.builder()
@@ -38,11 +40,13 @@ public class TokenAuthenticationService {
 				.compact();
 		
 		response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);		
-		response.addHeader("Access-Control-Expose-Headers", HEADER_STRING);
+		response.addHeader(EXPOSE_HEADER, HEADER_STRING);
 		
 	}
 	
 	public Authentication getAuthentication(HttpServletRequest request) {
+		
+		long start = System.currentTimeMillis();
 		
 		String token = request.getHeader(HEADER_STRING);
 		
@@ -52,13 +56,15 @@ public class TokenAuthenticationService {
 					.parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
 					.getBody()
 					.getSubject();
-			
 			User load = (User) dao.loadUserByUsername(user);
-			
 			if (load != null && load.getId() > 0) {
 				return new UsernamePasswordAuthenticationToken(load, null, load.getAuthorities());
 			}
 		}
+		
+		long end = System.currentTimeMillis();
+		getLogger(this.getClass()).debug("Authenticated in: " + (end - start) + " ms."); 
+		
 		return null;
 	}
 }
