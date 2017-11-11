@@ -33,7 +33,7 @@ public class ShopCartController extends BaseController {
 	@Autowired
 	private Cart cart;
 
-	@RequestMapping(value = "cart/product/{productId}", method = RequestMethod.POST)
+	@RequestMapping(value = "cart/{productId}", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> addProducToCart(@PathVariable Long productId) {
 
 		CartItem item = new CartItem();
@@ -49,13 +49,13 @@ public class ShopCartController extends BaseController {
 		return new ResponseEntity<>(cart, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "cart/product", method = RequestMethod.GET)
+	@RequestMapping(value = "cart", method = RequestMethod.GET)
 	public @ResponseBody Cart getShopCart() {
 
 		return cart;
 	}
 
-	@RequestMapping(value = "cart/product/{productId}", method = RequestMethod.PUT)
+	@RequestMapping(value = "cart/{productId}", method = RequestMethod.PUT)
 	public @ResponseBody Cart removeCartItem(@PathVariable Long productId) {
 
 		CartItem item = new CartItem();
@@ -66,7 +66,7 @@ public class ShopCartController extends BaseController {
 		return cart;
 	}
 
-	@RequestMapping(value = "cart/product/{productId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "cart/{productId}", method = RequestMethod.DELETE)
 	public @ResponseBody Cart removeALLCartItem(@PathVariable Long productId) {
 
 		CartItem item = new CartItem();
@@ -77,9 +77,8 @@ public class ShopCartController extends BaseController {
 		return cart;
 	}
 	
-	@RequestMapping(value = "cart/product", method = RequestMethod.DELETE)
+	@RequestMapping(value = "cart", method = RequestMethod.DELETE)
 	public @ResponseBody Cart cleanCart() {
-
 		cart.cleanCart();
 		return cart;
 	}
