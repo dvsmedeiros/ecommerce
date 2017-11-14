@@ -1,6 +1,7 @@
 package com.dvsmedeiros.order.service;
 
 import org.aspectj.weaver.ast.Or;
+import org.hibernate.id.CompositeNestedGeneratedValueGenerator.GenerationContextLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dvsmedeiros.bce.core.controller.IFacade;
 import com.dvsmedeiros.bce.core.controller.INavigator;
+import com.dvsmedeiros.bce.core.controller.impl.BusinessCase;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
@@ -77,8 +79,10 @@ public class OrderController extends CommonsController<Order> {
 
 		try {
 			
-			Result result = appFacade.update(order, new BusinessCaseBuilder()
-					.withName("UPDATE_STATUS#".concat(order.getStatusOrder().getCode())).build());
+			User loggedUser = getLoggedUser();
+			order.setUser(loggedUser);
+		
+			Result result = appFacade.update(order, new BusinessCaseBuilder().withName("UPDATE_STATUS#".concat(order.getStatusOrder().getCode())).build());
 
 			if (result.hasError()) {
 				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -88,7 +92,7 @@ public class OrderController extends CommonsController<Order> {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity(new ResponseMessage(Boolean.TRUE, "Erro ao cadastrar pedido."), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity(new ResponseMessage(Boolean.TRUE, "Erro ao atualizar status pedido."), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

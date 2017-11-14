@@ -23,7 +23,7 @@ public class StatusOrder extends DomainSpecificEntity {
 	public static final String SEPARATION = "SEPARATION";
 	public static final String TRANSPORTATION = "TRANSPORTATION";
 	public static final String DELIVERY = "DELIVERY";
-	public static final String CANCELED = "CANCELED";
+	public static final String REJECTED = "REJECTED";
 	public static final String EXCHANGE = "EXCHANGE";
 	public static final String EXCHANGED = "EXCHANGED";
 	public static final String APPROVED = "APPROVED";
@@ -32,14 +32,14 @@ public class StatusOrder extends DomainSpecificEntity {
 	public static final Map<String, List<String>> status = new HashMap<>();
 
 	public StatusOrder() {
-		status.put("PROCESSING", Arrays.asList("PROCESSING", "PAYMENT"));
-		status.put("PAYMENT", Arrays.asList("PAYMENT", "APPROVED", "DISAPPROVED"));
-		status.put("APPROVED", Arrays.asList("APPROVED", "SEPARATION"));
-		status.put("SEPARATION", Arrays.asList("SEPARATION", "TRANSPORTATION"));
-		status.put("TRANSPORTATION", Arrays.asList("TRANSPORTATION", "DELIVERY"));
-		status.put("DELIVERY", Arrays.asList("DELIVERY"));
-		status.put("EXCHANGE", Arrays.asList("EXCHANGE", "EXCHANGED", "DISAPPROVED"));
-		status.put("EXCHANGED", Arrays.asList("EXCHANGED"));
+		status.put(PROCESSING, Arrays.asList(PROCESSING, PAYMENT));
+		status.put(PAYMENT, Arrays.asList(PAYMENT, APPROVED, DISAPPROVED));
+		status.put(APPROVED, Arrays.asList(APPROVED, SEPARATION));
+		status.put(SEPARATION, Arrays.asList(SEPARATION, TRANSPORTATION));
+		status.put(TRANSPORTATION, Arrays.asList(TRANSPORTATION, DELIVERY));
+		status.put(DELIVERY, Arrays.asList(DELIVERY));
+		status.put(EXCHANGE, Arrays.asList(EXCHANGE, EXCHANGED, REJECTED));
+		status.put(EXCHANGED, Arrays.asList(EXCHANGED));
 	}
 
 	private List<String> getPossibleStatus(String current) {

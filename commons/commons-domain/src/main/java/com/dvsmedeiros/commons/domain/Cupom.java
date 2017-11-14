@@ -26,6 +26,13 @@ public class Cupom extends DomainSpecificEntity {
 	@Enumerated(EnumType.STRING)
 	private CupomType type;
 	
+	public Cupom() {
+	}
+	
+	public Cupom(String code) {
+		this.setCode(code);
+	}
+	
 	public Calendar getExpiryDate() {
 		return expiryDate;
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.address.domain.Address;
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
+import com.dvsmedeiros.commons.domain.Cupom;
+import com.dvsmedeiros.commons.domain.CupomType;
 import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.freight.domain.FreightService;
 import com.dvsmedeiros.payment.domain.Payment;
@@ -26,8 +29,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "ORDERS")
 public class Order extends DomainSpecificEntity {
 
-	private BigDecimal total;
-	private BigDecimal subTotal;
+	private BigDecimal total = BigDecimal.ZERO;
+	private BigDecimal subTotal = BigDecimal.ZERO;
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.DETACH })
 	private FreightService freight;
@@ -35,9 +38,9 @@ public class Order extends DomainSpecificEntity {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
 	private Payment payment;
 
-	@ManyToOne(cascade = CascadeType.DETACH)
-	private Cupom cupom;
-	
+	@ManyToMany(cascade = { CascadeType.DETACH })
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Cupom> cupons;
 	
 	@ManyToOne(cascade = CascadeType.DETACH)
 	private Address deliveryAddress;
@@ -54,7 +57,17 @@ public class Order extends DomainSpecificEntity {
 	@ManyToOne(cascade = CascadeType.DETACH)
 	private User user;
 	
+	public Order() {
+	}
+	
+	public Order(Long id) {
+		this.setId(id);
+	}
+	
 	public BigDecimal getTotal() {
+		total.subtract(getTotalCupons());
+		total.add(subTotal);
+		if(total.doubleValue() < 0) return BigDecimal.ZERO;
 		return total;
 	}
 
@@ -103,6 +116,14 @@ public class Order extends DomainSpecificEntity {
 	}
 
 	public BigDecimal getSubTotal() {
+		 BigDecimal calculated = BigDecimal.ZERO;
+		if(items != null && !items.isEmpty()) {			
+			for (OrderItem item : this.items) {
+				calculated = calculated
+						.add(item.getProduct().getCalculatedSalePrice().getValue().multiply(BigDecimal.valueOf(item.getQuantity())));
+			}
+			return calculated;
+		}
 		return subTotal;
 	}
 
@@ -117,13 +138,34 @@ public class Order extends DomainSpecificEntity {
 	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
-	
-	public Cupom getCupom() {
-		return cupom;
+
+	public List<Cupom> getCupons() {
+		return cupons;
 	}
 
-	public void setCupom(Cupom cupom) {
-		this.cupom = cupom;
+	public void setCupons(List<Cupom> cupons) {
+		this.cupons = cupons;
 	}
 	
+	public BigDecimal getTotalCupons() {
+		double calculated = 0;
+		if(this.cupons != null && !this.cupons.isEmpty()) {
+			for(Cupom cupom : this.cupons) {
+				calculated += cupom.getValue();
+			}
+		}
+		return new BigDecimal(calculated);
+	}
+	
+	public BigDecimal getTotalExchangeCupons() {
+		double calculated = 0;
+		if(this.cupons != null && !this.cupons.isEmpty()) {
+			for(Cupom cupom : this.cupons) {
+				if(cupom.getType().equals(CupomType.EXCHANGE)) {
+					calculated += cupom.getValue();
+				}
+			}
+		}
+		return new BigDecimal(calculated);
+	}
 }
