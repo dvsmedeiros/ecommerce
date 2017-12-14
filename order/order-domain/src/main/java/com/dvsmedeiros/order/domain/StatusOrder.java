@@ -28,10 +28,9 @@ public class StatusOrder extends DomainSpecificEntity {
 	public static final String EXCHANGED = "EXCHANGED";
 	public static final String APPROVED = "APPROVED";
 	public static final String DISAPPROVED = "DISAPPROVED";
+	private static Map<String, List<String>> status = new HashMap<>();
 
-	public static final Map<String, List<String>> status = new HashMap<>();
-
-	public StatusOrder() {
+	static {
 		status.put(PROCESSING, Arrays.asList(PROCESSING, PAYMENT));
 		status.put(PAYMENT, Arrays.asList(PAYMENT, APPROVED, DISAPPROVED));
 		status.put(APPROVED, Arrays.asList(APPROVED, SEPARATION));
@@ -42,18 +41,21 @@ public class StatusOrder extends DomainSpecificEntity {
 		status.put(EXCHANGED, Arrays.asList(EXCHANGED));
 	}
 
-	private List<String> getPossibleStatus(String current) {
+	public StatusOrder(String code, String description) {
+		this.setCode(code);
+		this.setDescription(description);
+	}
 
-		List<String> list = status.get(current);
-		if (list != null && !list.isEmpty()) {
-			return list;
-		}
-		return Arrays.asList(current);
+	public StatusOrder() {
 	}
 
 	@JsonSerialize
 	public List<String> possibleStatus() {
-		return getPossibleStatus(this.getCode());
+		List<String> list = status.get(this.getCode());
+		if (list != null && !list.isEmpty()) {
+			return list;
+		}
+		return Arrays.asList(this.getCode());
 	}
 
 	public void setPossibleStatus(List<String> possibleStatus) {
