@@ -1,31 +1,61 @@
-insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0001', 'Autor 1');
-insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0002', 'Autor 2');
-insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0003', 'Autor 3');
-insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0004', 'Autor 4');
-insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0005', 'Autor 5');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0001', 'Elena Sterley');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0002', 'Roderick Ceney');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0003', 'Earvin Demaine');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0004', 'Leann Coat');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0005', 'Chrissy Illiston');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0006', 'Peadar Blaycock');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0007', 'Tabor Ricciardelli');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0008', 'Averell Bromilow');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0009', 'Charmine Struis');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0010', 'Mateo Gimson');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0011', 'Christiana Itzig');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0012', 'Kaiser Djokovic');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0013', 'Libbey Vesty');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0014', 'Karissa Hassewell');
+insert into authors values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'AUT0015', 'Renate Bienvenu');
 
-insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0001', 'Editora 1');
-insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0002', 'Editora 2');
-insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0003', 'Editora 3');
-insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0004', 'Editora 4');
-insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0005', 'Editora 5');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0001','Wolf, Konopelski and Rodriguez');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0002','Schneider Inc');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0003','Nader Group');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0004','Douglas-Hoeger');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0005','Bartoletti-Bartoletti');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0006','Tillman Group');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0007','Swift, Volkman and Will');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0008','Wolff-Spencer');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0009','Mueller-Macejkovic');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0010','Langworth, Cummings and Hartmann');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0011','Leuschke-Schamberger');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0012','White-Auer');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0013','Miller, Kirlin and Waters');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0014','Botsford Inc');
+insert into publishers values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PUB0015','Durgan Inc');
 
-insert into price_groups values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PRG0001', 'Grupo Preço 1', 0.05);
-insert into price_groups values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PRG0002', 'Grupo Preço 2', 0.1);
-insert into price_groups values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PRG0003', 'Grupo Preço 3', 0.5);
+insert into price_groups values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PRG0001', 'Grupo Preço 5%', 0.05);
+insert into price_groups values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PRG0002', 'Grupo Preço 10%', 0.1);
+insert into price_groups values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PRG0003', 'Grupo Preço 50%', 0.5);
 
 insert into category_types values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'PROD', 'Produto');
 insert into category_types values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'INACT', 'Inativação');
 
-insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0001', 'Categoria 1', (select ID from category_types where category_types.code = 'PROD'));
-insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0002', 'Categoria 2', (select ID from category_types where category_types.code = 'PROD'));
-insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0003', 'Categoria 3', (select ID from category_types where category_types.code = 'PROD'));
-insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0004', 'Categoria 4', (select ID from category_types where category_types.code = 'PROD'));
-insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0005', 'Categoria 5', (select ID from category_types where category_types.code = 'PROD'));
-insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0006', 'Fora de Mercado', (select ID from category_types where category_types.code = 'INACT'));
-insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0007', 'Outro', (select ID from category_types where category_types.code = 'INACT'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0001', 'Administração', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0002', 'Agropecuária', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0003', 'Artes', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0004', 'Informática', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0005', 'Autoajuda', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0006', 'Ciências Biológicas', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0007', 'Ciências Exatas', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0008', 'Ciências Humanas e Sociais', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0009', 'Contabilidade', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0010', 'Cursos e Idiomas', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0011', 'Dicionários e Manuais Conversação', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0012', 'Didáticos', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0013', 'Direito', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0014', 'Economia', (select ID from category_types where category_types.code = 'PROD'));
+insert into categories values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'CAT0015', 'Engenharia e Tecnologia', (select ID from category_types where category_types.code = 'PROD'));
 
-insert into configurations values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'INACT_BOOKS', 'Inativa Livros RF0013', '60000');
+insert into configurations values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'INACTIVATION_BOOK_RATE', 'Intervalo de execução da task de inativação de livros sem estoque', '60000');
+insert into configurations values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'MAX_COUPON_PROMOTION', 'Quantidade máxima de cupons de promoção', '1');
+insert into configurations values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'MIN_SALE_FOR_INACTIVATION', 'Quantidade minima de venda para inativação', '10');
 
 insert into record_types values (HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'IN', 'Entrada');
 insert into record_types values (HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'OUT', 'Saida');
@@ -79,8 +109,11 @@ insert into status_order values (HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'EXCHAN
 insert into status_order values (HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'APPROVED', 'APROVADO');
 insert into status_order values (HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'DISAPPROVED', 'REPROVADO');
 
+insert into cupons values (HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'RODRIGOAJUDANOIS', null, sysdate, 'PROMOTION', 59.99, null);
+insert into cupons values (HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'LES2017', null, sysdate, 'PROMOTION', 15, null);
+
 insert into roles values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'ADMIN', 'Administrador');
 insert into roles values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, 'USER', 'Usuário');
---insert into users values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, null, null, 'admin', 'admin')
---insert into users_roles values((select id from users where email = 'admin'), (select id from roles where code = 'ADMIN'));
---insert into users_roles values((select id from users where email = 'admin'), (select id from roles where code = 'USER'));
+insert into users values(HIBERNATE_SEQUENCE.nextval, sysdate, 1, null, null, 'admin', 'admin')
+insert into users_roles values((select id from users where email = 'admin'), (select id from roles where code = 'ADMIN'));
+insert into users_roles values((select id from users where email = 'admin'), (select id from roles where code = 'USER'));
