@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.POST, "/ecommerce-api/category/filter").permitAll()
 			.antMatchers(HttpMethod.POST, "/ecommerce-api/book/filter").permitAll()
 			.antMatchers(HttpMethod.GET, "/ecommerce-api/book/**").permitAll()
-			.antMatchers("/ecommerce-api/cart/product/**").permitAll()
+			.antMatchers("/ecommerce-api/cart/**").permitAll()
 			.antMatchers(HttpMethod.GET, "/ecommerce-api/addressType").permitAll()
 			.antMatchers(HttpMethod.POST, "/ecommerce-api/client").permitAll()
 			.anyRequest().authenticated()
