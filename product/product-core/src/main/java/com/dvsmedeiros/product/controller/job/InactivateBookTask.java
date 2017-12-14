@@ -49,7 +49,7 @@ public class InactivateBookTask extends ApplicationEntity implements ITask {
 
 		List<Stock> stocks = result.getEntities();
 
-		Category category = appFacade.find(Category.class, "CAT0006", new BusinessCaseBuilder().build()).getEntity();
+		Category category = appFacade.find(Category.class, "CAT0016", new BusinessCaseBuilder().build()).getEntity();
 		
 		if (stocks != null && !stocks.isEmpty()) {
 			
@@ -71,7 +71,7 @@ public class InactivateBookTask extends ApplicationEntity implements ITask {
 	@Override
 	public Long getFixedRate() {
 
-		Configuration config = configDAO.findByCode("INACT_BOOKS");
+		Configuration config = configDAO.findByCode(Configuration.INACTIVATION_BOOK_RATE);
 		Long rate = config.getLongValue();
 
 		return rate;
