@@ -1,5 +1,6 @@
 package com.dvsmedeiros.category.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,7 +17,7 @@ import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Category extends DomainSpecificEntity {
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.DETACH)
 	private CategoryType type;
 	
 	public Category() {
