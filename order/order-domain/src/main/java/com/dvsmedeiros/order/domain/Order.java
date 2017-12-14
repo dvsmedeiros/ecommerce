@@ -11,12 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 import com.dvsmedeiros.address.domain.Address;
 import com.dvsmedeiros.bce.domain.DomainSpecificEntity;
+import com.dvsmedeiros.commons.domain.Client;
 import com.dvsmedeiros.commons.domain.Cupom;
 import com.dvsmedeiros.commons.domain.CupomType;
 import com.dvsmedeiros.commons.domain.User;
@@ -55,7 +57,13 @@ public class Order extends DomainSpecificEntity {
 	private StatusOrder statusOrder;
 
 	@ManyToOne(cascade = CascadeType.DETACH)
-	private User user;
+	private Client custumer;
+	
+	@Formula(value = "extract(month from insertion_date)")
+	private int month;
+	
+	@Formula(value = "extract(year from insertion_date)")
+	private int year;
 	
 	public Order() {
 	}
@@ -98,13 +106,13 @@ public class Order extends DomainSpecificEntity {
 	public void setStatusOrder(StatusOrder statusOrder) {
 		this.statusOrder = statusOrder;
 	}
-
-	public User getUser() {
-		return user;
+	
+	public Client getCustumer() {
+		return custumer;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setCustumer(Client custumer) {
+		this.custumer = custumer;
 	}
 
 	public FreightService getFreight() {
@@ -168,4 +176,13 @@ public class Order extends DomainSpecificEntity {
 		}
 		return new BigDecimal(calculated);
 	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public int getYear() {
+		return year;
+	}
+	
 }
