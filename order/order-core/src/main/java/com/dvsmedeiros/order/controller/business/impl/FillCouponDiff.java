@@ -31,7 +31,7 @@ public class FillCouponDiff extends ApplicationEntity implements ICouponFiller {
 			if (totalCupons.doubleValue() > subTotal.doubleValue()) {
 				
 				Cupom cupom = new Cupom();
-				cupom.setOwner(order.getUser());
+				cupom.setOwner(order.getCustumer());
 				cupom.setValue(totalCupons.subtract(subTotal).doubleValue());
 				aCase.getContext().setAttribute("coupon", cupom);
 			}

@@ -9,8 +9,8 @@ import com.dvsmedeiros.bce.core.controller.INavigator;
 import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCase;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
+import com.dvsmedeiros.commons.domain.Client;
 import com.dvsmedeiros.commons.domain.Cupom;
-import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.shopcart.domain.Cart;
 
 @Component
@@ -27,8 +27,8 @@ public class ShopCartCouponValidator implements IStrategy<Cupom> {
 	public void process(Cupom aEntity, INavigationCase<Cupom> aCase) {
 
 		BusinessCase<Cupom> bCase = new BusinessCaseBuilder<Cupom>().withName("COUPON_VALIDATOR").build();
-		User user = aCase.getContext().getAttribute("logged");
-		bCase.getContext().setAttribute("logged", user);
+		Client client = aCase.getContext().getAttribute("logged");
+		bCase.getContext().setAttribute("logged", client);
 		bCase.getContext().setAttribute("coupons", cart.getCupons());
 		bCase.getContext().setAttribute("subTotal", cart.getSubTotal());
 		bCase.getContext().setAttribute("totalCoupons", cart.getTotalCupons());

@@ -17,7 +17,7 @@ public class FillCouponExchange extends ApplicationEntity implements ICouponFill
 		Order order = aCase.getContext().getAttribute("order");
 		if (order != null) {
 			Cupom cupom = new Cupom();
-			cupom.setOwner(order.getUser());
+			cupom.setOwner(order.getCustumer());
 			cupom.setValue(order.getSubTotal().doubleValue());
 
 			aCase.getContext().setAttribute("coupon", cupom);

@@ -30,7 +30,7 @@ public class OrderCouponValidator extends ApplicationEntity implements IStrategy
 	public void process(Order aEntity, INavigationCase<Order> aCase) {
 
 		BusinessCase<Cupom> bCase = new BusinessCaseBuilder<Cupom>().withName("COUPON_VALIDATOR").build();		
-		bCase.getContext().setAttribute("logged", aEntity.getUser());
+		bCase.getContext().setAttribute("logged", aEntity.getCustumer());
 		bCase.getContext().setAttribute("coupons", aEntity.getCupons());
 		bCase.getContext().setAttribute("subTotal", aEntity.getSubTotal());
 		bCase.getContext().setAttribute("totalCoupons", aEntity.getTotalCupons());

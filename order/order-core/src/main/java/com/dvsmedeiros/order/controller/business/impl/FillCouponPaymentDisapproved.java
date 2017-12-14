@@ -17,7 +17,7 @@ public class FillCouponPaymentDisapproved extends ApplicationEntity implements I
 		Order order = aCase.getContext().getAttribute("order");
 		if (order != null) {
 			Cupom cupom = new Cupom();
-			cupom.setOwner(order.getUser());
+			cupom.setOwner(order.getCustumer());
 			cupom.setValue(order.getTotalExchangeCupons().doubleValue());
 
 			aCase.getContext().setAttribute("coupon", cupom);

@@ -23,8 +23,8 @@ public class CupomController extends CommonsController<Cupom>{
 	public @ResponseBody ResponseEntity<?> findEntityByFilter(@RequestBody Filter<Cupom> filter, @RequestParam(required = false) boolean logged) {
 		
 		if(logged) {
-			User loggedUser = getLoggedUser();
-			filter.getEntity().setOwner(loggedUser);				
+			
+			filter.getEntity().setOwner(getLoggedClient());				
 		}
 		return super.findEntityByFilter(filter, logged);
 		

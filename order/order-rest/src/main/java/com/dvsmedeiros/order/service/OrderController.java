@@ -1,7 +1,5 @@
 package com.dvsmedeiros.order.service;
 
-import org.aspectj.weaver.ast.Or;
-import org.hibernate.id.CompositeNestedGeneratedValueGenerator.GenerationContextLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -19,11 +17,10 @@ import com.dvsmedeiros.bce.core.controller.impl.BusinessCase;
 import com.dvsmedeiros.bce.core.controller.impl.BusinessCaseBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
-import com.dvsmedeiros.commons.controller.dao.impl.UserDAO;
+import com.dvsmedeiros.commons.domain.Client;
 import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.commons.service.CommonsController;
 import com.dvsmedeiros.order.domain.Order;
-import com.dvsmedeiros.order.domain.StatusOrder;
 import com.dvsmedeiros.payment.domain.PaymentType;
 import com.dvsmedeiros.rest.domain.ResponseMessage;
 
@@ -55,8 +52,8 @@ public class OrderController extends CommonsController<Order> {
 				order.getPayment().setCard(null);
 			}
 			
-			User loggedUser = getLoggedUser();
-			order.setUser(loggedUser);
+			Client loggedUser = getLoggedClient();
+			order.setCustumer(loggedUser);
 			
 			Result result = appFacade.save(order, new BusinessCaseBuilder().withName("CHECKOUT").build());
 
@@ -80,9 +77,11 @@ public class OrderController extends CommonsController<Order> {
 		try {
 			
 			User loggedUser = getLoggedUser();
-			order.setUser(loggedUser);
-		
-			Result result = appFacade.update(order, new BusinessCaseBuilder().withName("UPDATE_STATUS#".concat(order.getStatusOrder().getCode())).build());
+			
+			BusinessCase aCase = new BusinessCaseBuilder().withName("UPDATE_STATUS#".concat(order.getStatusOrder().getCode())).build();
+			aCase.getContext().setAttribute("logged", loggedUser);
+			
+			Result result = appFacade.update(order, aCase);
 
 			if (result.hasError()) {
 				return new ResponseEntity(new ResponseMessage(Boolean.TRUE, result.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -100,11 +99,10 @@ public class OrderController extends CommonsController<Order> {
 	public @ResponseBody ResponseEntity findEntityByFilter(@RequestBody Filter<Order> filter, @RequestParam(name="logged", required = false) boolean logged) {
 		
 		if(logged) {
-			User loggedUser = getLoggedUser();
-			filter.getEntity().setUser(loggedUser);				
+			Client loggedUser = getLoggedClient();
+			filter.getEntity().setCustumer(loggedUser);				
 		}
 		return super.findEntityByFilter(filter, logged);
-		
 	}
 	
 }

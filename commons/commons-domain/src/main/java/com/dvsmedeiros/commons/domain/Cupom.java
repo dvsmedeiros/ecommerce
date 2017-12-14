@@ -22,7 +22,7 @@ public class Cupom extends DomainSpecificEntity {
 	private Calendar expiryDate;
 	private Double value;
 	@ManyToOne(cascade = CascadeType.DETACH)
-	private User owner;
+	private Client owner;
 	@Enumerated(EnumType.STRING)
 	private CupomType type;
 	
@@ -48,12 +48,12 @@ public class Cupom extends DomainSpecificEntity {
 	public void setValue(Double value) {
 		this.value = value;
 	}
-
-	public User getOwner() {
+	
+	public Client getOwner() {
 		return owner;
 	}
 
-	public void setOwner(User owner) {
+	public void setOwner(Client owner) {
 		this.owner = owner;
 	}
 
