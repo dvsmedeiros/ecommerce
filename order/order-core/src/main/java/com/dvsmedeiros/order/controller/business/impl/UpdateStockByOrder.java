@@ -15,10 +15,11 @@ import com.dvsmedeiros.bce.core.dao.impl.GenericDAO;
 import com.dvsmedeiros.bce.domain.ApplicationEntity;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
+import com.dvsmedeiros.commons.domain.User;
 import com.dvsmedeiros.order.domain.Order;
 import com.dvsmedeiros.order.domain.OrderItem;
+import com.dvsmedeiros.order.domain.StatusOrder;
 import com.dvsmedeiros.product.domain.Book;
-import com.dvsmedeiros.product.domain.Price;
 import com.dvsmedeiros.product.domain.Product;
 import com.dvsmedeiros.stock.controller.dao.IStockDAO;
 import com.dvsmedeiros.stock.domain.RecordType;
@@ -44,7 +45,15 @@ public class UpdateStockByOrder extends ApplicationEntity implements IStrategy<O
 	@Override
 	public void process(Order aEntity, INavigationCase<Order> aCase) {
 		
-		RecordType type = (RecordType) dao.find(RecordType.class, RecordType.OUT);
+		RecordType type;
+		
+		if (aEntity.getStatusOrder().getCode().equals(StatusOrder.EXCHANGED)) {
+			type = (RecordType) dao.find(RecordType.class, RecordType.IN);
+		} else {
+			type = (RecordType) dao.find(RecordType.class, RecordType.OUT);
+		}
+		
+		User logged = aCase.getContext().getAttribute("logged");
 		
 		for (OrderItem item : aEntity.getItems()) {
 			
@@ -59,7 +68,7 @@ public class UpdateStockByOrder extends ApplicationEntity implements IStrategy<O
 				stockRecord.setStock(stock);
 				stockRecord.setVolume(new BigDecimal( item.getQuantity()));
 				stockRecord.setRecordType(type);
-				stockRecord.setUser(aEntity.getUser());
+				stockRecord.setUser(logged != null ? logged : aEntity.getCustumer().getUser());
 				stockRecord.setSalePrice(item.getProduct().getCalculatedSalePrice());
 				stockRecord.setPurchasePrice(stock.getProduct().getSalePrice());
 				
