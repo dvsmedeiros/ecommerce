@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.dvsmedeiros.bce.core.controller.INavigationCase;
 import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.bce.domain.ApplicationEntity;
-import com.dvsmedeiros.order.controller.dao.impl.IOrderDAO;
+import com.dvsmedeiros.order.controller.dao.IOrderDAO;
 import com.dvsmedeiros.order.domain.Order;
 import com.dvsmedeiros.order.domain.StatusOrder;
 import com.google.common.base.Strings;
