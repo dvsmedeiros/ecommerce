@@ -8,12 +8,16 @@ import com.dvsmedeiros.bce.core.controller.business.impl.CodeGenerator;
 import com.dvsmedeiros.bce.core.controller.impl.Navigation;
 import com.dvsmedeiros.bce.core.controller.impl.NavigationBuilder;
 import com.dvsmedeiros.bce.domain.Filter;
+import com.dvsmedeiros.commons.controller.business.impl.FindFilterNotification;
+import com.dvsmedeiros.commons.domain.Cupom;
+import com.dvsmedeiros.commons.domain.Notification;
 import com.dvsmedeiros.order.controller.business.impl.AddOrderStatus;
 import com.dvsmedeiros.order.controller.business.impl.CleanShopCart;
 import com.dvsmedeiros.order.controller.business.impl.FillCouponDiff;
 import com.dvsmedeiros.order.controller.business.impl.FillCouponExchange;
 import com.dvsmedeiros.order.controller.business.impl.FillCouponPaymentDisapproved;
 import com.dvsmedeiros.order.controller.business.impl.FindFilterOrder;
+import com.dvsmedeiros.order.controller.business.impl.GenerateExchangedNotification;
 import com.dvsmedeiros.order.controller.business.impl.InactvationExchangeCoupons;
 import com.dvsmedeiros.order.controller.business.impl.OrderCouponValidator;
 import com.dvsmedeiros.order.controller.business.impl.OrderGenerateCupomExchange;
@@ -35,11 +39,13 @@ public class OrderNavigation {
 	@Autowired private CodeGenerator codeGenerator;
 	@Autowired private UpdateStatusOrder updateStatusOrder;
 	@Autowired private UpdateStockByOrder updateStockByOrder;
+	@Autowired private GenerateExchangedNotification generateExchangedNotification;
 	@Autowired private SendOrderToProcess sendOrderToProcess;
 	@Autowired private SimulatesPayment simulatesPayment;
 	@Autowired private InactvationExchangeCoupons inactvationExchangeCoupons;
 	@Autowired private OrderGenerateCupomExchange orderGenerateCupomExchange;
 	@Autowired private OrderCouponValidator orderCouponValidator;
+	@Autowired private FindFilterNotification findFilterNotification;
 	
 	@Bean(name="CHECKOUT")
 	public Navigation<Order> getSaveOrderNavigation(){
@@ -103,7 +109,9 @@ public class OrderNavigation {
 
 		return new NavigationBuilder<Order>()				
 				.next(orderGenerateCupomExchange)
+				.next(updateStockByOrder)
 				.next(updateStatusOrder)
+				.next(generateExchangedNotification)
 				.build();
 	}
 	
@@ -155,21 +163,29 @@ public class OrderNavigation {
 				.build();
 	}
 	
-	@Bean(name=StatusOrder.EXCHANGED)
+	@Bean(name="EXCHANGED")
 	@Autowired
 	public FillCouponExchange couponExchange(FillCouponExchange fillCouponExchange) {
 		return fillCouponExchange;
 	}
 	
-	@Bean(name=StatusOrder.APPROVED)
+	@Bean(name="APPROVED")
 	@Autowired
 	public FillCouponDiff couponDiff(FillCouponDiff fillCouponDiff) {
 		return fillCouponDiff;
 	}
 	
-	@Bean(name=StatusOrder.DISAPPROVED)
+	@Bean(name="DISAPPROVED")
 	@Autowired
 	public FillCouponPaymentDisapproved couponDisapproved(FillCouponPaymentDisapproved fillCouponPaymentDisapproved) {
 		return fillCouponPaymentDisapproved;
+	}
+	
+	@Bean(name = "FILTER_NOTIFICATION")
+	public Navigation<Filter<Notification>> findFilterNotification() {
+
+		return new NavigationBuilder<Filter<Notification>>()
+				.next(findFilterNotification)
+				.build();
 	}
 }
