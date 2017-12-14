@@ -9,7 +9,7 @@ import com.dvsmedeiros.bce.core.controller.INavigationCase;
 import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.bce.domain.Filter;
 import com.dvsmedeiros.bce.domain.Result;
-import com.dvsmedeiros.order.controller.dao.OrderDAO;
+import com.dvsmedeiros.order.controller.dao.impl.OrderDAO;
 import com.dvsmedeiros.order.domain.Order;
 
 @Component
