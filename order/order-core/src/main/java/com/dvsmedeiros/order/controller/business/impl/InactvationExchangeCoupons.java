@@ -8,7 +8,7 @@ import com.dvsmedeiros.bce.core.controller.business.IStrategy;
 import com.dvsmedeiros.bce.domain.ApplicationEntity;
 import com.dvsmedeiros.commons.domain.Cupom;
 import com.dvsmedeiros.commons.domain.CupomType;
-import com.dvsmedeiros.order.controller.dao.impl.IOrderDAO;
+import com.dvsmedeiros.order.controller.dao.IOrderDAO;
 import com.dvsmedeiros.order.domain.Order;
 
 @Component
