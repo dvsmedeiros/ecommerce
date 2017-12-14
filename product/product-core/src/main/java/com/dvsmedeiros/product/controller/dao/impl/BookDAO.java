@@ -66,7 +66,7 @@ public class BookDAO extends GenericDAO<Book> implements IBookDAO {
 
 		if (validFilter && filter.getEntity().getCategories() != null
 				&& !filter.getEntity().getCategories().isEmpty()) {
-			jpql.append(" AND b.categories IN (:categories)");
+			jpql.append(" AND b.categories IN ( :categories )");
 		}
 
 		if (validFilter && filter.getEntity().getAuthors() != null && !filter.getEntity().getAuthors().isEmpty()) {
