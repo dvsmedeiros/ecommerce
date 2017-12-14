@@ -19,6 +19,7 @@ public class AddItemToCart implements IStrategy<CartItem>{
 		
 		CartItem item = aCase.getContext().getAttribute("item");
 		if( item != null ){
+			aEntity.getProduct().setCode(item.getProduct().getCode());
 			cart.addItem(item);
 			return;
 		}
