@@ -1,4 +1,4 @@
-package com.dvsmedeiros.order.controller.dao;
+package com.dvsmedeiros.order.controller.dao.impl;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dvsmedeiros.bce.core.dao.impl.GenericDAO;
 import com.dvsmedeiros.bce.domain.Filter;
-import com.dvsmedeiros.order.controller.dao.impl.IOrderDAO;
+import com.dvsmedeiros.order.controller.dao.IOrderDAO;
 import com.dvsmedeiros.order.domain.Order;
 
 @Repository
@@ -28,14 +28,14 @@ public class OrderDAO extends GenericDAO<Order> implements IOrderDAO{
 		StringBuilder jpql = new StringBuilder();
 		jpql.append("SELECT o FROM ").append(Order.class.getName()).append(" o ");
 		
-		if (validFilter && filter.getEntity().getUser() != null) {
-			jpql.append( " JOIN FETCH o.user u " );
+		if (validFilter && filter.getEntity().getCustumer() != null) {
+			jpql.append( " JOIN FETCH o.custumer c " );
 		}
         
         jpql.append(" WHERE 1=1 ");
 	
-		if (validFilter && filter.getEntity().getUser() != null) {
-			jpql.append(" AND u.id = :userId");
+		if (validFilter && filter.getEntity().getCustumer() != null) {
+			jpql.append(" AND c.id = :custumerId");
 		}
 		
 		if (validFilter && filter.getEntity().getStatusOrder() != null && filter.getEntity().getStatusOrder().getId() > 0) {
@@ -44,8 +44,8 @@ public class OrderDAO extends GenericDAO<Order> implements IOrderDAO{
 		
 		TypedQuery<Order> query = em.createQuery(jpql.toString(), Order.class);
 		
-		if (validFilter && filter.getEntity().getUser() != null) {
-			query.setParameter("userId", filter.getEntity().getUser().getId());
+		if (validFilter && filter.getEntity().getCustumer() != null) {
+			query.setParameter("custumerId", filter.getEntity().getCustumer().getId());
 		}
 		
 		if (validFilter && filter.getEntity().getStatusOrder() != null && filter.getEntity().getStatusOrder().getId() > 0) {
@@ -73,5 +73,9 @@ public class OrderDAO extends GenericDAO<Order> implements IOrderDAO{
 		}
 		query.executeUpdate();
 		return order;
+	}
+	
+	public Long saleQuantityByProductId(Long productId) {
+		return 0L;
 	}
 }

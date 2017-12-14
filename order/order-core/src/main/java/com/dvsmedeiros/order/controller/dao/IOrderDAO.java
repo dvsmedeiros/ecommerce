@@ -1,4 +1,4 @@
-package com.dvsmedeiros.order.controller.dao.impl;
+package com.dvsmedeiros.order.controller.dao;
 
  import java.util.List;
 
