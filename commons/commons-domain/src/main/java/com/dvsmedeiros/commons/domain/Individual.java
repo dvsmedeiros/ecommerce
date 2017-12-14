@@ -7,6 +7,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.Formula;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @MappedSuperclass
@@ -20,7 +22,10 @@ public class Individual extends People {
 	private Gender gender;
 	@Embedded
 	private CPF cpf;
-
+	
+	@Formula(value = "trunc((to_number(to_char(sysdate,'yyyymmdd'))-to_number(to_char(born_date,'yyyymmdd')))/10000)")
+	private int age;
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -61,4 +66,7 @@ public class Individual extends People {
 		this.cpf = cpf;
 	}
 
+	public int getAge() {
+		return age;
+	}	
 }
