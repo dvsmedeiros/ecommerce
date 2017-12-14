@@ -3,6 +3,7 @@ package com.dvsmedeiros.product.domain;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -34,6 +35,7 @@ public class Book extends Product {
 	private String edition;
 	private String ISBN;
 	private Integer pages;
+	@Column(length = 1000)
 	private String synopsis;
 
 	public List<Author> getAuthors() {
