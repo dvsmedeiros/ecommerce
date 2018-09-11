@@ -24,7 +24,7 @@ public class QuantityCupomValidator implements IStrategy<Cupom> {
 	@Override
 	public void process(Cupom aEntity, INavigationCase<Cupom> aCase) {
 		
-		Configuration configuration = (Configuration) dao.find(Configuration.class, Configuration.MAX_COUPON_PROMOTION);
+		Configuration configuration = (Configuration) dao.find(Configuration.class, com.dvsmedeiros.commons.domain.Configuration.MAX_COUPON_PROMOTION);
 		long limit = configuration.getLongValue() > 0 ? configuration.getLongValue() : DEFAULT_QUANTITY;
 		
 		List<Cupom> coupons = aCase.getContext().getAttribute("coupons");

@@ -56,8 +56,8 @@ public class AnalyzeDAO extends GenericDAO<Analyze> implements IAnalyzeDAO {
 		Query query = em.createQuery(jpql.toString());
 		
 		query.setParameter("status", statusOrder);
-		query.setParameter("start", BceUtils.startDay(filter.getEntity().getPeriod().getStart()));
-		query.setParameter("end", BceUtils.endDay(filter.getEntity().getPeriod().getEnd()));
+		//query.setParameter("start", BceUtils.startDay(filter.getEntity().getPeriod().getStart()));
+		//query.setParameter("end", BceUtils.endDay(filter.getEntity().getPeriod().getEnd()));
 		if(filter != null && filter.getEntity() != null && filter.getEntity().getCategories() != null && !filter.getEntity().getCategories().isEmpty()) {
 			query.setParameter("categories", filter.getEntity().getCategories());
 		}

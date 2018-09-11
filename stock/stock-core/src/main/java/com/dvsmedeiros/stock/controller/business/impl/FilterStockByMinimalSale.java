@@ -36,7 +36,7 @@ public class FilterStockByMinimalSale extends ApplicationEntity implements IStra
 	
 	public Long getMinSale() {
 
-		Configuration config = configDAO.findByCode(Configuration.MIN_SALE_FOR_INACTIVATION);
+		Configuration config = configDAO.findByCode(com.dvsmedeiros.commons.domain.Configuration.MIN_SALE_FOR_INACTIVATION);
 		Long rate = config.getLongValue();
 
 		return rate;

@@ -14,6 +14,7 @@
 	
 	<properties>
 		<activemq.version>5.14.5</activemq.version>
+		<jwt.version>0.7.0</jwt.version>
 	</properties>
 	
 	<dependencies>
@@ -72,13 +73,14 @@
 			<artifactId>shopcart-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
+	
+		<!-- 
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
 			<artifactId>freight-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
+	 	-->
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
 			<artifactId>payment-rest</artifactId>
@@ -108,13 +110,18 @@
 			<artifactId>supplier-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		 
+		<!--  
 		<dependency>
 			<groupId>com.dvsmedeiros</groupId>
 			<artifactId>bce-auth</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		 
+		-->
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt</artifactId>
+		    <version>${jwt.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

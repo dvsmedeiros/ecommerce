@@ -71,7 +71,7 @@ public class InactivateBookTask extends ApplicationEntity implements ITask {
 	@Override
 	public Long getFixedRate() {
 
-		Configuration config = configDAO.findByCode(Configuration.INACTIVATION_BOOK_RATE);
+		Configuration config = configDAO.findByCode(com.dvsmedeiros.commons.domain.Configuration.INACTIVATION_BOOK_RATE);
 		Long rate = config.getLongValue();
 
 		return rate;
